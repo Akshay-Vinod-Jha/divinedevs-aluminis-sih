@@ -4,13 +4,21 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 
 const Messages = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedChat, setSelectedChat] = useState(1);
   const [newMessage, setNewMessage] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const conversations = [
     {
@@ -76,24 +84,100 @@ const Messages = () => {
 
   const selectedConversation = conversations.find(c => c.id === selectedChat);
 
+  // Professional Loader for Messages
+  const ProfessionalLoader = () => (
+    <div className="flex h-[calc(100vh-64px)]">
+      {/* Conversations List Loader */}
+      <div className="w-80 border-r border-border bg-surface flex flex-col">
+        <div className="p-4 border-b border-border">
+          <div className="h-6 w-24 bg-muted/50 rounded animate-pulse mb-3"></div>
+          <div className="h-10 bg-muted/50 rounded-md animate-pulse"></div>
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="p-4 border-b border-border">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full animate-pulse"></div>
+                <div className="flex-1 space-y-2">
+                  <div className="flex justify-between">
+                    <div className="h-4 w-24 bg-muted/50 rounded animate-pulse"></div>
+                    <div className="h-3 w-12 bg-muted/40 rounded animate-pulse"></div>
+                  </div>
+                  <div className="h-3 w-40 bg-muted/40 rounded animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Chat Area Loader */}
+      <div className="flex-1 flex flex-col">
+        <div className="p-4 border-b border-border bg-surface flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full animate-pulse"></div>
+            <div className="space-y-2">
+              <div className="h-4 w-32 bg-muted/50 rounded animate-pulse"></div>
+              <div className="h-3 w-20 bg-muted/40 rounded animate-pulse"></div>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="w-8 h-8 bg-muted/50 rounded animate-pulse"></div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className={`flex ${i % 2 === 0 ? "justify-start" : "justify-end"}`}>
+              <div className={`max-w-xs lg:max-w-md h-16 rounded-lg animate-pulse ${
+                i % 2 === 0 ? "bg-muted/50" : "bg-gradient-to-r from-primary/20 to-accent/20"
+              }`}></div>
+            </div>
+          ))}
+        </div>
+
+        <div className="p-4 border-t border-border bg-surface">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-muted/50 rounded animate-pulse"></div>
+            <div className="h-10 flex-1 bg-muted/50 rounded-md animate-pulse"></div>
+            <div className="w-8 h-8 bg-gradient-to-r from-primary/20 to-accent/20 rounded animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="flex items-center gap-3 bg-background/80 backdrop-blur-sm rounded-lg p-4">
+          <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
+          <div className="text-sm font-medium text-foreground">Loading messages</div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
         <main className="flex-1 flex h-[calc(100vh-64px)]">
-          {/* Conversations List */}
-          <div className="w-80 border-r border-border bg-surface flex flex-col">
-            <div className="p-4 border-b border-border">
-              <h1 className="text-xl font-bold text-foreground flex items-center gap-2 mb-3">
-                <MessageCircle className="h-5 w-5" />
-                Messages
-              </h1>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input placeholder="Search conversations..." className="pl-10" />
-              </div>
-            </div>
+          {isLoading ? (
+            <ProfessionalLoader />
+          ) : (
+            <>
+              {/* Conversations List */}
+              <div className="w-80 border-r border-border bg-surface flex flex-col">
+                <div className="p-4 border-b border-border">
+                  <h1 className="text-xl font-bold text-foreground flex items-center gap-2 mb-3">
+                    <MessageCircle className="h-5 w-5" />
+                    Messages
+                  </h1>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                    <Input placeholder="Search conversations..." className="pl-10" />
+                  </div>
+                </div>
             
             <div className="flex-1 overflow-y-auto">
               {conversations.map((conv) => (
@@ -218,6 +302,8 @@ const Messages = () => {
               </div>
             )}
           </div>
+            </>
+          )}
         </main>
       </div>
     </div>

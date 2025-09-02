@@ -116,9 +116,144 @@ const Notifications = () => {
     console.log("Mark all as read");
   };
 
-  const handleNotificationAction = (id: number, action: 'accept' | 'decline' | 'dismiss') => {
+  const handleNotificationAction = (id: number, action: 'accept' | 'decline' | 'dismiss' | 'view' | 'respond') => {
     // Function to handle notification actions
     console.log(`${action} notification ${id}`);
+  };
+
+  // Function to get appropriate action buttons based on notification type
+  const getActionButtons = (notification: any) => {
+    switch (notification.type) {
+      case "connection":
+        return (
+          <div className="flex gap-2">
+            <Button 
+              size="sm" 
+              className="alma-gradient text-primary-foreground w-20"
+              onClick={() => handleNotificationAction(notification.id, 'accept')}
+            >
+              Accept
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="w-20"
+              onClick={() => handleNotificationAction(notification.id, 'decline')}
+            >
+              Decline
+            </Button>
+          </div>
+        );
+      
+      case "like":
+      case "share":
+        return (
+          <div className="flex gap-2">
+            <Button 
+              size="sm" 
+              className="alma-gradient text-primary-foreground w-20"
+              onClick={() => handleNotificationAction(notification.id, 'view')}
+            >
+              View
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="w-20"
+              onClick={() => handleNotificationAction(notification.id, 'dismiss')}
+            >
+              Dismiss
+            </Button>
+          </div>
+        );
+      
+      case "message":
+        return (
+          <div className="flex gap-2">
+            <Button 
+              size="sm" 
+              className="alma-gradient text-primary-foreground w-20"
+              onClick={() => handleNotificationAction(notification.id, 'respond')}
+            >
+              Reply
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="w-20"
+              onClick={() => handleNotificationAction(notification.id, 'view')}
+            >
+              View
+            </Button>
+          </div>
+        );
+      
+      case "job":
+        return (
+          <div className="flex gap-2">
+            <Button 
+              size="sm" 
+              className="alma-gradient text-primary-foreground w-20"
+              onClick={() => handleNotificationAction(notification.id, 'view')}
+            >
+              View
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="w-20"
+              onClick={() => handleNotificationAction(notification.id, 'decline')}
+            >
+              Pass
+            </Button>
+          </div>
+        );
+      
+      case "event":
+        return (
+          <div className="flex gap-2">
+            <Button 
+              size="sm" 
+              className="alma-gradient text-primary-foreground w-20"
+              onClick={() => handleNotificationAction(notification.id, 'accept')}
+            >
+              Join
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="w-20"
+              onClick={() => handleNotificationAction(notification.id, 'decline')}
+            >
+              Skip
+            </Button>
+          </div>
+        );
+      
+      case "system":
+        return (
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="w-20"
+            onClick={() => handleNotificationAction(notification.id, 'dismiss')}
+          >
+            Dismiss
+          </Button>
+        );
+      
+      default:
+        return (
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="w-20"
+            onClick={() => handleNotificationAction(notification.id, 'dismiss')}
+          >
+            Dismiss
+          </Button>
+        );
+    }
   };
 
   // Professional Loader Component
@@ -240,9 +375,9 @@ const Notifications = () => {
                 <TabsTrigger value="unread">
                   Unread
                   {unreadNotifications.length > 0 && (
-                    <Badge variant="secondary" className="ml-2 bg-accent/10 text-accent">
+                    <span className="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
                       {unreadNotifications.length}
-                    </Badge>
+                    </span>
                   )}
                 </TabsTrigger>
                 <TabsTrigger value="connections">Connections</TabsTrigger>
@@ -256,21 +391,15 @@ const Notifications = () => {
                 </div>
                 <div className="space-y-3">
                   {allNotifications.map((notification) => (
-                    <Card key={notification.id} className={`professional-card ${!notification.isRead ? 'border-l-4 border-l-primary' : ''}`}>
+                    <Card key={notification.id} className="professional-card">
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between">
-                          <div className="flex gap-3 flex-1">
-                            <div className={`p-3 rounded-lg ${!notification.isRead ? notification.bgColor : 'bg-muted'}`}>
-                              <div className="w-2 h-2 bg-primary rounded-full"></div>
-                            </div>
+                          <div className="flex-1">
                             <div className="flex-1 space-y-1">
                               <div className="flex items-center gap-2">
                                 <h3 className={`font-medium ${!notification.isRead ? 'text-foreground' : 'text-muted-foreground'}`}>
                                   {notification.title}
                                 </h3>
-                                {!notification.isRead && (
-                                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                )}
                               </div>
                               <p className="text-sm text-muted-foreground">{notification.message}</p>
                               {notification.user && (
@@ -290,32 +419,7 @@ const Notifications = () => {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            {notification.type === "connection" && !notification.isRead && (
-                              <div className="flex gap-2">
-                                <Button 
-                                  size="sm" 
-                                  className="alma-gradient text-primary-foreground"
-                                  onClick={() => handleNotificationAction(notification.id, 'accept')}
-                                >
-                                  Accept
-                                </Button>
-                                <Button 
-                                  variant="outline" 
-                                  size="sm"
-                                  onClick={() => handleNotificationAction(notification.id, 'decline')}
-                                >
-                                  Decline
-                                </Button>
-                              </div>
-                            )}
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              className="h-8 w-8"
-                              onClick={() => handleNotificationAction(notification.id, 'dismiss')}
-                            >
-                              ×
-                            </Button>
+                            {getActionButtons(notification)}
                           </div>
                         </div>
                       </CardContent>
@@ -329,7 +433,7 @@ const Notifications = () => {
                 <div className="space-y-3">
                   {unreadNotifications.length > 0 ? (
                     unreadNotifications.map((notification) => (
-                      <Card key={notification.id} className="professional-card border-l-4 border-l-primary">
+                      <Card key={notification.id} className="professional-card">
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
@@ -359,24 +463,7 @@ const Notifications = () => {
                             </div>
 
                             <div className="flex items-center gap-2">
-                              {notification.type === "connection" && (
-                                <div className="flex gap-2">
-                                  <Button 
-                                    size="sm" 
-                                    className="alma-gradient text-primary-foreground"
-                                    onClick={() => handleNotificationAction(notification.id, 'accept')}
-                                  >
-                                    Accept
-                                  </Button>
-                                  <Button 
-                                    variant="outline" 
-                                    size="sm"
-                                    onClick={() => handleNotificationAction(notification.id, 'decline')}
-                                  >
-                                    Decline
-                                  </Button>
-                                </div>
-                              )}
+                              {getActionButtons(notification)}
                             </div>
                           </div>
                         </CardContent>
@@ -384,7 +471,9 @@ const Notifications = () => {
                     ))
                   ) : (
                     <div className="text-center py-12">
-                      <div className="text-6xl mb-4">🔔</div>
+                      <div className="w-16 h-16 mx-auto mb-4 bg-muted/20 rounded-full flex items-center justify-center">
+                        <div className="w-8 h-8 bg-primary/20 rounded-full"></div>
+                      </div>
                       <h3 className="text-lg font-semibold text-foreground mb-2">All caught up!</h3>
                       <p className="text-muted-foreground">No unread notifications</p>
                     </div>
@@ -412,27 +501,14 @@ const Notifications = () => {
                               <p className="text-sm text-muted-foreground">{notification.user?.title}</p>
                               <p className="text-sm text-muted-foreground">Wants to connect with you</p>
                               
-                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                🕐 {notification.timestamp}
+                              <div className="text-xs text-muted-foreground">
+                                {notification.timestamp}
                               </div>
                             </div>
                           </div>
 
                           <div className="flex gap-2">
-                            <Button 
-                              size="sm" 
-                              className="alma-gradient text-primary-foreground"
-                              onClick={() => handleNotificationAction(notification.id, 'accept')}
-                            >
-                              Accept
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm"
-                              onClick={() => handleNotificationAction(notification.id, 'decline')}
-                            >
-                              Decline
-                            </Button>
+                            {getActionButtons(notification)}
                           </div>
                         </div>
                       </CardContent>
@@ -448,24 +524,20 @@ const Notifications = () => {
                     <Card key={notification.id} className="professional-card">
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between">
-                          <div className="flex gap-3 flex-1">
-                            <div className="p-2 rounded-full bg-success/10">
-                              <span className="text-lg">💼</span>
-                            </div>
-                            
+                          <div className="flex-1">
                             <div className="flex-1 space-y-1">
                               <h3 className="font-medium text-foreground">{notification.title}</h3>
                               <p className="text-sm text-muted-foreground">{notification.message}</p>
                               
-                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                🕐 {notification.timestamp}
+                              <div className="text-xs text-muted-foreground">
+                                {notification.timestamp}
                               </div>
                             </div>
                           </div>
 
-                          <Button size="sm" className="alma-gradient text-primary-foreground">
-                            View Job
-                          </Button>
+                          <div className="flex items-center gap-2">
+                            {getActionButtons(notification)}
+                          </div>
                         </div>
                       </CardContent>
                     </Card>

@@ -7,8 +7,18 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
+import { useState, useEffect } from "react";
 
 const Events = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const events = [
     {
       id: 1,
@@ -51,23 +61,75 @@ const Events = () => {
   const upcomingEvents = events.filter(event => !event.isAttending);
   const myEvents = events.filter(event => event.isAttending);
 
+  // Professional Loader for Events
+  const ProfessionalLoader = () => (
+    <div className="max-w-6xl mx-auto space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="h-8 w-32 bg-muted/50 rounded-lg animate-pulse"></div>
+        <div className="h-9 w-32 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
+      </div>
+
+      <div className="flex gap-4">
+        <div className="h-10 flex-1 bg-muted/50 rounded-md animate-pulse"></div>
+        <div className="h-10 w-24 bg-muted/50 rounded-md animate-pulse"></div>
+      </div>
+
+      <div className="grid w-full grid-cols-3 gap-1 bg-muted/30 rounded-lg p-1">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="h-9 bg-muted/50 rounded-md animate-pulse"></div>
+        ))}
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[...Array(6)].map((_, i) => (
+          <Card key={i} className="professional-card overflow-hidden">
+            <div className="h-48 bg-gradient-to-br from-primary/10 to-accent/10 animate-pulse"></div>
+            <CardContent className="p-4 space-y-3">
+              <div className="h-6 w-48 bg-muted/50 rounded animate-pulse"></div>
+              <div className="space-y-2">
+                <div className="h-4 w-40 bg-muted/40 rounded animate-pulse"></div>
+                <div className="h-4 w-32 bg-muted/40 rounded animate-pulse"></div>
+                <div className="h-4 w-28 bg-muted/40 rounded animate-pulse"></div>
+              </div>
+              <div className="h-4 w-full bg-muted/40 rounded animate-pulse"></div>
+              <div className="flex gap-2">
+                <div className="h-8 flex-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
+                <div className="h-8 flex-1 bg-muted/50 rounded-md animate-pulse"></div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="flex justify-center items-center py-8">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
+          <div className="text-sm font-medium text-foreground">Loading events</div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
         <main className="flex-1 p-6">
-          <div className="max-w-6xl mx-auto space-y-6">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                <Calendar className="h-6 w-6" />
-                Events
-              </h1>
-              <Button className="alma-gradient text-primary-foreground">
-                <Plus className="h-4 w-4 mr-2" />
-                Create Event
-              </Button>
-            </div>
+          {isLoading ? (
+            <ProfessionalLoader />
+          ) : (
+            <div className="max-w-6xl mx-auto space-y-6">
+              <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+                  <Calendar className="h-6 w-6" />
+                  Events
+                </h1>
+                <Button className="alma-gradient text-primary-foreground">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create Event
+                </Button>
+              </div>
 
             <div className="flex gap-4">
               <div className="relative flex-1">
@@ -185,7 +247,8 @@ const Events = () => {
                 </div>
               </TabsContent>
             </Tabs>
-          </div>
+            </div>
+          )}
         </main>
       </div>
     </div>

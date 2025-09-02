@@ -7,8 +7,18 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
+import { useState, useEffect } from "react";
 
 const Jobs = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const jobs = [
     {
       id: 1,
@@ -71,23 +81,98 @@ const Jobs = () => {
   const appliedJobs = [jobs[0], jobs[2]];
   const savedJobs = [jobs[1], jobs[3]];
 
+  // Professional Loader for Jobs
+  const ProfessionalLoader = () => (
+    <div className="max-w-6xl mx-auto space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="h-8 w-24 bg-muted/50 rounded-lg animate-pulse"></div>
+        <div className="h-9 w-24 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
+      </div>
+
+      <div className="flex gap-4">
+        <div className="h-10 flex-1 bg-muted/50 rounded-md animate-pulse"></div>
+        <div className="h-10 w-32 bg-muted/50 rounded-md animate-pulse"></div>
+        <div className="h-10 w-24 bg-muted/50 rounded-md animate-pulse"></div>
+      </div>
+
+      <div className="grid w-full grid-cols-4 gap-1 bg-muted/30 rounded-lg p-1">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="h-9 bg-muted/50 rounded-md animate-pulse"></div>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="h-5 w-32 bg-muted/50 rounded animate-pulse"></div>
+        <div className="h-6 w-20 bg-muted/50 rounded-full animate-pulse"></div>
+      </div>
+
+      <div className="space-y-4">
+        {[...Array(4)].map((_, i) => (
+          <Card key={i} className="professional-card">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                <div className="flex gap-4 flex-1">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg animate-pulse"></div>
+                  <div className="flex-1 space-y-3">
+                    <div className="space-y-2">
+                      <div className="h-6 w-48 bg-muted/50 rounded animate-pulse"></div>
+                      <div className="h-4 w-32 bg-muted/40 rounded animate-pulse"></div>
+                    </div>
+                    <div className="flex gap-4">
+                      <div className="h-4 w-24 bg-muted/40 rounded animate-pulse"></div>
+                      <div className="h-4 w-20 bg-muted/40 rounded animate-pulse"></div>
+                      <div className="h-4 w-16 bg-muted/40 rounded animate-pulse"></div>
+                    </div>
+                    <div className="h-4 w-full bg-muted/40 rounded animate-pulse"></div>
+                    <div className="flex gap-2">
+                      {[...Array(3)].map((_, j) => (
+                        <div key={j} className="h-6 w-16 bg-muted/30 rounded animate-pulse"></div>
+                      ))}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="h-3 w-40 bg-muted/30 rounded animate-pulse"></div>
+                      <div className="flex gap-2">
+                        <div className="h-8 w-12 bg-muted/50 rounded-md animate-pulse"></div>
+                        <div className="h-8 w-20 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="flex justify-center items-center py-8">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
+          <div className="text-sm font-medium text-foreground">Loading jobs</div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
         <main className="flex-1 p-6">
-          <div className="max-w-6xl mx-auto space-y-6">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                <Briefcase className="h-6 w-6" />
-                Jobs
-              </h1>
-              <Button className="alma-gradient text-primary-foreground">
-                <Plus className="h-4 w-4 mr-2" />
-                Post Job
-              </Button>
-            </div>
+          {isLoading ? (
+            <ProfessionalLoader />
+          ) : (
+            <div className="max-w-6xl mx-auto space-y-6">
+              <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+                  <Briefcase className="h-6 w-6" />
+                  Jobs
+                </h1>
+                <Button className="alma-gradient text-primary-foreground">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Post Job
+                </Button>
+              </div>
 
             <div className="flex gap-4">
               <div className="relative flex-1">
@@ -271,7 +356,8 @@ const Jobs = () => {
                 </div>
               </TabsContent>
             </Tabs>
-          </div>
+            </div>
+          )}
         </main>
       </div>
     </div>

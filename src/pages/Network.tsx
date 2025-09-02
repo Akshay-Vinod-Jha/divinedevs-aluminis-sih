@@ -7,8 +7,18 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
+import { useState, useEffect } from "react";
 
 const Network = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const connections = [
     {
       id: 1,
@@ -60,23 +70,81 @@ const Network = () => {
     }
   ];
 
+  // Professional Loader for Network
+  const ProfessionalLoader = () => (
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="h-8 w-40 bg-muted/50 rounded-lg animate-pulse"></div>
+        <div className="h-9 w-32 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
+      </div>
+
+      <div className="flex gap-4">
+        <div className="h-10 flex-1 bg-muted/50 rounded-md animate-pulse"></div>
+        <div className="h-10 w-24 bg-muted/50 rounded-md animate-pulse"></div>
+      </div>
+
+      <div className="grid w-full grid-cols-3 gap-1 bg-muted/30 rounded-lg p-1">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="h-9 bg-muted/50 rounded-md animate-pulse"></div>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="h-5 w-32 bg-muted/50 rounded animate-pulse"></div>
+        <div className="h-6 w-20 bg-muted/50 rounded-full animate-pulse"></div>
+      </div>
+
+      <div className="grid gap-4">
+        {[...Array(5)].map((_, i) => (
+          <Card key={i} className="professional-card">
+            <CardContent className="p-4">
+              <div className="flex items-start justify-between">
+                <div className="flex gap-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full animate-pulse"></div>
+                  <div className="space-y-2">
+                    <div className="h-5 w-40 bg-muted/50 rounded animate-pulse"></div>
+                    <div className="h-4 w-48 bg-muted/40 rounded animate-pulse"></div>
+                    <div className="h-4 w-24 bg-muted/40 rounded animate-pulse"></div>
+                    <div className="h-4 w-32 bg-muted/40 rounded animate-pulse"></div>
+                    <div className="h-3 w-28 bg-muted/30 rounded animate-pulse"></div>
+                  </div>
+                </div>
+                <div className="h-8 w-20 bg-muted/50 rounded-md animate-pulse"></div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="flex justify-center items-center py-8">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
+          <div className="text-sm font-medium text-foreground">Loading network</div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
         <main className="flex-1 p-6">
-          <div className="max-w-4xl mx-auto space-y-6">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                <Users className="h-6 w-6" />
-                My Network
-              </h1>
-              <Button className="alma-gradient text-primary-foreground">
-                <UserPlus className="h-4 w-4 mr-2" />
-                Invite Alumni
-              </Button>
-            </div>
+          {isLoading ? (
+            <ProfessionalLoader />
+          ) : (
+            <div className="max-w-4xl mx-auto space-y-6">
+              <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+                  <Users className="h-6 w-6" />
+                  My Network
+                </h1>
+                <Button className="alma-gradient text-primary-foreground">
+                  <UserPlus className="h-4 w-4 mr-2" />
+                  Invite Alumni
+                </Button>
+              </div>
 
             <div className="flex gap-4">
               <div className="relative flex-1">
@@ -178,7 +246,8 @@ const Network = () => {
                 </div>
               </TabsContent>
             </Tabs>
-          </div>
+            </div>
+          )}
         </main>
       </div>
     </div>

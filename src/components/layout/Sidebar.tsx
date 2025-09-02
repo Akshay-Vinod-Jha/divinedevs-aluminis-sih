@@ -23,7 +23,7 @@ const Sidebar = () => {
     <aside className="w-64 border-r border-border bg-surface h-screen sticky top-16 overflow-y-auto">
       <div className="p-4 space-y-6">
         {/* User Profile Card */}
-        <Card className="professional-card">
+        <Card className="professional-card cursor-pointer hover:alma-shadow-strong alma-transition" onClick={() => navigate('/profile')}>
           <CardContent className="p-4">
             <div className="flex items-center space-x-3 mb-3">
               <Avatar className="h-12 w-12 alma-shadow">

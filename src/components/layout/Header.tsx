@@ -82,7 +82,10 @@ const Header = () => {
             </Button>
 
             {/* User Avatar */}
-            <Avatar className="h-8 w-8 alma-shadow">
+            <Avatar 
+              className="h-8 w-8 alma-shadow cursor-pointer"
+              onClick={() => navigate('/profile')}
+            >
               <AvatarImage src="/api/placeholder/32/32" alt="Profile" />
               <AvatarFallback className="bg-primary text-primary-foreground">
                 <User className="h-4 w-4" />

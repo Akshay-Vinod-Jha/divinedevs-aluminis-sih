@@ -6,8 +6,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import ChatBot from "@/components/widgets/ChatBot";
+import { useState, useEffect } from "react";
 
 const StoryTimeline = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const timelineStories = [
     {
       id: 1,
@@ -41,6 +51,91 @@ const StoryTimeline = () => {
     }
   ];
 
+  // Professional Loader for StoryTimeline
+  const ProfessionalLoader = () => (
+    <div className="max-w-4xl mx-auto">
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <div className="h-10 w-48 bg-muted/50 rounded-lg animate-pulse mb-2"></div>
+            <div className="h-5 w-80 bg-muted/40 rounded animate-pulse"></div>
+          </div>
+          <div className="flex space-x-3">
+            <div className="h-9 w-28 bg-muted/50 rounded-md animate-pulse"></div>
+            <div className="h-9 w-36 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        {[...Array(3)].map((_, i) => (
+          <Card key={i} className="professional-card">
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="h-7 w-64 bg-muted/50 rounded animate-pulse mb-2"></div>
+                  <div className="h-5 w-96 bg-muted/40 rounded animate-pulse mb-4"></div>
+                  
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="h-6 w-20 bg-primary/20 rounded animate-pulse"></div>
+                    <div className="h-4 w-32 bg-muted/40 rounded animate-pulse"></div>
+                    <div className="h-4 w-24 bg-muted/40 rounded animate-pulse"></div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <div className="h-8 w-8 bg-muted/50 rounded animate-pulse"></div>
+                  <div className="h-8 w-8 bg-muted/50 rounded animate-pulse"></div>
+                </div>
+              </div>
+            </CardHeader>
+            
+            <CardContent>
+              <div className="bg-surface rounded-lg p-6 mb-4">
+                <div className="relative">
+                  <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-primary/30"></div>
+                  
+                  <div className="space-y-8">
+                    {[...Array(3)].map((_, j) => (
+                      <div key={j} className="flex items-start space-x-4">
+                        <div className="w-8 h-8 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full animate-pulse"></div>
+                        <div className="flex-1 bg-card rounded-lg p-4 space-y-2">
+                          <div className="h-5 w-48 bg-muted/50 rounded animate-pulse"></div>
+                          <div className="h-4 w-32 bg-muted/40 rounded animate-pulse"></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="h-4 w-40 bg-muted/40 rounded animate-pulse"></div>
+                <div className="h-8 w-28 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <Card className="professional-card mt-8 bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
+        <CardContent className="p-8 text-center space-y-4">
+          <div className="w-12 h-12 bg-primary/20 rounded-full animate-pulse mx-auto"></div>
+          <div className="h-7 w-64 bg-muted/50 rounded animate-pulse mx-auto"></div>
+          <div className="h-5 w-96 bg-muted/40 rounded animate-pulse mx-auto"></div>
+          <div className="h-12 w-48 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg animate-pulse mx-auto"></div>
+        </CardContent>
+      </Card>
+
+      <div className="flex justify-center items-center py-8">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
+          <div className="text-sm font-medium text-foreground">Loading story timelines</div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -48,28 +143,31 @@ const StoryTimeline = () => {
         <Sidebar />
         
         <main className="flex-1 p-6">
-          <div className="max-w-4xl mx-auto">
-            {/* Page Header */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h1 className="text-3xl font-bold text-foreground mb-2">StoryTimeline</h1>
-                  <p className="text-muted-foreground">
-                    AI-generated visual timelines of alumni stories and achievements
-                  </p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Button variant="outline" size="sm">
-                    <Filter className="h-4 w-4 mr-2" />
-                    Filter by Batch
-                  </Button>
-                  <Button variant="hero" size="sm">
-                    <Calendar className="h-4 w-4 mr-2" />
-                    Generate New Timeline
-                  </Button>
+          {isLoading ? (
+            <ProfessionalLoader />
+          ) : (
+            <div className="max-w-4xl mx-auto">
+              {/* Page Header */}
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h1 className="text-3xl font-bold text-foreground mb-2">StoryTimeline</h1>
+                    <p className="text-muted-foreground">
+                      AI-generated visual timelines of alumni stories and achievements
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Button variant="outline" size="sm">
+                      <Filter className="h-4 w-4 mr-2" />
+                      Filter by Batch
+                    </Button>
+                    <Button variant="hero" size="sm">
+                      <Calendar className="h-4 w-4 mr-2" />
+                      Generate New Timeline
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
 
             {/* Timeline Cards */}
             <div className="space-y-6">
@@ -172,14 +270,13 @@ const StoryTimeline = () => {
                   Generate New Timeline
                 </Button>
               </CardContent>
-            </Card>
-          </div>
+              </Card>
+            </div>
+            )}
         </main>
       </div>
       
       <ChatBot />
     </div>
   );
-};
-
-export default StoryTimeline;
+};export default StoryTimeline;
