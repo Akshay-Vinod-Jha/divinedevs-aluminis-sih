@@ -7,59 +7,20 @@ import { Progress } from "@/components/ui/progress";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import { useState, useEffect } from "react";
-
-// Custom hook for counting animation
-const useCountUp = (end: number, duration: number = 2000, start: number = 0, decimals: number = 0) => {
-  const [count, setCount] = useState(start);
-
-  useEffect(() => {
-    let startTime: number;
-    let animationFrame: number;
-
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      
-      // Easing function for smooth animation
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      
-      const currentValue = easeOutQuart * (end - start) + start;
-      setCount(decimals > 0 ? parseFloat(currentValue.toFixed(decimals)) : Math.floor(currentValue));
-
-      if (progress < 1) {
-        animationFrame = requestAnimationFrame(animate);
-      }
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
-  }, [end, duration, start, decimals]);
-
-  return count;
-};
+import { useSidebar } from "@/contexts/SidebarContext";
+import { PageLayout, AnimatedCard, StaggeredList } from "@/components/animations/PageAnimations";
+import CountingNumber from "@/components/ui/counting-number";
 
 const AIHub = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { isOpen } = useSidebar();
 
-  // Counting animations for AI Usage stats
-  const careerInsightsPercent = useCountUp(85, 2200);
-  const mentorshipPercent = useCountUp(67, 2400);
-  const resumePercent = useCountUp(43, 2600);
-
-  // Counting animations for Smart Insights percentages
-  const careerTransitionPercent = useCountUp(34, 2300);
-  const connectionsCount = useCountUp(5, 1800);
-  const skillMatchPercent = useCountUp(89, 2500);
-
-  // Counting animations for Analytics section
-  const successRate = useCountUp(94, 2800);
-  const timeSaved = useCountUp(12.5, 2600, 0, 1);
-  const connectionsMade = useCountUp(347, 3000);
+    useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -128,17 +89,17 @@ const AIHub = () => {
     {
       title: "Alumni Success Patterns",
       description: "Top career transitions: Engineering → Product Management",
-      trend: `+${careerTransitionPercent}%`
+      trend: "+34%"
     },
     {
       title: "Networking Opportunities",
-      description: `${connectionsCount} alumni in your target companies available for connections`,
+      description: "5 alumni in your target companies available for connections",
       trend: "New"
     },
     {
       title: "Skill Recommendations",
       description: "Cloud Computing skills show higher job match rate",
-      trend: `+${skillMatchPercent}%`
+      trend: "+89%"
     }
   ];
 
@@ -218,26 +179,32 @@ const AIHub = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="flex">
+      <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className="flex-1 p-6">
+        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <div className="max-w-6xl mx-auto space-y-6">
-              <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                  <Bot className="h-6 w-6" />
-                  AI Hub
-                  <Badge variant="secondary" className="ml-2">Beta</Badge>
-                </h1>
-                <Button className="alma-gradient text-primary-foreground">
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Get AI Insights
-                </Button>
-              </div>
+            <PageLayout 
+              title="AI Hub" 
+              subtitle="Harness the power of AI to enhance your alumni experience"
+              className="max-w-6xl mx-auto"
+            >
+              <AnimatedCard delay={200}>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <Bot className="h-6 w-6 text-primary" />
+                    <span className="text-lg font-semibold">AI Assistant</span>
+                    <Badge variant="secondary" className="ml-2">Beta</Badge>
+                  </div>
+                  <Button className="alma-gradient text-primary-foreground">
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Get AI Insights
+                  </Button>
+                </div>
+              </AnimatedCard>
 
-            <div className="grid lg:grid-cols-3 gap-6">
+              <StaggeredList className="grid lg:grid-cols-3 gap-6" delay={400}>
               {/* AI Usage Stats */}
               <Card className="professional-card">
                 <CardHeader>
@@ -250,23 +217,23 @@ const AIHub = () => {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Career Insights</span>
-                      <span>{careerInsightsPercent}%</span>
+                      <span><CountingNumber start={0} end={85} duration={2200} />%</span>
                     </div>
-                    <Progress value={careerInsightsPercent} className="h-2" />
+                    <Progress value={85} className="h-2" />
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Mentorship Matching</span>
-                      <span>{mentorshipPercent}%</span>
+                      <span><CountingNumber start={0} end={67} duration={2400} />%</span>
                     </div>
-                    <Progress value={mentorshipPercent} className="h-2" />
+                    <Progress value={67} className="h-2" />
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Resume Analysis</span>
-                      <span>{resumePercent}%</span>
+                      <span><CountingNumber start={0} end={43} duration={2600} />%</span>
                     </div>
-                    <Progress value={resumePercent} className="h-2" />
+                    <Progress value={43} className="h-2" />
                   </div>
                   <div className="pt-2 text-xs text-muted-foreground">
                     Next reset in 12 days
@@ -296,14 +263,15 @@ const AIHub = () => {
                   ))}
                 </CardContent>
               </Card>
-            </div>
+              </StaggeredList>
 
-            <Tabs defaultValue="features" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="features">AI Features</TabsTrigger>
-                <TabsTrigger value="activity">Recent Activity</TabsTrigger>
-                <TabsTrigger value="analytics">Analytics</TabsTrigger>
-              </TabsList>
+              <AnimatedCard delay={600}>
+                <Tabs defaultValue="features" className="space-y-6">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="features">AI Features</TabsTrigger>
+                    <TabsTrigger value="activity">Recent Activity</TabsTrigger>
+                    <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                  </TabsList>
 
               <TabsContent value="features" className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -371,7 +339,9 @@ const AIHub = () => {
                       <CardTitle className="text-lg">Success Rate</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold text-foreground">{successRate}%</div>
+                      <div className="text-3xl font-bold text-foreground">
+                        <CountingNumber start={0} end={94} duration={2800} />%
+                      </div>
                       <p className="text-sm text-muted-foreground">AI recommendations accuracy</p>
                     </CardContent>
                   </Card>
@@ -381,7 +351,9 @@ const AIHub = () => {
                       <CardTitle className="text-lg">Time Saved</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold text-foreground">{timeSaved}h</div>
+                      <div className="text-3xl font-bold text-foreground">
+                        <CountingNumber start={0} end={12.5} duration={2600} />h
+                      </div>
                       <p className="text-sm text-muted-foreground">Average hours saved per user</p>
                     </CardContent>
                   </Card>
@@ -391,14 +363,17 @@ const AIHub = () => {
                       <CardTitle className="text-lg">Connections Made</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold text-foreground">{connectionsMade.toLocaleString()}</div>
+                      <div className="text-3xl font-bold text-foreground">
+                        <CountingNumber start={0} end={347} duration={3000} />
+                      </div>
                       <p className="text-sm text-muted-foreground">Through AI matching</p>
                     </CardContent>
                   </Card>
                 </div>
               </TabsContent>
-            </Tabs>
-            </div>
+                </Tabs>
+              </AnimatedCard>
+            </PageLayout>
           )}
         </main>
       </div>

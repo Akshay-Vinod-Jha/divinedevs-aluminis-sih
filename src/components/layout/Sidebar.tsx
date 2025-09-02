@@ -1,18 +1,31 @@
-import { Home, Users, MessageCircle, Calendar, Briefcase, Bot, Clock, Settings, User } from "lucide-react";
+import { Home, Users, MessageCircle, Calendar, Briefcase, Bot, Clock, Settings, User, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSidebar } from "@/contexts/SidebarContext";
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const { isOpen } = useSidebar();
+
+  useEffect(() => {
+    // Trigger entrance animation after a short delay
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const navigationItems = [
     { icon: Home, label: "Feed", path: "/", count: null },
     { icon: Users, label: "My Network", path: "/network", count: 12 },
     { icon: MessageCircle, label: "Messages", path: "/messages", count: 2 },
+    { icon: Bell, label: "Notifications", path: "/notifications", count: 5 },
     { icon: Calendar, label: "Events", path: "/events", count: 5 },
     { icon: Briefcase, label: "Jobs", path: "/jobs", count: 8 },
     { icon: Clock, label: "StoryTimeline", path: "/storytimeline", count: null },
@@ -20,11 +33,17 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 border-r border-border bg-surface h-screen sticky top-16 overflow-y-auto">
-      <div className="p-4 space-y-6">
+    <aside className={`${isOpen ? 'w-64' : 'w-0'} border-r border-border bg-surface h-screen sticky top-32 overflow-y-auto transition-all duration-700 ${
+      isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+    } ${!isOpen ? 'overflow-hidden' : ''}`}>
+      {isOpen && (
+        <div className="p-4 space-y-6">
         {/* User Profile Card */}
-        <Card className="professional-card cursor-pointer hover:alma-shadow-strong alma-transition" onClick={() => navigate('/profile')}>
-          <CardContent className="p-4">
+        <div className={`transition-all duration-700 delay-300 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}>
+          <Card className="professional-card cursor-pointer hover:alma-shadow-strong alma-transition" onClick={() => navigate('/profile')}>
+            <CardContent className="p-4">
             <div className="flex items-center space-x-3 mb-3">
               <Avatar className="h-12 w-12 alma-shadow">
                 <AvatarImage src="/api/placeholder/48/48" alt="Profile" />
@@ -44,24 +63,30 @@ const Sidebar = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
 
         {/* Navigation */}
         <nav className="space-y-1">
-          {navigationItems.map((item) => {
+          {navigationItems.map((item, index) => {
             const isActive = location.pathname === item.path;
             return (
               <Button
                 key={item.label}
                 variant={isActive ? "default" : "ghost"}
-                className={`w-full justify-start alma-transition ${
+                className={`w-full justify-start alma-transition transform hover:scale-105 transition-all duration-300 ${
                   isActive ? "alma-gradient text-primary-foreground alma-shadow" : "hover:bg-surface-hover"
+                } ${
+                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
+                style={{ 
+                  transitionDelay: isVisible ? `${index * 100 + 400}ms` : '0ms' 
+                }}
                 onClick={() => navigate(item.path)}
               >
                 <item.icon className="h-4 w-4 mr-3" />
                 <span className="flex-1 text-left">{item.label}</span>
                 {item.count && (
-                  <Badge variant="secondary" className="ml-2 text-xs">
+                  <Badge variant="secondary" className="ml-2 text-xs hover:scale-110 transition-transform duration-200">
                     {item.count}
                   </Badge>
                 )}
@@ -107,7 +132,8 @@ const Sidebar = () => {
             Settings
           </Button>
         </div>
-      </div>
+        </div>
+      )}
     </aside>
   );
 };

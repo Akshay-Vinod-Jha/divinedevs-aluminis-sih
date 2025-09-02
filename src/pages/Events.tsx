@@ -8,9 +8,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import { useState, useEffect } from "react";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { PageLayout, AnimatedCard, StaggeredList } from "@/components/animations/PageAnimations";
 
 const Events = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { isOpen } = useSidebar();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -113,36 +116,45 @@ const Events = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="flex">
+      <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className="flex-1 p-6">
+        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <div className="max-w-6xl mx-auto space-y-6">
-              <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                  <Calendar className="h-6 w-6" />
-                  Events
-                </h1>
-                <Button className="alma-gradient text-primary-foreground">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create Event
-                </Button>
-              </div>
+            <PageLayout 
+              title="Events" 
+              subtitle="Discover and attend alumni events and networking opportunities"
+              className="max-w-6xl mx-auto"
+            >
+              <AnimatedCard delay={200}>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-6 w-6 text-primary" />
+                    <span className="text-lg font-semibold">Event Center</span>
+                  </div>
+                  <Button className="alma-gradient text-primary-foreground">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create Event
+                  </Button>
+                </div>
+              </AnimatedCard>
 
-            <div className="flex gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input placeholder="Search events..." className="pl-10" />
-              </div>
-              <Button variant="outline">
-                <Filter className="h-4 w-4 mr-2" />
-                Filters
-              </Button>
-            </div>
+              <AnimatedCard delay={400}>
+                <div className="flex gap-4 mb-6">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                    <Input placeholder="Search events..." className="pl-10" />
+                  </div>
+                  <Button variant="outline">
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filters
+                  </Button>
+                </div>
+              </AnimatedCard>
 
-            <Tabs defaultValue="upcoming" className="space-y-6">
+              <AnimatedCard delay={600}>
+                <Tabs defaultValue="upcoming" className="space-y-6">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
                 <TabsTrigger value="my-events">My Events</TabsTrigger>
@@ -150,7 +162,7 @@ const Events = () => {
               </TabsList>
 
               <TabsContent value="upcoming" className="space-y-6">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <StaggeredList className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" delay={800}>
                   {upcomingEvents.map((event) => (
                     <Card key={event.id} className="professional-card overflow-hidden">
                       <div className="h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
@@ -195,11 +207,11 @@ const Events = () => {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
+                </StaggeredList>
               </TabsContent>
 
               <TabsContent value="my-events" className="space-y-6">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <StaggeredList className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" delay={1000}>
                   {myEvents.map((event) => (
                     <Card key={event.id} className="professional-card overflow-hidden">
                       <div className="h-48 bg-gradient-to-br from-success/10 to-primary/10 flex items-center justify-center">
@@ -236,7 +248,7 @@ const Events = () => {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
+                </StaggeredList>
               </TabsContent>
 
               <TabsContent value="past" className="space-y-6">
@@ -246,8 +258,9 @@ const Events = () => {
                   <p className="text-muted-foreground">Events you've attended will appear here</p>
                 </div>
               </TabsContent>
-            </Tabs>
-            </div>
+                </Tabs>
+              </AnimatedCard>
+            </PageLayout>
           )}
         </main>
       </div>

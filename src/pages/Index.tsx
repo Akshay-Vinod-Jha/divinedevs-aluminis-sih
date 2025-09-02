@@ -4,11 +4,11 @@ import Sidebar from "@/components/layout/Sidebar";
 import RightSidebar from "@/components/widgets/RightSidebar";
 import CreatePost from "@/components/feed/CreatePost";
 import PostCard from "@/components/feed/PostCard";
-import ChatBot from "@/components/widgets/ChatBot";
 import heroNetworking from "@/assets/hero-networking.jpg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSidebar } from "@/contexts/SidebarContext";
 
-// Custom hook for counting animation
+// Custom hook for counting animation with stable behavior
 const useCountUp = (end: number, duration: number = 2000, start: number = 0) => {
   const [count, setCount] = useState(start);
 
@@ -30,6 +30,7 @@ const useCountUp = (end: number, duration: number = 2000, start: number = 0) => 
       }
     };
 
+    // Start animation immediately
     animationFrame = requestAnimationFrame(animate);
 
     return () => {
@@ -42,18 +43,82 @@ const useCountUp = (end: number, duration: number = 2000, start: number = 0) => 
   return count;
 };
 
+// Custom hook for intersection observer animations
+const useIntersectionAnimation = (threshold = 0.1, rootMargin = "0px") => {
+  const [isVisible, setIsVisible] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          // Once visible, stop observing to prevent re-triggering
+          if (elementRef.current) {
+            observer.unobserve(elementRef.current);
+          }
+        }
+      },
+      { threshold, rootMargin }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current);
+      }
+    };
+  }, [threshold, rootMargin]);
+
+  return [elementRef, isVisible] as const;
+};
+
+// Individual post animation component
+const FadeInPost = ({ post, delay }: { post: any; delay: number }) => {
+  const [postRef, isPostVisible] = useIntersectionAnimation(0.1);
+
+  return (
+    <div 
+      ref={postRef}
+      className={`transition-all duration-700 ${
+        isPostVisible 
+          ? 'opacity-100 translate-y-0 scale-100' 
+          : 'opacity-0 translate-y-6 scale-98'
+      }`}
+      style={{ 
+        transitionDelay: isPostVisible ? `${delay}ms` : '0ms' 
+      }}
+    >
+      <PostCard {...post} />
+    </div>
+  );
+};
+
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [statsVisible, setStatsVisible] = useState(false);
+  const [contentVisible, setContentVisible] = useState(false);
+  const { isOpen } = useSidebar();
   
-  // Counting animations for statistics
-  const alumniCount = useCountUp(2450, 2500);
-  const companiesCount = useCountUp(156, 2000);
-  const successRate = useCountUp(89, 2200);
+  // Counting animations for statistics with different, realistic numbers
+  const alumniCount = useCountUp(2847, 2500);      // Alumni Connected
+  const companiesCount = useCountUp(245, 1800);    // Active Companies  
+  const successRate = useCountUp(94, 2200);        // Success Rate
+  const jobsPosted = useCountUp(1289, 2000);       // Jobs Posted
+  const eventsHosted = useCountUp(156, 1900);      // Events Hosted
+
+  // Animation hooks for posts section only (keep welcome section always visible)
+  const [loadMoreRef, isLoadMoreVisible] = useIntersectionAnimation(0.1);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+      setStatsVisible(true); // Make stats visible after loading
+      setContentVisible(true); // Make content visible after loading
+    }, 800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -131,51 +196,91 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="flex">
+      
+      {/* Fixed Statistics Bar - Always visible on Feed Page */}
+      <div className={`fixed top-16 left-0 right-0 z-40 bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg transition-all duration-700 ${
+        statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
+      }`}>
+        <div className="max-w-6xl mx-auto px-6 py-4">
+          <div className="flex justify-center space-x-6">
+            <div className="text-center">
+              <div className="text-xl font-bold">
+                {alumniCount.toLocaleString()}+
+              </div>
+              <div className="text-xs text-primary-foreground/80">Alumni Connected</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl font-bold">
+                {companiesCount}+
+              </div>
+              <div className="text-xs text-primary-foreground/80">Active Companies</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl font-bold">
+                {successRate}%
+              </div>
+              <div className="text-xs text-primary-foreground/80">Success Rate</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl font-bold">
+                {jobsPosted.toLocaleString()}+
+              </div>
+              <div className="text-xs text-primary-foreground/80">Jobs Posted</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl font-bold">
+                {eventsHosted}+
+              </div>
+              <div className="text-xs text-primary-foreground/80">Events Hosted</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={`flex pt-20 transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}> {/* Increased padding-top to account for larger fixed statistics bar */}
         <Sidebar />
-        <main className="flex-1 max-w-2xl mx-auto p-6">
+        <main className={`flex-1 max-w-2xl mx-auto p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-4xl'}`}>
           {isLoading ? <ProfessionalLoader /> : (
             <>
-              {/* Welcome Section */}
-              <div className="hero-gradient rounded-xl p-8 mb-6 text-center alma-shadow-strong">
+              {/* Welcome Section - Always visible with initial load animation */}
+              <div className={`hero-gradient rounded-xl p-8 mb-6 text-center alma-shadow-strong transition-all duration-1000 ${
+                contentVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
+              }`}>
                 <h1 className="text-3xl font-bold text-primary-foreground mb-3">
                   Welcome to AlmaConnect
                 </h1>
                 <p className="text-primary-foreground/90 text-lg mb-6">
                   Your professional alumni network where stories inspire careers and connections create opportunities.
                 </p>
-                <div className="flex justify-center space-x-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary-foreground">
-                      {alumniCount.toLocaleString()}+
-                    </div>
-                    <div className="text-sm text-primary-foreground/80">Alumni Connected</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary-foreground">
-                      {companiesCount}
-                    </div>
-                    <div className="text-sm text-primary-foreground/80">Active Companies</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary-foreground">
-                      {successRate}%
-                    </div>
-                    <div className="text-sm text-primary-foreground/80">Success Rate</div>
-                  </div>
+                <div className="text-primary-foreground/80 text-sm">
+                  Connect    Share    Grow    Succeed
                 </div>
               </div>
-              {/* Create Post */}
-              <CreatePost />
-              {/* Posts Feed */}
+              
+              {/* Create Post - Always visible with delayed load animation */}
+              <div className={`mb-6 transition-all duration-800 delay-300 ${
+                contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+              }`}>
+                <CreatePost />
+              </div>
+              
+              {/* Posts Feed - With staggered entrance animations */}
               <div className="space-y-6">
                 {posts.map((post, index) => (
-                  <PostCard key={index} {...post} />
+                  <FadeInPost key={index} post={post} delay={index * 150} />
                 ))}
               </div>
-              {/* Load More */}
-              <div className="text-center mt-8">
-                <button className="bg-surface hover:bg-surface-hover border border-border text-foreground px-6 py-3 rounded-lg alma-transition alma-shadow">
+              
+              {/* Load More - With entrance animation */}
+              <div 
+                ref={loadMoreRef}
+                className={`text-center mt-8 transition-all duration-700 ${
+                  isLoadMoreVisible 
+                    ? 'opacity-100 translate-y-0' 
+                    : 'opacity-0 translate-y-4'
+                }`}
+              >
+                <button className="bg-surface hover:bg-surface-hover border border-border text-foreground px-6 py-3 rounded-lg alma-transition alma-shadow hover:alma-shadow-strong transform hover:scale-105">
                   Load More Posts
                 </button>
               </div>
@@ -184,7 +289,6 @@ const Index = () => {
         </main>
         <RightSidebar />
       </div>
-      <ChatBot />
     </div>
   );
 };

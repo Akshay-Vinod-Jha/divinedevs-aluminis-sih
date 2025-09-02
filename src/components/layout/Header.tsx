@@ -1,18 +1,33 @@
-import { Bell, MessageCircle, Search, User, Users, Calendar, Briefcase, Bot } from "lucide-react";
+import { Bell, MessageCircle, Search, User, Users, Calendar, Briefcase, Bot, Menu, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useSidebar } from "@/contexts/SidebarContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
+  const { toggleSidebar } = useSidebar();
+  
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo & Brand */}
           <div className="flex items-center space-x-4">
+            {/* Sidebar Toggle */}
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={toggleSidebar}
+              className="hover:bg-surface-hover"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+            
             <div className="alma-gradient rounded-lg p-2 cursor-pointer" onClick={() => navigate("/")}>
               <Users className="h-6 w-6 text-primary-foreground" />
             </div>
@@ -79,6 +94,16 @@ const Header = () => {
               onClick={() => navigate('/ai')}
             >
               <Bot className="h-5 w-5" />
+            </Button>
+
+            {/* Theme Toggle */}
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={toggleTheme}
+              className="hover:bg-surface-hover"
+            >
+              {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </Button>
 
             {/* User Avatar */}

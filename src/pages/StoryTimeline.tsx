@@ -7,9 +7,12 @@ import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import ChatBot from "@/components/widgets/ChatBot";
 import { useState, useEffect } from "react";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { PageLayout, AnimatedCard, StaggeredList } from "@/components/animations/PageAnimations";
 
 const StoryTimeline = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { isOpen } = useSidebar();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -139,22 +142,23 @@ const StoryTimeline = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="flex">
+      <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
         
-        <main className="flex-1 p-6">
+        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <div className="max-w-4xl mx-auto">
-              {/* Page Header */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h1 className="text-3xl font-bold text-foreground mb-2">StoryTimeline</h1>
-                    <p className="text-muted-foreground">
-                      AI-generated visual timelines of alumni stories and achievements
-                    </p>
+            <PageLayout 
+              title="StoryTimeline" 
+              subtitle="AI-generated visual timelines of alumni stories and achievements"
+              className="max-w-4xl mx-auto"
+            >
+              <AnimatedCard delay={200}>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-6 w-6 text-primary" />
+                    <span className="text-lg font-semibold">AI Story Generator</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Button variant="outline" size="sm">
@@ -167,12 +171,11 @@ const StoryTimeline = () => {
                     </Button>
                   </div>
                 </div>
-              </div>
+              </AnimatedCard>
 
-            {/* Timeline Cards */}
-            <div className="space-y-6">
-              {timelineStories.map((story) => (
-                <Card key={story.id} className="professional-card hover:alma-shadow-strong">
+              <StaggeredList className="space-y-6" delay={400}>
+                {timelineStories.map((story) => (
+                  <Card key={story.id} className="professional-card hover:alma-shadow-strong">
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -253,26 +256,28 @@ const StoryTimeline = () => {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
+                ))}
+              </StaggeredList>
 
-            {/* Generate New Timeline CTA */}
-            <Card className="professional-card mt-8 bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
-              <CardContent className="p-8 text-center">
-                <Clock className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-foreground mb-2">
-                  Create Your Custom Timeline
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Generate personalized story timelines based on specific batches, departments, or topics
-                </p>
-                <Button variant="hero" size="lg" className="alma-glow">
-                  Generate New Timeline
-                </Button>
-              </CardContent>
-              </Card>
-            </div>
-            )}
+              <AnimatedCard delay={800}>
+                {/* Generate New Timeline CTA */}
+                <Card className="professional-card mt-8 bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
+                  <CardContent className="p-8 text-center">
+                    <Clock className="h-12 w-12 text-primary mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      Create Your Custom Timeline
+                    </h3>
+                    <p className="text-muted-foreground mb-6">
+                      Generate personalized story timelines based on specific batches, departments, or topics
+                    </p>
+                    <Button variant="hero" size="lg" className="alma-glow">
+                      Generate New Timeline
+                    </Button>
+                  </CardContent>
+                </Card>
+              </AnimatedCard>
+            </PageLayout>
+          )}
         </main>
       </div>
       

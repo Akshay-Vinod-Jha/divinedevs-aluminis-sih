@@ -7,11 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { PageLayout, AnimatedCard, StaggeredList } from "@/components/animations/PageAnimations";
 
 const Messages = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedChat, setSelectedChat] = useState(1);
   const [newMessage, setNewMessage] = useState("");
+  const { isOpen } = useSidebar();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -159,15 +162,14 @@ const Messages = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="flex">
+      <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className="flex-1 flex h-[calc(100vh-64px)]">
+        <main className={`flex-1 flex h-[calc(100vh-64px)] transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <>
-              {/* Conversations List */}
-              <div className="w-80 border-r border-border bg-surface flex flex-col">
+            <PageLayout className="flex w-full max-w-none p-0">
+              <AnimatedCard delay={200} className="w-80 border-r border-border bg-surface flex flex-col">
                 <div className="p-4 border-b border-border">
                   <h1 className="text-xl font-bold text-foreground flex items-center gap-2 mb-3">
                     <MessageCircle className="h-5 w-5" />
@@ -179,15 +181,16 @@ const Messages = () => {
                   </div>
                 </div>
             
-            <div className="flex-1 overflow-y-auto">
-              {conversations.map((conv) => (
-                <div
-                  key={conv.id}
-                  className={`p-4 border-b border-border cursor-pointer alma-transition ${
-                    selectedChat === conv.id ? "bg-surface-hover" : "hover:bg-surface-hover"
-                  }`}
-                  onClick={() => setSelectedChat(conv.id)}
-                >
+                <div className="flex-1 overflow-y-auto">
+                  <StaggeredList delay={400}>
+                    {conversations.map((conv) => (
+                      <div
+                        key={conv.id}
+                        className={`p-4 border-b border-border cursor-pointer alma-transition ${
+                          selectedChat === conv.id ? "bg-surface-hover" : "hover:bg-surface-hover"
+                        }`}
+                        onClick={() => setSelectedChat(conv.id)}
+                      >
                   <div className="flex items-center gap-3">
                     <div className="relative">
                       <Avatar className="h-12 w-12">
@@ -214,95 +217,97 @@ const Messages = () => {
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Chat Area */}
-          <div className="flex-1 flex flex-col">
-            {selectedConversation ? (
-              <>
-                {/* Chat Header */}
-                <div className="p-4 border-b border-border bg-surface flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage src={selectedConversation.avatar} />
-                      <AvatarFallback>{selectedConversation.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h3 className="font-semibold text-foreground">{selectedConversation.name}</h3>
-                      <p className="text-xs text-muted-foreground">
-                        {selectedConversation.online ? "Active now" : "Last seen 1h ago"}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm">
-                      <Phone className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <Video className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </div>
+                    ))}
+                  </StaggeredList>
                 </div>
+              </AnimatedCard>
 
-                {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                  {messages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex ${message.isMe ? "justify-end" : "justify-start"}`}
-                    >
-                      <div
-                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                          message.isMe
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-surface border border-border"
-                        }`}
-                      >
-                        <p className="text-sm">{message.content}</p>
-                        <p className={`text-xs mt-1 ${
-                          message.isMe ? "text-primary-foreground/70" : "text-muted-foreground"
-                        }`}>
-                          {message.time}
-                        </p>
+              <AnimatedCard delay={600} className="flex-1 flex flex-col">
+                {selectedConversation ? (
+                  <>
+                    {/* Chat Header */}
+                    <div className="p-4 border-b border-border bg-surface flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src={selectedConversation.avatar} />
+                          <AvatarFallback>{selectedConversation.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <h3 className="font-semibold text-foreground">{selectedConversation.name}</h3>
+                          <p className="text-xs text-muted-foreground">
+                            {selectedConversation.online ? "Active now" : "Last seen 1h ago"}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm">
+                          <Phone className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm">
+                          <Video className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
-                  ))}
-                </div>
 
-                {/* Message Input */}
-                <div className="p-4 border-t border-border bg-surface">
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm">
-                      <Paperclip className="h-4 w-4" />
-                    </Button>
-                    <Input
-                      placeholder="Type a message..."
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      className="flex-1"
-                    />
-                    <Button size="sm" className="alma-gradient text-primary-foreground">
-                      <Send className="h-4 w-4" />
-                    </Button>
+                    {/* Messages */}
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                      <StaggeredList delay={800}>
+                        {messages.map((message) => (
+                          <div
+                            key={message.id}
+                            className={`flex ${message.isMe ? "justify-end" : "justify-start"}`}
+                          >
+                            <div
+                              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                                message.isMe
+                                  ? "bg-primary text-primary-foreground"
+                                  : "bg-surface border border-border"
+                              }`}
+                            >
+                              <p className="text-sm">{message.content}</p>
+                              <p className={`text-xs mt-1 ${
+                                message.isMe ? "text-primary-foreground/70" : "text-muted-foreground"
+                              }`}>
+                                {message.time}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </StaggeredList>
+                    </div>
+
+                    {/* Message Input */}
+                    <div className="p-4 border-t border-border bg-surface">
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm">
+                          <Paperclip className="h-4 w-4" />
+                        </Button>
+                        <Input
+                          placeholder="Type a message..."
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          className="flex-1"
+                        />
+                        <Button size="sm" className="alma-gradient text-primary-foreground">
+                          <Send className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex-1 flex items-center justify-center text-center">
+                    <div>
+                      <MessageCircle className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Select a conversation</h3>
+                      <p className="text-muted-foreground">Choose from your existing conversations or start a new one</p>
+                    </div>
                   </div>
-                </div>
-              </>
-            ) : (
-              <div className="flex-1 flex items-center justify-center text-center">
-                <div>
-                  <MessageCircle className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Select a conversation</h3>
-                  <p className="text-muted-foreground">Choose from your existing conversations or start a new one</p>
-                </div>
-              </div>
-            )}
-          </div>
-            </>
+                )}
+              </AnimatedCard>
+            </PageLayout>
           )}
         </main>
       </div>

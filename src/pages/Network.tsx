@@ -7,10 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
+import { PageLayout, AnimatedCard, StaggeredList } from "@/components/animations/PageAnimations";
 import { useState, useEffect } from "react";
+import { useSidebar } from "@/contexts/SidebarContext";
+import CountingNumber from "@/components/ui/counting-number";
 
 const Network = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { isOpen } = useSidebar();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -128,36 +132,82 @@ const Network = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="flex">
+      <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className="flex-1 p-6">
+        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <div className="max-w-4xl mx-auto space-y-6">
-              <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                  <Users className="h-6 w-6" />
-                  My Network
-                </h1>
-                <Button className="alma-gradient text-primary-foreground">
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  Invite Alumni
-                </Button>
-              </div>
+            <PageLayout 
+              title="My Network" 
+              subtitle="Connect with fellow alumni and expand your professional network"
+              className="max-w-4xl mx-auto"
+            >
+              <AnimatedCard delay={200}>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <Users className="h-6 w-6 text-primary" />
+                    <span className="text-lg font-semibold">Network Overview</span>
+                  </div>
+                  <Button className="alma-gradient text-primary-foreground">
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Invite Alumni
+                  </Button>
+                </div>
+              </AnimatedCard>
 
-            <div className="flex gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input placeholder="Search alumni by name, company, or batch..." className="pl-10" />
-              </div>
-              <Button variant="outline">
-                <Filter className="h-4 w-4 mr-2" />
-                Filters
-              </Button>
-            </div>
+              <AnimatedCard delay={400}>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card className="border-none shadow-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                    <CardContent className="p-4 text-center">
+                      <div className="text-2xl font-bold">
+                        <CountingNumber start={0} end={connections.length} duration={2000} />
+                      </div>
+                      <p className="text-sm opacity-90">Connections</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-none shadow-lg bg-gradient-to-r from-green-500 to-green-600 text-white">
+                    <CardContent className="p-4 text-center">
+                      <div className="text-2xl font-bold">
+                        <CountingNumber start={0} end={12} duration={2000} />
+                      </div>
+                      <p className="text-sm opacity-90">Pending</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-none shadow-lg bg-gradient-to-r from-purple-500 to-purple-600 text-white">
+                    <CardContent className="p-4 text-center">
+                      <div className="text-2xl font-bold">
+                        <CountingNumber start={0} end={8} duration={2000} />
+                      </div>
+                      <p className="text-sm opacity-90">Mutual</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-none shadow-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+                    <CardContent className="p-4 text-center">
+                      <div className="text-2xl font-bold">
+                        <CountingNumber start={0} end={5} duration={2000} />
+                      </div>
+                      <p className="text-sm opacity-90">This Week</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </AnimatedCard>
 
-            <Tabs defaultValue="connections" className="space-y-6">
+              <AnimatedCard delay={600}>
+                <div className="flex gap-4">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                    <Input placeholder="Search alumni by name, company, or batch..." className="pl-10" />
+                  </div>
+                  <Button variant="outline">
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filters
+                  </Button>
+                </div>
+              </AnimatedCard>
+
+              <AnimatedCard delay={800}>
+                <Tabs defaultValue="connections" className="space-y-6">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="connections">Connections</TabsTrigger>
                 <TabsTrigger value="suggestions">Suggestions</TabsTrigger>
@@ -169,7 +219,7 @@ const Network = () => {
                   <p className="text-muted-foreground">156 connections</p>
                   <Badge variant="secondary">12 new this week</Badge>
                 </div>
-                <div className="grid gap-4">
+                <StaggeredList className="grid gap-4" delay={1000}>
                   {connections.map((person) => (
                     <Card key={person.id} className="professional-card">
                       <CardContent className="p-4">
@@ -201,12 +251,12 @@ const Network = () => {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
+                </StaggeredList>
               </TabsContent>
 
               <TabsContent value="suggestions" className="space-y-4">
                 <p className="text-muted-foreground">People you may know</p>
-                <div className="grid gap-4">
+                <StaggeredList className="grid gap-4" delay={1200}>
                   {suggestions.map((person) => (
                     <Card key={person.id} className="professional-card">
                       <CardContent className="p-4">
@@ -235,7 +285,7 @@ const Network = () => {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
+                </StaggeredList>
               </TabsContent>
 
               <TabsContent value="invitations" className="space-y-4">
@@ -245,8 +295,9 @@ const Network = () => {
                   <p>No pending invitations</p>
                 </div>
               </TabsContent>
-            </Tabs>
-            </div>
+                </Tabs>
+              </AnimatedCard>
+            </PageLayout>
           )}
         </main>
       </div>

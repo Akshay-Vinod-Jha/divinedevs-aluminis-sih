@@ -8,9 +8,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import { useState, useEffect } from "react";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { PageLayout, AnimatedCard, StaggeredList } from "@/components/animations/PageAnimations";
 
 const Jobs = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { isOpen } = useSidebar();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -156,40 +159,49 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="flex">
+      <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className="flex-1 p-6">
+        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <div className="max-w-6xl mx-auto space-y-6">
-              <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                  <Briefcase className="h-6 w-6" />
-                  Jobs
-                </h1>
-                <Button className="alma-gradient text-primary-foreground">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Post Job
-                </Button>
-              </div>
+            <PageLayout 
+              title="Jobs" 
+              subtitle="Discover career opportunities posted by fellow alumni"
+              className="max-w-6xl mx-auto"
+            >
+              <AnimatedCard delay={200}>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <Briefcase className="h-6 w-6 text-primary" />
+                    <span className="text-lg font-semibold">Career Center</span>
+                  </div>
+                  <Button className="alma-gradient text-primary-foreground">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Post Job
+                  </Button>
+                </div>
+              </AnimatedCard>
 
-            <div className="flex gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input placeholder="Search jobs by title, company, or skills..." className="pl-10" />
-              </div>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input placeholder="Location" className="pl-10 w-48" />
-              </div>
-              <Button variant="outline">
-                <Filter className="h-4 w-4 mr-2" />
-                Filters
-              </Button>
-            </div>
+              <AnimatedCard delay={400}>
+                <div className="flex gap-4 mb-6">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                    <Input placeholder="Search jobs by title, company, or skills..." className="pl-10" />
+                  </div>
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                    <Input placeholder="Location" className="pl-10 w-48" />
+                  </div>
+                  <Button variant="outline">
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filters
+                  </Button>
+                </div>
+              </AnimatedCard>
 
-            <Tabs defaultValue="all-jobs" className="space-y-6">
+              <AnimatedCard delay={600}>
+                <Tabs defaultValue="all-jobs" className="space-y-6">
               <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="all-jobs">All Jobs</TabsTrigger>
                 <TabsTrigger value="applied">Applied</TabsTrigger>
@@ -202,7 +214,7 @@ const Jobs = () => {
                   <p className="text-muted-foreground">Showing {jobs.length} jobs</p>
                   <Badge variant="secondary">8 new jobs this week</Badge>
                 </div>
-                <div className="space-y-4">
+                <StaggeredList className="space-y-4" delay={800}>
                   {jobs.map((job) => (
                     <Card key={job.id} className="professional-card">
                       <CardContent className="p-6">
@@ -271,12 +283,12 @@ const Jobs = () => {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
+                </StaggeredList>
               </TabsContent>
 
               <TabsContent value="applied" className="space-y-4">
                 <p className="text-muted-foreground">Jobs you've applied to ({appliedJobs.length})</p>
-                <div className="space-y-4">
+                <StaggeredList className="space-y-4" delay={1000}>
                   {appliedJobs.map((job) => (
                     <Card key={job.id} className="professional-card">
                       <CardContent className="p-6">
@@ -310,12 +322,12 @@ const Jobs = () => {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
+                </StaggeredList>
               </TabsContent>
 
               <TabsContent value="saved" className="space-y-4">
                 <p className="text-muted-foreground">Saved jobs ({savedJobs.length})</p>
-                <div className="space-y-4">
+                <StaggeredList className="space-y-4" delay={1200}>
                   {savedJobs.map((job) => (
                     <Card key={job.id} className="professional-card">
                       <CardContent className="p-6">
@@ -344,7 +356,7 @@ const Jobs = () => {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
+                </StaggeredList>
               </TabsContent>
 
               <TabsContent value="recommended" className="space-y-4">
@@ -355,8 +367,9 @@ const Jobs = () => {
                   <Button className="mt-4">Complete Profile</Button>
                 </div>
               </TabsContent>
-            </Tabs>
-            </div>
+                </Tabs>
+              </AnimatedCard>
+            </PageLayout>
           )}
         </main>
       </div>
