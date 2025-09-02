@@ -244,4 +244,47 @@
       transform: translateY(-10px);
     }
   }
+
+  /* Professional Loader Animations */
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .loading-pulse {
+    animation: loading-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes loading-pulse {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  .gradient-loader {
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
+    animation: gradient-wave 2s infinite;
+  }
+
+  @keyframes gradient-wave {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
 }
