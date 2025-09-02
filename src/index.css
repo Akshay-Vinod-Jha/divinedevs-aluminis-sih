@@ -287,4 +287,15 @@
       transform: translateX(100%);
     }
   }
+
+  /* Hide scrollbar but keep scrolling functionality */
+  .scrollbar-hide {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

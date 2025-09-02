@@ -157,37 +157,37 @@ const Network = () => {
               </AnimatedCard>
 
               <AnimatedCard delay={400}>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                  <Card className="border-none shadow-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-                    <CardContent className="p-4 text-center">
-                      <div className="text-2xl font-bold">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+                  <Card className="professional-card alma-gradient alma-shadow-strong">
+                    <CardContent className="p-3 md:p-4 text-center">
+                      <div className="text-xl md:text-2xl font-bold text-primary-foreground">
                         <CountingNumber start={0} end={connections.length} duration={2000} />
                       </div>
-                      <p className="text-sm opacity-90">Connections</p>
+                      <p className="text-xs md:text-sm text-primary-foreground/80">Connections</p>
                     </CardContent>
                   </Card>
-                  <Card className="border-none shadow-lg bg-gradient-to-r from-green-500 to-green-600 text-white">
-                    <CardContent className="p-4 text-center">
-                      <div className="text-2xl font-bold">
+                  <Card className="professional-card bg-surface border alma-shadow">
+                    <CardContent className="p-3 md:p-4 text-center">
+                      <div className="text-xl md:text-2xl font-bold text-foreground">
                         <CountingNumber start={0} end={12} duration={2000} />
                       </div>
-                      <p className="text-sm opacity-90">Pending</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">Pending</p>
                     </CardContent>
                   </Card>
-                  <Card className="border-none shadow-lg bg-gradient-to-r from-purple-500 to-purple-600 text-white">
-                    <CardContent className="p-4 text-center">
-                      <div className="text-2xl font-bold">
+                  <Card className="professional-card bg-accent/10 border-accent/20 alma-shadow">
+                    <CardContent className="p-3 md:p-4 text-center">
+                      <div className="text-xl md:text-2xl font-bold text-accent">
                         <CountingNumber start={0} end={8} duration={2000} />
                       </div>
-                      <p className="text-sm opacity-90">Mutual</p>
+                      <p className="text-xs md:text-sm text-accent/70">Mutual</p>
                     </CardContent>
                   </Card>
-                  <Card className="border-none shadow-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-                    <CardContent className="p-4 text-center">
-                      <div className="text-2xl font-bold">
+                  <Card className="professional-card bg-primary/10 border-primary/20 alma-shadow">
+                    <CardContent className="p-3 md:p-4 text-center">
+                      <div className="text-xl md:text-2xl font-bold text-primary">
                         <CountingNumber start={0} end={5} duration={2000} />
                       </div>
-                      <p className="text-sm opacity-90">This Week</p>
+                      <p className="text-xs md:text-sm text-primary/70">This Week</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -219,7 +219,7 @@ const Network = () => {
                   <p className="text-muted-foreground">156 connections</p>
                   <Badge variant="secondary">12 new this week</Badge>
                 </div>
-                <StaggeredList className="grid gap-4" delay={1000}>
+                <StaggeredList className="grid grid-cols-1 lg:grid-cols-2 gap-4" delay={1000}>
                   {connections.map((person) => (
                     <Card key={person.id} className="professional-card">
                       <CardContent className="p-4">
@@ -256,7 +256,7 @@ const Network = () => {
 
               <TabsContent value="suggestions" className="space-y-4">
                 <p className="text-muted-foreground">People you may know</p>
-                <StaggeredList className="grid gap-4" delay={1200}>
+                <StaggeredList className="grid grid-cols-1 lg:grid-cols-2 gap-4" delay={1200}>
                   {suggestions.map((person) => (
                     <Card key={person.id} className="professional-card">
                       <CardContent className="p-4">

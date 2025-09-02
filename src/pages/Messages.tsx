@@ -14,6 +14,37 @@ const Messages = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedChat, setSelectedChat] = useState(1);
   const [newMessage, setNewMessage] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      sender: "Alex Chen",
+      content: "Hey Sarah! How's everything going at your new role?",
+      time: "10:30 AM",
+      isMe: false
+    },
+    {
+      id: 2,
+      sender: "You",
+      content: "Hi Alex! It's going great, thanks for asking. Really enjoying the challenges here.",
+      time: "10:32 AM",
+      isMe: true
+    },
+    {
+      id: 3,
+      sender: "Alex Chen",
+      content: "That's awesome! We should grab coffee sometime and catch up properly.",
+      time: "10:35 AM",
+      isMe: false
+    },
+    {
+      id: 4,
+      sender: "You",
+      content: "Absolutely! Are you free this weekend?",
+      time: "10:36 AM",
+      isMe: true
+    }
+  ]);
   const { isOpen } = useSidebar();
 
   useEffect(() => {
@@ -54,36 +85,63 @@ const Messages = () => {
     }
   ];
 
-  const messages = [
-    {
-      id: 1,
-      sender: "Alex Chen",
-      content: "Hey Sarah! How's everything going at your new role?",
-      time: "10:30 AM",
-      isMe: false
-    },
-    {
-      id: 2,
+  // Send message function with typing indicator and auto-response
+  const sendMessage = () => {
+    if (!newMessage.trim()) return;
+
+    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+    // Add user message
+    const userMessage = {
+      id: Date.now(),
       sender: "You",
-      content: "Hi Alex! It's going great, thanks for asking. Really enjoying the challenges here.",
-      time: "10:32 AM",
+      content: newMessage.trim(),
+      time: currentTime,
       isMe: true
-    },
-    {
-      id: 3,
-      sender: "Alex Chen",
-      content: "That's awesome! We should grab coffee sometime and catch up properly.",
-      time: "10:35 AM",
-      isMe: false
-    },
-    {
-      id: 4,
-      sender: "You",
-      content: "Absolutely! Are you free this weekend?",
-      time: "10:36 AM",
-      isMe: true
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setNewMessage("");
+
+    // Show typing indicator
+    setIsTyping(true);
+
+    // Auto-response after 1 second
+    setTimeout(() => {
+      setIsTyping(false);
+      
+      const dummyResponses = [
+        "Thanks for your message! I'll get back to you soon.",
+        "That sounds great! Let me think about it.",
+        "Absolutely! I'm looking forward to it.",
+        "Thanks for reaching out. I appreciate it!",
+        "That's interesting! Tell me more about it.",
+        "Great idea! Let's discuss this further.",
+        "I completely agree with you on that.",
+        "Thanks for sharing! That's really helpful."
+      ];
+
+      const randomResponse = dummyResponses[Math.floor(Math.random() * dummyResponses.length)];
+      const selectedConv = conversations.find(c => c.id === selectedChat);
+      
+      const botMessage = {
+        id: Date.now() + 1,
+        sender: selectedConv?.name || "Contact",
+        content: randomResponse,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isMe: false
+      };
+
+      setMessages(prev => [...prev, botMessage]);
+    }, 1000);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
     }
-  ];
+  };
 
   const selectedConversation = conversations.find(c => c.id === selectedChat);
 
@@ -93,7 +151,7 @@ const Messages = () => {
       {/* Conversations List Loader */}
       <div className="w-80 border-r border-border bg-surface flex flex-col">
         <div className="p-4 border-b border-border">
-          <div className="h-6 w-24 bg-muted/50 rounded animate-pulse mb-3"></div>
+          <div className="h-6 w-24 bg-muted/50 rounded-lg animate-pulse mb-3"></div>
           <div className="h-10 bg-muted/50 rounded-md animate-pulse"></div>
         </div>
         <div className="flex-1 overflow-y-auto">
@@ -150,7 +208,7 @@ const Messages = () => {
         </div>
       </div>
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="flex justify-center items-center py-8 absolute inset-0 pointer-events-none">
         <div className="flex items-center gap-3 bg-background/80 backdrop-blur-sm rounded-lg p-4">
           <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
           <div className="text-sm font-medium text-foreground">Loading messages</div>
@@ -164,11 +222,11 @@ const Messages = () => {
       <Header />
       <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className={`flex-1 flex h-[calc(100vh-64px)] transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
+        <main className={`flex-1 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <PageLayout className="flex w-full max-w-none p-0">
+            <div className="flex h-[calc(100vh-64px)] w-full">
               <AnimatedCard delay={200} className="w-80 border-r border-border bg-surface flex flex-col">
                 <div className="p-4 border-b border-border">
                   <h1 className="text-xl font-bold text-foreground flex items-center gap-2 mb-3">
@@ -276,6 +334,22 @@ const Messages = () => {
                             </div>
                           </div>
                         ))}
+                        
+                        {/* Typing Indicator */}
+                        {isTyping && (
+                          <div className="flex justify-start">
+                            <div className="bg-surface border border-border px-4 py-2 rounded-lg max-w-xs">
+                              <div className="flex items-center space-x-1">
+                                <div className="flex space-x-1">
+                                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+                                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                                </div>
+                                <span className="text-xs text-muted-foreground ml-2">typing...</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </StaggeredList>
                     </div>
 
@@ -289,9 +363,15 @@ const Messages = () => {
                           placeholder="Type a message..."
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
+                          onKeyPress={handleKeyPress}
                           className="flex-1"
                         />
-                        <Button size="sm" className="alma-gradient text-primary-foreground">
+                        <Button 
+                          size="sm" 
+                          className="alma-gradient text-primary-foreground"
+                          onClick={sendMessage}
+                          disabled={!newMessage.trim()}
+                        >
                           <Send className="h-4 w-4" />
                         </Button>
                       </div>
@@ -307,7 +387,7 @@ const Messages = () => {
                   </div>
                 )}
               </AnimatedCard>
-            </PageLayout>
+            </div>
           )}
         </main>
       </div>
