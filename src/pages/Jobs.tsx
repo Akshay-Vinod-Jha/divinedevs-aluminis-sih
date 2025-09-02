@@ -161,7 +161,7 @@ const Jobs = () => {
       <Header />
       <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
+        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
@@ -184,16 +184,16 @@ const Jobs = () => {
               </AnimatedCard>
 
               <AnimatedCard delay={400}>
-                <div className="flex gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row gap-4 mb-6">
                   <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                     <Input placeholder="Search jobs by title, company, or skills..." className="pl-10" />
                   </div>
-                  <div className="relative">
+                  <div className="relative flex-1 sm:flex-none">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                    <Input placeholder="Location" className="pl-10 w-48" />
+                    <Input placeholder="Location" className="pl-10 sm:w-48" />
                   </div>
-                  <Button variant="outline">
+                  <Button variant="outline" className="w-full sm:w-auto">
                     <Filter className="h-4 w-4 mr-2" />
                     Filters
                   </Button>
@@ -202,59 +202,59 @@ const Jobs = () => {
 
               <AnimatedCard delay={600}>
                 <Tabs defaultValue="all-jobs" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="all-jobs">All Jobs</TabsTrigger>
-                <TabsTrigger value="applied">Applied</TabsTrigger>
-                <TabsTrigger value="saved">Saved</TabsTrigger>
-                <TabsTrigger value="recommended">Recommended</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
+                <TabsTrigger value="all-jobs" className="text-xs sm:text-sm">All Jobs</TabsTrigger>
+                <TabsTrigger value="applied" className="text-xs sm:text-sm">Applied</TabsTrigger>
+                <TabsTrigger value="saved" className="text-xs sm:text-sm">Saved</TabsTrigger>
+                <TabsTrigger value="recommended" className="text-xs sm:text-sm">Recommended</TabsTrigger>
               </TabsList>
 
               <TabsContent value="all-jobs" className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <p className="text-muted-foreground">Showing {jobs.length} jobs</p>
                   <Badge variant="secondary">8 new jobs this week</Badge>
                 </div>
                 <StaggeredList className="space-y-4" delay={800}>
                   {jobs.map((job) => (
                     <Card key={job.id} className="professional-card">
-                      <CardContent className="p-6">
-                        <div className="flex justify-between items-start">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
                           <div className="flex gap-4 flex-1">
-                            <Avatar className="h-12 w-12 alma-shadow">
+                            <Avatar className="h-12 w-12 alma-shadow flex-shrink-0">
                               <AvatarImage src={job.logo} />
                               <AvatarFallback>
                                 <Building className="h-6 w-6" />
                               </AvatarFallback>
                             </Avatar>
-                            <div className="flex-1 space-y-2">
-                              <div className="flex items-start justify-between">
-                                <div>
-                                  <h3 className="font-semibold text-lg text-foreground">{job.title}</h3>
-                                  <p className="text-muted-foreground">{job.company}</p>
+                            <div className="flex-1 space-y-2 min-w-0">
+                              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                                <div className="min-w-0">
+                                  <h3 className="font-semibold text-lg text-foreground truncate">{job.title}</h3>
+                                  <p className="text-muted-foreground truncate">{job.company}</p>
                                 </div>
                                 {job.referralAvailable && (
-                                  <Badge variant="secondary" className="bg-success/10 text-success">
+                                  <Badge variant="secondary" className="bg-success/10 text-success flex-shrink-0">
                                     Referral Available
                                   </Badge>
                                 )}
                               </div>
                               
-                              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                              <div className="flex flex-wrap gap-2 sm:gap-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-1">
                                   <MapPin className="h-4 w-4" />
-                                  {job.location}
+                                  <span className="truncate">{job.location}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <DollarSign className="h-4 w-4" />
-                                  {job.salary}
+                                  <span className="truncate">{job.salary}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Clock className="h-4 w-4" />
-                                  {job.type}
+                                  <span>{job.type}</span>
                                 </div>
                               </div>
 
-                              <p className="text-sm text-muted-foreground">{job.description}</p>
+                              <p className="text-sm text-muted-foreground line-clamp-2">{job.description}</p>
 
                               <div className="flex flex-wrap gap-2">
                                 {job.skills.map((skill) => (
@@ -264,15 +264,15 @@ const Jobs = () => {
                                 ))}
                               </div>
 
-                              <div className="flex items-center justify-between pt-2">
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
                                 <div className="text-xs text-muted-foreground">
                                   {job.applicants} applicants • Posted {job.posted}
                                 </div>
                                 <div className="flex gap-2">
-                                  <Button variant="outline" size="sm">
+                                  <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
                                     Save
                                   </Button>
-                                  <Button size="sm" className="alma-gradient text-primary-foreground">
+                                  <Button size="sm" className="alma-gradient text-primary-foreground flex-1 sm:flex-none">
                                     Apply Now
                                   </Button>
                                 </div>

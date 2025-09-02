@@ -392,31 +392,31 @@ const Profile = () => {
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-4 sm:p-6">
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
             <div className="max-w-6xl mx-auto space-y-6">
               {/* Cover Photo & Profile Header */}
               <div className="relative">
-                <div className="h-64 hero-gradient rounded-lg overflow-hidden">
+                <div className="h-48 sm:h-64 hero-gradient rounded-lg overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
                   
                   {/* Profile content inside hero section */}
-                  <div className="relative h-full flex items-end p-8">
-                    <div className="flex items-end gap-6 w-full">
-                      <Avatar className="w-32 h-32 border-4 border-white alma-shadow-strong">
+                  <div className="relative h-full flex items-end p-4 sm:p-8">
+                    <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6 w-full">
+                      <Avatar className="w-24 h-24 sm:w-32 sm:h-32 border-4 border-white alma-shadow-strong">
                         <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
-                        <AvatarFallback className="bg-primary text-primary-foreground text-4xl">
+                        <AvatarFallback className="bg-primary text-primary-foreground text-2xl sm:text-4xl">
                           {userProfile.name.split(' ').map(n => n[0]).join('')}
                         </AvatarFallback>
                       </Avatar>
                       
-                      <div className="flex-1 min-w-0 pb-2">
+                      <div className="flex-1 min-w-0 pb-0 sm:pb-2">
                         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-4">
                           <div className="flex-1 min-w-0">
-                            <h1 className="text-2xl lg:text-3xl font-bold text-white truncate">{userProfile.name}</h1>
-                            <p className="text-base lg:text-lg text-white/90 truncate">{userProfile.title}</p>
+                            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white truncate">{userProfile.name}</h1>
+                            <p className="text-sm sm:text-base lg:text-lg text-white/90 truncate">{userProfile.title}</p>
                             <div className="flex flex-wrap items-center gap-2 lg:gap-4 mt-2 text-xs lg:text-sm text-white/80">
                               <span className="flex items-center gap-1">
                                 <Building className="h-3 w-3 lg:h-4 lg:w-4" />
@@ -432,12 +432,12 @@ const Profile = () => {
                               </span>
                             </div>
                           </div>
-                          <div className="flex gap-2 flex-shrink-0">
-                            <Button variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+                          <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+                            <Button variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20 w-full sm:w-auto">
                               <MessageCircle className="h-4 w-4 mr-2" />
                               Message
                             </Button>
-                            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto">
                               <Edit className="h-4 w-4 mr-2" />
                               Edit Profile
                             </Button>
@@ -449,7 +449,7 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="grid lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Main Content */}
                 <div className="lg:col-span-2 space-y-6">
                   {/* About Section */}
@@ -485,17 +485,17 @@ const Profile = () => {
 
                   {/* Tabbed Content */}
                   <Tabs defaultValue="experience" className="space-y-6">
-                    <TabsList className="grid w-full grid-cols-4">
-                      <TabsTrigger value="experience">Experience</TabsTrigger>
-                      <TabsTrigger value="education">Education</TabsTrigger>
-                      <TabsTrigger value="activity">Activity</TabsTrigger>
-                      <TabsTrigger value="achievements">Awards</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
+                      <TabsTrigger value="experience" className="text-xs sm:text-sm">Experience</TabsTrigger>
+                      <TabsTrigger value="education" className="text-xs sm:text-sm">Education</TabsTrigger>
+                      <TabsTrigger value="activity" className="text-xs sm:text-sm">Activity</TabsTrigger>
+                      <TabsTrigger value="achievements" className="text-xs sm:text-sm">Awards</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="experience" className="space-y-4">
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <h3 className="text-lg font-semibold text-foreground">Work Experience</h3>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="w-full sm:w-auto">
                           <Edit className="h-4 w-4 mr-2" />
                           Add Experience
                         </Button>
@@ -503,12 +503,12 @@ const Profile = () => {
                       <div className="space-y-4">
                         {experience.map((exp) => (
                           <Card key={exp.id} className="professional-card">
-                            <CardContent className="p-6">
-                              <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <CardContent className="p-4 sm:p-6">
+                              <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+                                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                                   <Briefcase className="h-6 w-6 text-primary" />
                                 </div>
-                                <div className="flex-1">
+                                <div className="flex-1 min-w-0">
                                   <h4 className="font-semibold text-foreground">{exp.title}</h4>
                                   <p className="text-muted-foreground">{exp.company}</p>
                                   <p className="text-sm text-muted-foreground">{exp.duration} • {exp.location}</p>

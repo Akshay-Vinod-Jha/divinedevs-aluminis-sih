@@ -118,7 +118,7 @@ const Events = () => {
       <Header />
       <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
+        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
@@ -128,12 +128,12 @@ const Events = () => {
               className="max-w-6xl mx-auto"
             >
               <AnimatedCard delay={200}>
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-6 w-6 text-primary" />
                     <span className="text-lg font-semibold">Event Center</span>
                   </div>
-                  <Button className="alma-gradient text-primary-foreground">
+                  <Button className="alma-gradient text-primary-foreground w-full sm:w-auto">
                     <Plus className="h-4 w-4 mr-2" />
                     Create Event
                   </Button>
@@ -141,12 +141,12 @@ const Events = () => {
               </AnimatedCard>
 
               <AnimatedCard delay={400}>
-                <div className="flex gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row gap-4 mb-6">
                   <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                     <Input placeholder="Search events..." className="pl-10" />
                   </div>
-                  <Button variant="outline">
+                  <Button variant="outline" className="w-full sm:w-auto">
                     <Filter className="h-4 w-4 mr-2" />
                     Filters
                   </Button>
@@ -155,48 +155,48 @@ const Events = () => {
 
               <AnimatedCard delay={600}>
                 <Tabs defaultValue="upcoming" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
-                <TabsTrigger value="my-events">My Events</TabsTrigger>
-                <TabsTrigger value="past">Past Events</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3">
+                <TabsTrigger value="upcoming" className="text-sm">Upcoming Events</TabsTrigger>
+                <TabsTrigger value="my-events" className="text-sm">My Events</TabsTrigger>
+                <TabsTrigger value="past" className="text-sm">Past Events</TabsTrigger>
               </TabsList>
 
               <TabsContent value="upcoming" className="space-y-6">
-                <StaggeredList className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" delay={800}>
+                <StaggeredList className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" delay={800}>
                   {upcomingEvents.map((event) => (
                     <Card key={event.id} className="professional-card overflow-hidden">
                       <div className="h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                         <Calendar className="h-16 w-16 text-primary/20" />
                       </div>
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-lg">{event.title}</CardTitle>
+                      <CardHeader className="pb-3 p-4 sm:p-6">
+                        <CardTitle className="text-base sm:text-lg truncate">{event.title}</CardTitle>
                         <div className="space-y-2 text-sm text-muted-foreground">
                           <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4" />
-                            {event.date} at {event.time}
+                            <Clock className="h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">{event.date} at {event.time}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4" />
-                            {event.location}
+                            <MapPin className="h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">{event.location}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Users className="h-4 w-4" />
-                            {event.attendees} attending
+                            <Users className="h-4 w-4 flex-shrink-0" />
+                            <span>{event.attendees} attending</span>
                           </div>
                         </div>
                       </CardHeader>
-                      <CardContent className="space-y-3">
-                        <p className="text-sm text-muted-foreground">{event.description}</p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-6 w-6">
+                      <CardContent className="space-y-3 p-4 sm:p-6 pt-0">
+                        <p className="text-sm text-muted-foreground line-clamp-2">{event.description}</p>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <Avatar className="h-6 w-6 flex-shrink-0">
                               <AvatarFallback className="text-xs">{event.organizer[0]}</AvatarFallback>
                             </Avatar>
-                            <span className="text-xs text-muted-foreground">{event.organizer}</span>
+                            <span className="text-xs text-muted-foreground truncate">{event.organizer}</span>
                           </div>
-                          <Badge variant="secondary">Free</Badge>
+                          <Badge variant="secondary" className="self-start sm:self-center">Free</Badge>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                           <Button size="sm" className="flex-1 alma-gradient text-primary-foreground">
                             RSVP
                           </Button>
@@ -211,33 +211,33 @@ const Events = () => {
               </TabsContent>
 
               <TabsContent value="my-events" className="space-y-6">
-                <StaggeredList className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" delay={1000}>
+                <StaggeredList className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" delay={1000}>
                   {myEvents.map((event) => (
                     <Card key={event.id} className="professional-card overflow-hidden">
                       <div className="h-48 bg-gradient-to-br from-success/10 to-primary/10 flex items-center justify-center">
                         <Calendar className="h-16 w-16 text-success/20" />
                       </div>
-                      <CardHeader className="pb-3">
-                        <div className="flex items-start justify-between">
-                          <CardTitle className="text-lg">{event.title}</CardTitle>
-                          <Badge variant="secondary" className="bg-success/10 text-success">
+                      <CardHeader className="pb-3 p-4 sm:p-6">
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+                          <CardTitle className="text-base sm:text-lg truncate">{event.title}</CardTitle>
+                          <Badge variant="secondary" className="bg-success/10 text-success self-start">
                             Attending
                           </Badge>
                         </div>
                         <div className="space-y-2 text-sm text-muted-foreground">
                           <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4" />
-                            {event.date} at {event.time}
+                            <Clock className="h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">{event.date} at {event.time}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4" />
-                            {event.location}
+                            <MapPin className="h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">{event.location}</span>
                           </div>
                         </div>
                       </CardHeader>
-                      <CardContent className="space-y-3">
-                        <p className="text-sm text-muted-foreground">{event.description}</p>
-                        <div className="flex gap-2">
+                      <CardContent className="space-y-3 p-4 sm:p-6 pt-0">
+                        <p className="text-sm text-muted-foreground line-clamp-2">{event.description}</p>
+                        <div className="flex flex-col sm:flex-row gap-2">
                           <Button variant="outline" size="sm" className="flex-1">
                             View Details
                           </Button>

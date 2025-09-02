@@ -181,7 +181,7 @@ const AIHub = () => {
       <Header />
       <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
         <Sidebar />
-        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
+        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
@@ -191,20 +191,20 @@ const AIHub = () => {
               className="max-w-6xl mx-auto"
             >
               <AnimatedCard delay={200}>
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                   <div className="flex items-center gap-2">
                     <Bot className="h-6 w-6 text-primary" />
                     <span className="text-lg font-semibold">AI Assistant</span>
                     <Badge variant="secondary" className="ml-2">Beta</Badge>
                   </div>
-                  <Button className="alma-gradient text-primary-foreground">
+                  <Button className="alma-gradient text-primary-foreground w-full sm:w-auto">
                     <Sparkles className="h-4 w-4 mr-2" />
                     Get AI Insights
                   </Button>
                 </div>
               </AnimatedCard>
 
-              <StaggeredList className="grid lg:grid-cols-3 gap-6" delay={400}>
+              <StaggeredList className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6" delay={400}>
               {/* AI Usage Stats */}
               <Card className="professional-card">
                 <CardHeader>
@@ -243,20 +243,20 @@ const AIHub = () => {
 
               {/* AI Insights */}
               <Card className="professional-card lg:col-span-2">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
+                <CardHeader className="p-4 sm:p-6">
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                     <Brain className="h-5 w-5" />
                     Smart Insights
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
                   {aiInsights.map((insight, index) => (
-                    <div key={index} className="flex items-start justify-between p-3 rounded-lg bg-surface border border-border">
-                      <div className="space-y-1">
+                    <div key={index} className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 p-3 rounded-lg bg-surface border border-border">
+                      <div className="space-y-1 min-w-0">
                         <h4 className="font-medium text-foreground">{insight.title}</h4>
                         <p className="text-sm text-muted-foreground">{insight.description}</p>
                       </div>
-                      <Badge variant="secondary" className="bg-success/10 text-success">
+                      <Badge variant="secondary" className="bg-success/10 text-success self-start">
                         {insight.trend}
                       </Badge>
                     </div>
@@ -267,24 +267,24 @@ const AIHub = () => {
 
               <AnimatedCard delay={600}>
                 <Tabs defaultValue="features" className="space-y-6">
-                  <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="features">AI Features</TabsTrigger>
-                    <TabsTrigger value="activity">Recent Activity</TabsTrigger>
-                    <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                  <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3">
+                    <TabsTrigger value="features" className="text-sm">AI Features</TabsTrigger>
+                    <TabsTrigger value="activity" className="text-sm">Recent Activity</TabsTrigger>
+                    <TabsTrigger value="analytics" className="text-sm">Analytics</TabsTrigger>
                   </TabsList>
 
               <TabsContent value="features" className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   {aiFeatures.map((feature) => (
                     <Card key={feature.id} className="professional-card">
-                      <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10">
+                      <CardHeader className="p-4 sm:p-6">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="p-2 rounded-lg bg-primary/10 flex-shrink-0">
                               <feature.icon className="h-6 w-6 text-primary" />
                             </div>
-                            <div>
-                              <CardTitle className="text-lg">{feature.title}</CardTitle>
+                            <div className="min-w-0">
+                              <CardTitle className="text-base sm:text-lg truncate">{feature.title}</CardTitle>
                               <div className="flex items-center gap-2 mt-1">
                                 <Badge variant={feature.status === 'active' ? 'secondary' : 'outline'}>
                                   {feature.status}
@@ -294,11 +294,11 @@ const AIHub = () => {
                           </div>
                         </div>
                       </CardHeader>
-                      <CardContent className="space-y-4">
+                      <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
                         <p className="text-sm text-muted-foreground">{feature.description}</p>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                           <span className="text-xs text-muted-foreground">{feature.usage}</span>
-                          <Button size="sm" className="alma-gradient text-primary-foreground">
+                          <Button size="sm" className="alma-gradient text-primary-foreground w-full sm:w-auto">
                             Try Now
                           </Button>
                         </div>
@@ -333,13 +333,13 @@ const AIHub = () => {
               </TabsContent>
 
               <TabsContent value="analytics" className="space-y-6">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   <Card className="professional-card">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Success Rate</CardTitle>
+                    <CardHeader className="p-4 sm:p-6">
+                      <CardTitle className="text-base sm:text-lg">Success Rate</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <div className="text-3xl font-bold text-foreground">
+                    <CardContent className="p-4 sm:p-6 pt-0">
+                      <div className="text-2xl sm:text-3xl font-bold text-foreground">
                         <CountingNumber start={0} end={94} duration={2800} />%
                       </div>
                       <p className="text-sm text-muted-foreground">AI recommendations accuracy</p>
@@ -347,11 +347,11 @@ const AIHub = () => {
                   </Card>
                   
                   <Card className="professional-card">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Time Saved</CardTitle>
+                    <CardHeader className="p-4 sm:p-6">
+                      <CardTitle className="text-base sm:text-lg">Time Saved</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <div className="text-3xl font-bold text-foreground">
+                    <CardContent className="p-4 sm:p-6 pt-0">
+                      <div className="text-2xl sm:text-3xl font-bold text-foreground">
                         <CountingNumber start={0} end={12.5} duration={2600} />h
                       </div>
                       <p className="text-sm text-muted-foreground">Average hours saved per user</p>
@@ -359,11 +359,11 @@ const AIHub = () => {
                   </Card>
 
                   <Card className="professional-card">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Connections Made</CardTitle>
+                    <CardHeader className="p-4 sm:p-6">
+                      <CardTitle className="text-base sm:text-lg">Connections Made</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <div className="text-3xl font-bold text-foreground">
+                    <CardContent className="p-4 sm:p-6 pt-0">
+                      <div className="text-2xl sm:text-3xl font-bold text-foreground">
                         <CountingNumber start={0} end={347} duration={3000} />
                       </div>
                       <p className="text-sm text-muted-foreground">Through AI matching</p>

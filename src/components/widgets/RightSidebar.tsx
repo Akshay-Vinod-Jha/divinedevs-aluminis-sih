@@ -103,7 +103,7 @@ const RightSidebar = () => {
   ];
 
   return (
-    <aside className="w-80 p-4 space-y-6">
+    <aside className="hidden xl:block w-80 p-4 space-y-6">
       {/* Upcoming Events */}
       <div 
         ref={eventsRef}

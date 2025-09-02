@@ -22,31 +22,31 @@ interface PostCardProps {
 
 const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, media }: PostCardProps) => {
   return (
-    <Card className="professional-card mb-6">
-      <CardContent className="p-6">
+    <Card className="professional-card">
+      <CardContent className="p-4 sm:p-6">
         {/* Post Header */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center space-x-3">
-            <Avatar className="h-12 w-12 alma-shadow">
+        <div className="flex items-start justify-between mb-3 sm:mb-4">
+          <div className="flex items-center space-x-3 min-w-0 flex-1">
+            <Avatar className="h-10 w-10 sm:h-12 sm:w-12 alma-shadow flex-shrink-0">
               <AvatarImage src={author.avatar} alt={author.name} />
               <AvatarFallback className="bg-primary text-primary-foreground">
                 {author.name.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
-            <div>
-              <h3 className="font-semibold text-foreground">{author.name}</h3>
-              <p className="text-sm text-muted-foreground">{author.title}</p>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-semibold text-foreground text-sm sm:text-base truncate">{author.name}</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground truncate">{author.title}</p>
               <p className="text-xs text-muted-foreground">Class of {author.batchYear} • {timestamp}</p>
             </div>
           </div>
-          <Button variant="ghost" size="icon" className="h-8 w-8">
+          <Button variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0">
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </div>
 
         {/* Post Content */}
-        <div className="mb-4">
-          <p className="text-foreground leading-relaxed mb-3">{content}</p>
+        <div className="mb-3 sm:mb-4">
+          <p className="text-foreground leading-relaxed mb-3 text-sm sm:text-base">{content}</p>
           
           {/* Media */}
           {media && (
@@ -54,14 +54,14 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
               <img 
                 src={media} 
                 alt="Post media" 
-                className="w-full h-64 object-cover"
+                className="w-full h-48 sm:h-64 object-cover"
               />
             </div>
           )}
 
           {/* Tags */}
           {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               {tags.map((tag, index) => (
                 <Badge key={index} variant="secondary" className="text-xs">
                   #{tag}
@@ -72,22 +72,22 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
         </div>
 
         {/* Post Actions */}
-        <div className="flex items-center justify-between pt-4 border-t border-border">
-          <div className="flex items-center space-x-6">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent">
-              <Heart className="h-4 w-4 mr-2" />
-              <span>{likes}</span>
+        <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-border">
+          <div className="flex items-center space-x-3 sm:space-x-6">
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent px-2 sm:px-3">
+              <Heart className="h-4 w-4 mr-1 sm:mr-2" />
+              <span className="text-xs sm:text-sm">{likes}</span>
             </Button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              <span>{comments}</span>
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary px-2 sm:px-3">
+              <MessageCircle className="h-4 w-4 mr-1 sm:mr-2" />
+              <span className="text-xs sm:text-sm">{comments}</span>
             </Button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-success">
-              <Share2 className="h-4 w-4 mr-2" />
-              <span>{shares}</span>
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-success px-2 sm:px-3">
+              <Share2 className="h-4 w-4 mr-1 sm:mr-2" />
+              <span className="text-xs sm:text-sm">{shares}</span>
             </Button>
           </div>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-warning">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-warning">
             <Bookmark className="h-4 w-4" />
           </Button>
         </div>

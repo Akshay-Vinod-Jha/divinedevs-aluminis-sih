@@ -197,93 +197,107 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Fixed sidebar layout - No more fixed statistics bar */}
+      {/* Responsive layout */}
       <div className="flex">
         <Sidebar />
-        <main className={`flex-1 p-6 transition-all duration-300 ${isOpen ? 'max-w-2xl' : 'max-w-4xl'} mx-auto`}>
-          {isLoading ? <ProfessionalLoader /> : (
-            <>
-              {/* Welcome Section - Always visible with initial load animation */}
-              <div className={`hero-gradient rounded-xl p-8 mb-6 text-center alma-shadow-strong transition-all duration-1000 ${
-                contentVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
-              }`}>
-                <h1 className="text-3xl font-bold text-primary-foreground mb-3">
-                  Welcome to AlmaConnect
-                </h1>
-                <p className="text-primary-foreground/90 text-lg mb-6">
-                  Your professional alumni network where stories inspire careers and connections create opportunities.
-                </p>
+        
+        {/* Main Content - Responsive grid */}
+        <main className="flex-1 min-w-0">
+          <div className="max-w-7xl mx-auto p-3 sm:p-4 lg:p-6">
+            {isLoading ? <ProfessionalLoader /> : (
+              <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 lg:gap-6">
                 
-                {/* Statistics Section - Integrated into Welcome */}
-                <div className={`transition-all duration-700 delay-500 ${
-                  statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}>
-                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4 pt-6 border-t border-primary-foreground/20">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary-foreground">
-                        {alumniCount.toLocaleString()}+
+                {/* Main Feed Column */}
+                <div className="xl:col-span-3 space-y-4 lg:space-y-6">
+                  {/* Welcome Section */}
+                  <div className={`hero-gradient rounded-xl p-4 sm:p-6 lg:p-8 text-center alma-shadow-strong transition-all duration-1000 ${
+                    contentVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
+                  }`}>
+                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary-foreground mb-2 lg:mb-3">
+                      Welcome to AlmaConnect
+                    </h1>
+                    <p className="text-primary-foreground/90 text-sm sm:text-base lg:text-lg mb-4 lg:mb-6">
+                      Your professional alumni network where stories inspire careers and connections create opportunities.
+                    </p>
+                    
+                    {/* Statistics Section - Mobile responsive */}
+                    <div className={`transition-all duration-700 delay-500 ${
+                      statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    }`}>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 pt-4 lg:pt-6 border-t border-primary-foreground/20">
+                        <div className="text-center">
+                          <div className="text-lg sm:text-xl lg:text-2xl font-bold text-primary-foreground">
+                            {alumniCount.toLocaleString()}+
+                          </div>
+                          <div className="text-xs text-primary-foreground/80">Alumni Connected</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg sm:text-xl lg:text-2xl font-bold text-primary-foreground">
+                            {companiesCount}+
+                          </div>
+                          <div className="text-xs text-primary-foreground/80">Active Companies</div>
+                        </div>
+                        <div className="text-center col-span-2 sm:col-span-1">
+                          <div className="text-lg sm:text-xl lg:text-2xl font-bold text-primary-foreground">
+                            {successRate}%
+                          </div>
+                          <div className="text-xs text-primary-foreground/80">Success Rate</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg sm:text-xl lg:text-2xl font-bold text-primary-foreground">
+                            {jobsPosted.toLocaleString()}+
+                          </div>
+                          <div className="text-xs text-primary-foreground/80">Jobs Posted</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg sm:text-xl lg:text-2xl font-bold text-primary-foreground">
+                            {eventsHosted}+
+                          </div>
+                          <div className="text-xs text-primary-foreground/80">Events Hosted</div>
+                        </div>
                       </div>
-                      <div className="text-xs text-primary-foreground/80">Alumni Connected</div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary-foreground">
-                        {companiesCount}+
-                      </div>
-                      <div className="text-xs text-primary-foreground/80">Active Companies</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary-foreground">
-                        {successRate}%
-                      </div>
-                      <div className="text-xs text-primary-foreground/80">Success Rate</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary-foreground">
-                        {jobsPosted.toLocaleString()}+
-                      </div>
-                      <div className="text-xs text-primary-foreground/80">Jobs Posted</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary-foreground">
-                        {eventsHosted}+
-                      </div>
-                      <div className="text-xs text-primary-foreground/80">Events Hosted</div>
-                    </div>
+                  </div>
+                  
+                  {/* Create Post */}
+                  <div className={`transition-all duration-800 delay-300 ${
+                    contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+                  }`}>
+                    <CreatePost />
+                  </div>
+                  
+                  {/* Posts Feed */}
+                  <div className="space-y-4 lg:space-y-6">
+                    {posts.map((post, index) => (
+                      <FadeInPost key={index} post={post} delay={index * 150} />
+                    ))}
+                  </div>
+                  
+                  {/* Load More */}
+                  <div 
+                    ref={loadMoreRef}
+                    className={`text-center transition-all duration-700 ${
+                      isLoadMoreVisible 
+                        ? 'opacity-100 translate-y-0' 
+                        : 'opacity-0 translate-y-4'
+                    }`}
+                  >
+                    <button className="bg-surface hover:bg-surface-hover border border-border text-foreground px-4 sm:px-6 py-2 sm:py-3 rounded-lg alma-transition alma-shadow hover:alma-shadow-strong transform hover:scale-105 text-sm sm:text-base">
+                      Load More Posts
+                    </button>
+                  </div>
+                </div>
+
+                {/* Right Sidebar - Hidden on mobile/tablet */}
+                <div className="hidden xl:block xl:col-span-1">
+                  <div className="sticky top-20">
+                    <RightSidebar />
                   </div>
                 </div>
               </div>
-              
-              {/* Create Post - Always visible with delayed load animation */}
-              <div className={`mb-6 transition-all duration-800 delay-300 ${
-                contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
-              }`}>
-                <CreatePost />
-              </div>
-              
-              {/* Posts Feed - With staggered entrance animations */}
-              <div className="space-y-6">
-                {posts.map((post, index) => (
-                  <FadeInPost key={index} post={post} delay={index * 150} />
-                ))}
-              </div>
-              
-              {/* Load More - With entrance animation */}
-              <div 
-                ref={loadMoreRef}
-                className={`text-center mt-8 transition-all duration-700 ${
-                  isLoadMoreVisible 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-4'
-                }`}
-              >
-                <button className="bg-surface hover:bg-surface-hover border border-border text-foreground px-6 py-3 rounded-lg alma-transition alma-shadow hover:alma-shadow-strong transform hover:scale-105">
-                  Load More Posts
-                </button>
-              </div>
-            </>
-          )}
+            )}
+          </div>
         </main>
-        <RightSidebar />
       </div>
     </div>
   );
