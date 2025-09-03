@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { SidebarProvider } from "@/contexts/SidebarContext";
 import ChatBot from "@/components/widgets/ChatBot";
+import Landing from "./pages/Landing";
 import Index from "./pages/Index";
 import StoryTimeline from "./pages/StoryTimeline";
 import Network from "./pages/Network";
@@ -16,6 +17,8 @@ import AIHub from "./pages/AIHub";
 import Notifications from "./pages/Notifications";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,7 +32,13 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Index />} />
+              {/* Public Routes */}
+              <Route path="/" element={<Landing />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              
+              {/* Protected Routes - Main App */}
+              <Route path="/dashboard" element={<Index />} />
               <Route path="/network" element={<Network />} />
               <Route path="/messages" element={<Messages />} />
               <Route path="/events" element={<Events />} />
@@ -39,10 +48,11 @@ const App = () => (
               <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/storytimeline" element={<StoryTimeline />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              
+              {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-            {/* Global ChatBot - Available on all pages */}
+            {/* Global ChatBot - Available on all pages except auth and landing pages */}
             <ChatBot />
           </BrowserRouter>
         </TooltipProvider>

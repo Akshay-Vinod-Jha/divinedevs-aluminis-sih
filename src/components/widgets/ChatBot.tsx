@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Bot, Send, X, Minimize2, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ interface Message {
 }
 
 const ChatBot = () => {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [message, setMessage] = useState("");
@@ -27,6 +29,10 @@ const ChatBot = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Hide ChatBot on authentication and landing pages
+  const authPages = ['/signin', '/signup', '/'];
+  const isAuthPage = authPages.includes(location.pathname);
 
   // Scroll to bottom when new messages arrive
   useEffect(() => {
@@ -118,6 +124,11 @@ const ChatBot = () => {
       handleSendMessage();
     }
   };
+
+  // Don't render ChatBot on auth pages
+  if (isAuthPage) {
+    return null;
+  }
 
   return (
     <>
