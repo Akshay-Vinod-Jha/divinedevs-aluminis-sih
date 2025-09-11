@@ -1,21 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User, GraduationCap, Users, Sparkles, Calendar, Building } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  User,
+  Sparkles,
+  Calendar,
+  Building,
+  Sun,
+  Moon,
+  GraduationCap,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
+  const { login, isAuthenticated } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
   const [formData, setFormData] = useState({
     // Personal Info
     firstName: "",
@@ -23,26 +52,26 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    
+
     // Academic Info
     batchYear: "",
     department: "",
     studentId: "",
-    
+
     // Professional Info
     currentRole: "",
     company: "",
     location: "",
-    
+
     // Agreement
     agreeToTerms: false,
-    subscribeNewsletter: true
+    subscribeNewsletter: true,
   });
   const [error, setError] = useState("");
 
   const departments = [
     "Computer Science",
-    "Electrical Engineering", 
+    "Electrical Engineering",
     "Mechanical Engineering",
     "Civil Engineering",
     "Business Administration",
@@ -53,14 +82,16 @@ const SignUp = () => {
     "Biology",
     "Psychology",
     "English Literature",
-    "Other"
+    "Other",
   ];
 
-  const batchYears = Array.from({ length: 30 }, (_, i) => (new Date().getFullYear() - i).toString());
+  const batchYears = Array.from({ length: 30 }, (_, i) =>
+    (new Date().getFullYear() - i).toString()
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (currentStep < 3) {
       if (validateStep(currentStep)) {
         setCurrentStep(currentStep + 1);
@@ -83,7 +114,7 @@ const SignUp = () => {
     // Simulate API call
     setTimeout(() => {
       // Dummy signup - always succeeds
-      navigate("/dashboard");
+      login(); // This will automatically redirect to dashboard via ProtectedRoute
       setIsLoading(false);
     }, 2000);
   };
@@ -91,7 +122,13 @@ const SignUp = () => {
   const validateStep = (step: number) => {
     switch (step) {
       case 1:
-        if (!formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword) {
+        if (
+          !formData.firstName ||
+          !formData.lastName ||
+          !formData.email ||
+          !formData.password ||
+          !formData.confirmPassword
+        ) {
           setError("Please fill in all required fields");
           return false;
         }
@@ -115,7 +152,7 @@ const SignUp = () => {
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     setError("");
   };
 
@@ -140,7 +177,7 @@ const SignUp = () => {
       company: "Tech Corp",
       location: "San Francisco, CA",
       agreeToTerms: true,
-      subscribeNewsletter: true
+      subscribeNewsletter: true,
     });
   };
 
@@ -207,7 +244,11 @@ const SignUp = () => {
             onClick={() => setShowPassword(!showPassword)}
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
           >
-            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {showPassword ? (
+              <EyeOff className="h-4 w-4" />
+            ) : (
+              <Eye className="h-4 w-4" />
+            )}
           </button>
         </div>
       </div>
@@ -221,7 +262,9 @@ const SignUp = () => {
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm your password"
             value={formData.confirmPassword}
-            onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+            onChange={(e) =>
+              handleInputChange("confirmPassword", e.target.value)
+            }
             className="pl-10 pr-10"
             required
           />
@@ -230,7 +273,11 @@ const SignUp = () => {
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
           >
-            {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {showConfirmPassword ? (
+              <EyeOff className="h-4 w-4" />
+            ) : (
+              <Eye className="h-4 w-4" />
+            )}
           </button>
         </div>
       </div>
@@ -244,13 +291,18 @@ const SignUp = () => {
           <Label htmlFor="batchYear">Graduation Year *</Label>
           <div className="relative">
             <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
-            <Select value={formData.batchYear} onValueChange={(value) => handleInputChange("batchYear", value)}>
+            <Select
+              value={formData.batchYear}
+              onValueChange={(value) => handleInputChange("batchYear", value)}
+            >
               <SelectTrigger className="pl-10">
                 <SelectValue placeholder="Select year" />
               </SelectTrigger>
               <SelectContent>
                 {batchYears.map((year) => (
-                  <SelectItem key={year} value={year}>{year}</SelectItem>
+                  <SelectItem key={year} value={year}>
+                    {year}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -260,13 +312,18 @@ const SignUp = () => {
           <Label htmlFor="department">Department *</Label>
           <div className="relative">
             <GraduationCap className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
-            <Select value={formData.department} onValueChange={(value) => handleInputChange("department", value)}>
+            <Select
+              value={formData.department}
+              onValueChange={(value) => handleInputChange("department", value)}
+            >
               <SelectTrigger className="pl-10">
                 <SelectValue placeholder="Select department" />
               </SelectTrigger>
               <SelectContent>
                 {departments.map((dept) => (
-                  <SelectItem key={dept} value={dept}>{dept}</SelectItem>
+                  <SelectItem key={dept} value={dept}>
+                    {dept}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -331,15 +388,24 @@ const SignUp = () => {
           <Checkbox
             id="terms"
             checked={formData.agreeToTerms}
-            onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
+            onCheckedChange={(checked) =>
+              handleInputChange("agreeToTerms", checked as boolean)
+            }
             className="mt-1"
           />
-          <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer">
+          <Label
+            htmlFor="terms"
+            className="text-sm leading-relaxed cursor-pointer"
+          >
             I agree to the{" "}
-            <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link>
-            {" "}and{" "}
-            <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
-            {" "}*
+            <Link to="/terms" className="text-primary hover:underline">
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link to="/privacy" className="text-primary hover:underline">
+              Privacy Policy
+            </Link>{" "}
+            *
           </Label>
         </div>
 
@@ -347,10 +413,15 @@ const SignUp = () => {
           <Checkbox
             id="newsletter"
             checked={formData.subscribeNewsletter}
-            onCheckedChange={(checked) => handleInputChange("subscribeNewsletter", checked as boolean)}
+            onCheckedChange={(checked) =>
+              handleInputChange("subscribeNewsletter", checked as boolean)
+            }
             className="mt-1"
           />
-          <Label htmlFor="newsletter" className="text-sm leading-relaxed cursor-pointer">
+          <Label
+            htmlFor="newsletter"
+            className="text-sm leading-relaxed cursor-pointer"
+          >
             Subscribe to our newsletter for alumni updates and opportunities
           </Label>
         </div>
@@ -359,11 +430,25 @@ const SignUp = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex relative">
+      {/* Theme Toggle Button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={toggleTheme}
+        className="absolute top-4 right-4 z-50 bg-background/80 backdrop-blur-sm border"
+      >
+        {theme === "dark" ? (
+          <Sun className="h-5 w-5" />
+        ) : (
+          <Moon className="h-5 w-5" />
+        )}
+      </Button>
+
       {/* Left Side - Branding & Info */}
       <div className="hidden lg:flex lg:w-1/2 hero-gradient relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
-        
+
         {/* Floating Elements */}
         <div className="absolute top-20 left-20 w-16 h-16 bg-white/10 rounded-full animate-pulse"></div>
         <div className="absolute top-40 right-32 w-8 h-8 bg-white/20 rounded-full animate-bounce"></div>
@@ -374,8 +459,8 @@ const SignUp = () => {
             {/* Logo & Branding */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                  <GraduationCap className="h-7 w-7 text-white" />
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-primary/20">
+                  <GraduationCap className="h-7 w-7 text-primary" />
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold">AlmaConnect</h1>
@@ -388,27 +473,35 @@ const SignUp = () => {
             <div className="space-y-6">
               <h2 className="text-2xl font-semibold">Join Our Community</h2>
               <p className="text-lg text-white/90 leading-relaxed">
-                Connect with fellow alumni, discover career opportunities, and share your professional journey with a global network of achievers.
+                Connect with fellow alumni, discover career opportunities, and
+                share your professional journey with a global network of
+                achievers.
               </p>
 
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                    <Users className="h-5 w-5" />
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/20">
+                    <GraduationCap className="h-5 w-5 text-primary" />
                   </div>
-                  <span className="text-white/90">Network with alumni across 50+ countries</span>
+                  <span className="text-white/90">
+                    Network with alumni across 50+ countries
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                     <Sparkles className="h-5 w-5" />
                   </div>
-                  <span className="text-white/90">Access exclusive job opportunities</span>
+                  <span className="text-white/90">
+                    Access exclusive job opportunities
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                    <GraduationCap className="h-5 w-5" />
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/20">
+                    <GraduationCap className="h-5 w-5 text-primary" />
                   </div>
-                  <span className="text-white/90">Mentorship and career guidance</span>
+                  <span className="text-white/90">
+                    Mentorship and career guidance
+                  </span>
                 </div>
               </div>
             </div>
@@ -417,26 +510,44 @@ const SignUp = () => {
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Quick Registration</h3>
               <div className="space-y-3">
-                <div className={`flex items-center gap-3 ${currentStep >= 1 ? 'text-white' : 'text-white/50'}`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                    currentStep >= 1 ? 'bg-white text-primary' : 'bg-white/20'
-                  }`}>
+                <div
+                  className={`flex items-center gap-3 ${
+                    currentStep >= 1 ? "text-white" : "text-white/50"
+                  }`}
+                >
+                  <div
+                    className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                      currentStep >= 1 ? "bg-white text-primary" : "bg-white/20"
+                    }`}
+                  >
                     1
                   </div>
                   <span>Personal Information</span>
                 </div>
-                <div className={`flex items-center gap-3 ${currentStep >= 2 ? 'text-white' : 'text-white/50'}`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                    currentStep >= 2 ? 'bg-white text-primary' : 'bg-white/20'
-                  }`}>
+                <div
+                  className={`flex items-center gap-3 ${
+                    currentStep >= 2 ? "text-white" : "text-white/50"
+                  }`}
+                >
+                  <div
+                    className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                      currentStep >= 2 ? "bg-white text-primary" : "bg-white/20"
+                    }`}
+                  >
                     2
                   </div>
                   <span>Academic Background</span>
                 </div>
-                <div className={`flex items-center gap-3 ${currentStep >= 3 ? 'text-white' : 'text-white/50'}`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                    currentStep >= 3 ? 'bg-white text-primary' : 'bg-white/20'
-                  }`}>
+                <div
+                  className={`flex items-center gap-3 ${
+                    currentStep >= 3 ? "text-white" : "text-white/50"
+                  }`}
+                >
+                  <div
+                    className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                      currentStep >= 3 ? "bg-white text-primary" : "bg-white/20"
+                    }`}
+                  >
                     3
                   </div>
                   <span>Professional Details</span>
@@ -453,10 +564,10 @@ const SignUp = () => {
           {/* Mobile Logo */}
           <div className="lg:hidden text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
-              <div className="w-10 h-10 alma-gradient rounded-xl flex items-center justify-center">
-                <GraduationCap className="h-6 w-6 text-white" />
+              <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20">
+                <GraduationCap className="h-6 w-6 text-primary" />
               </div>
-              <h1 className="text-2xl font-bold text-foreground">AlmaConnect</h1>
+              <h1 className="text-2xl font-bold text-primary">AlmaConnect</h1>
             </div>
             <p className="text-muted-foreground">Alumni Network Platform</p>
           </div>
@@ -468,7 +579,9 @@ const SignUp = () => {
                 <div
                   key={step}
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                    currentStep >= step ? 'alma-gradient text-white' : 'bg-muted text-muted-foreground'
+                    currentStep >= step
+                      ? "alma-gradient text-white"
+                      : "bg-muted text-muted-foreground"
                   }`}
                 >
                   {step}
@@ -541,7 +654,9 @@ const SignUp = () => {
                       <div className="w-full border-t border-border"></div>
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-card px-2 text-muted-foreground">Quick demo</span>
+                      <span className="bg-card px-2 text-muted-foreground">
+                        Quick demo
+                      </span>
                     </div>
                   </div>
 
@@ -551,7 +666,9 @@ const SignUp = () => {
                     className="w-full"
                     onClick={fillDemoData}
                   >
-                    <Badge variant="secondary" className="mr-2">Demo</Badge>
+                    <Badge variant="secondary" className="mr-2">
+                      Demo
+                    </Badge>
                     Fill Demo Data
                   </Button>
                 </>
@@ -561,7 +678,10 @@ const SignUp = () => {
               <div className="text-center pt-4 border-t border-border">
                 <p className="text-muted-foreground">
                   Already have an account?{" "}
-                  <Link to="/signin" className="text-primary hover:underline font-medium">
+                  <Link
+                    to="/signin"
+                    className="text-primary hover:underline font-medium"
+                  >
                     Sign in here
                   </Link>
                 </p>

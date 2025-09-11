@@ -18,7 +18,9 @@
 **AlmaConnect** is a comprehensive professional alumni networking platform designed for the Smart India Hackathon (SIH). It serves as a LinkedIn-inspired solution that connects alumni, facilitates career growth, and creates meaningful professional relationships within educational institutions.
 
 ### 🏆 SIH Problem Statement
+
 This project addresses the need for a robust alumni networking platform that enables:
+
 - Professional networking between alumni and current students
 - Career guidance and mentorship opportunities
 - Job placement assistance through alumni networks
@@ -28,29 +30,34 @@ This project addresses the need for a robust alumni networking platform that ena
 ## ✨ Key Features
 
 ### 🌐 **Core Networking**
+
 - **Professional Profiles**: Complete alumni profiles with career timelines
 - **Connection Management**: Advanced search, filtering, and connection recommendations
 - **Real-time Messaging**: Integrated chat system for seamless communication
 - **Mutual Connections**: Smart networking suggestions based on common connections
 
 ### 💼 **Career Development**
+
 - **Job Board**: Alumni-posted job opportunities with referral system
 - **Career Path Visualization**: AI-generated career progression insights
 - **Resume Optimization**: AI-powered resume enhancement suggestions
 - **Mentorship Matching**: Smart algorithm to connect mentors with mentees
 
 ### 🤖 **AI-Powered Features**
+
 - **Career Path Advisor**: Personalized career guidance based on alumni success stories
 - **Network Insights**: Hidden connection discovery and networking opportunities
 - **Story Timeline**: AI-generated visual timelines of alumni achievements
 - **Smart Recommendations**: Intelligent job and connection suggestions
 
 ### 📅 **Events & Engagement**
+
 - **Event Management**: Alumni reunion, tech talks, and networking events
 - **Virtual & Physical Events**: Hybrid event support with attendance tracking
 - **Community Building**: Batch-wise and department-wise communities
 
 ### 📊 **Analytics & Insights**
+
 - **Success Metrics**: Alumni career progression analytics
 - **Platform Analytics**: Engagement and networking success rates
 - **Institutional Insights**: University-wide alumni network health
@@ -58,25 +65,30 @@ This project addresses the need for a robust alumni networking platform that ena
 ## 🛠️ Technology Stack
 
 ### **Frontend Framework**
+
 - **React 18.3.1** - Modern React with hooks and concurrent features
 - **TypeScript 5.8.3** - Type-safe development
 - **Vite 5.4.19** - Fast build tool and dev server
 
 ### **UI/UX Design System**
+
 - **Tailwind CSS 3.4.17** - Utility-first CSS framework
 - **shadcn/ui** - Modern component library
 - **Radix UI** - Accessible component primitives
 - **Lucide React** - Beautiful icon library
 
 ### **State Management & Data**
+
 - **TanStack Query 5.83.0** - Server state management
 - **React Hook Form 7.61.1** - Form management
 - **Zod 3.25.76** - Schema validation
 
 ### **Routing & Navigation**
+
 - **React Router DOM 6.30.1** - Client-side routing
 
 ### **Styling & Animation**
+
 - **Class Variance Authority** - Component styling utilities
 - **Tailwind Animate** - Animation utilities
 - **Custom CSS Variables** - Professional design system
@@ -84,6 +96,7 @@ This project addresses the need for a robust alumni networking platform that ena
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - **Node.js** (v18 or higher)
 - **npm** or **yarn** package manager
 - **Git** for version control
@@ -91,12 +104,14 @@ This project addresses the need for a robust alumni networking platform that ena
 ### Installation
 
 1. **Clone the Repository**
+
    ```bash
    git clone https://github.com/Akshay-Vinod-Jha/divinedevs-aluminis-sih.git
    cd alma-story-connect-main
    ```
 
 2. **Install Dependencies**
+
    ```bash
    npm install
    # or
@@ -104,6 +119,7 @@ This project addresses the need for a robust alumni networking platform that ena
    ```
 
 3. **Start Development Server**
+
    ```bash
    npm run dev
    # or
@@ -162,16 +178,19 @@ alma-story-connect-main/
 AlmaConnect features a professional design system inspired by LinkedIn:
 
 ### **Color Palette**
+
 - **Primary Blue**: `#1B237E` - Professional & trustworthy
 - **Accent Orange**: `#FF5722` - Action & energy
 - **Success Green**: `#22C55E` - Positive actions
 - **Warning Yellow**: `#F59E0B` - Alerts & notifications
 
 ### **Typography**
+
 - **Font Family**: Inter (Google Fonts)
 - **Weights**: 300, 400, 500, 600, 700, 800
 
 ### **Components**
+
 - Professional card styling with subtle shadows
 - Gradient backgrounds for hero sections
 - Smooth transitions and hover effects
@@ -180,19 +199,23 @@ AlmaConnect features a professional design system inspired by LinkedIn:
 ## 🔧 Key Components
 
 ### **Feed System**
+
 - `CreatePost.tsx` - Post creation interface
 - `PostCard.tsx` - Individual post display with interactions
 
 ### **Networking**
+
 - `Network.tsx` - Alumni connection management
 - Connection suggestions and mutual connections
 
 ### **AI Features**
+
 - `AIHub.tsx` - Central AI features dashboard
 - `ChatBot.tsx` - AI assistant integration
 - `StoryTimeline.tsx` - AI-generated story visualizations
 
 ### **Job Management**
+
 - `Jobs.tsx` - Complete job board with filtering
 - Referral system integration
 - Application tracking
@@ -200,16 +223,19 @@ AlmaConnect features a professional design system inspired by LinkedIn:
 ## 🚀 Deployment
 
 ### **Development Build**
+
 ```bash
 npm run build:dev
 ```
 
 ### **Production Build**
+
 ```bash
 npm run build
 ```
 
 ### **Deployment Platforms**
+
 - **Vercel** (Recommended)
 - **Netlify**
 - **GitHub Pages**
@@ -226,6 +252,7 @@ We welcome contributions to AlmaConnect! Please follow these steps:
 5. **Open Pull Request**
 
 ### **Code Style**
+
 - Follow TypeScript best practices
 - Use meaningful component and variable names
 - Maintain consistent formatting with Prettier
@@ -244,6 +271,7 @@ This project is developed for the Smart India Hackathon (SIH) and is open for ed
 ## 📞 Support
 
 For questions, issues, or contributions:
+
 - **GitHub Issues**: [Create an issue](https://github.com/Akshay-Vinod-Jha/divinedevs-aluminis-sih/issues)
 - **Email**: [Your team email]
 - **SIH Team**: Divine Devs

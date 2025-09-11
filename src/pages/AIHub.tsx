@@ -1,4 +1,13 @@
-import { Bot, Sparkles, MessageSquare, FileText, Users, TrendingUp, Zap, Brain } from "lucide-react";
+import {
+  Bot,
+  Sparkles,
+  MessageSquare,
+  FileText,
+  Users,
+  TrendingUp,
+  Zap,
+  Brain,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,14 +17,18 @@ import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import { useState, useEffect } from "react";
 import { useSidebar } from "@/contexts/SidebarContext";
-import { PageLayout, AnimatedCard, StaggeredList } from "@/components/animations/PageAnimations";
+import {
+  PageLayout,
+  AnimatedCard,
+  StaggeredList,
+} from "@/components/animations/PageAnimations";
 import CountingNumber from "@/components/ui/counting-number";
 
 const AIHub = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { isOpen } = useSidebar();
 
-    useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
@@ -33,35 +46,39 @@ const AIHub = () => {
     {
       id: 1,
       title: "Career Path Advisor",
-      description: "Get AI-powered career guidance based on your background and alumni success stories",
+      description:
+        "Get AI-powered career guidance based on your background and alumni success stories",
       icon: TrendingUp,
       status: "active",
-      usage: "142 consultations this month"
+      usage: "142 consultations this month",
     },
     {
       id: 2,
       title: "Mentorship Matcher",
-      description: "AI matches you with the perfect mentor based on your goals and interests",
+      description:
+        "AI matches you with the perfect mentor based on your goals and interests",
       icon: Users,
       status: "active",
-      usage: "89 matches made"
+      usage: "89 matches made",
     },
     {
       id: 3,
       title: "Resume Optimizer",
-      description: "Enhance your resume with AI suggestions based on industry trends",
+      description:
+        "Enhance your resume with AI suggestions based on industry trends",
       icon: FileText,
       status: "active",
-      usage: "56 resumes improved"
+      usage: "56 resumes improved",
     },
     {
       id: 4,
       title: "Network Insights",
-      description: "Discover hidden connections and networking opportunities in your alumni network",
+      description:
+        "Discover hidden connections and networking opportunities in your alumni network",
       icon: Brain,
       status: "beta",
-      usage: "23 insights generated"
-    }
+      usage: "23 insights generated",
+    },
   ];
 
   const recentActivities = [
@@ -69,38 +86,39 @@ const AIHub = () => {
       id: 1,
       action: "Generated career roadmap for Software Engineering",
       time: "2 hours ago",
-      type: "career"
+      type: "career",
     },
     {
       id: 2,
       action: "Matched with 3 potential mentors in Data Science",
-      time: "1 day ago", 
-      type: "mentorship"
+      time: "1 day ago",
+      type: "mentorship",
     },
     {
       id: 3,
       action: "Optimized resume - 15% improvement score",
       time: "3 days ago",
-      type: "resume"
-    }
+      type: "resume",
+    },
   ];
 
   const aiInsights = [
     {
       title: "Alumni Success Patterns",
       description: "Top career transitions: Engineering → Product Management",
-      trend: "+34%"
+      trend: "+34%",
     },
     {
       title: "Networking Opportunities",
-      description: "5 alumni in your target companies available for connections",
-      trend: "New"
+      description:
+        "5 alumni in your target companies available for connections",
+      trend: "New",
     },
     {
       title: "Skill Recommendations",
       description: "Cloud Computing skills show higher job match rate",
-      trend: "+89%"
-    }
+      trend: "+89%",
+    },
   ];
 
   // Professional Loader for AI Hub
@@ -131,7 +149,10 @@ const AIHub = () => {
           <CardContent className="p-6 space-y-4">
             <div className="h-6 w-32 bg-muted/50 rounded animate-pulse"></div>
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="p-3 rounded-lg bg-surface border border-border">
+              <div
+                key={i}
+                className="p-3 rounded-lg bg-surface border border-border"
+              >
                 <div className="h-5 w-48 bg-gradient-to-r from-primary/20 to-transparent rounded animate-pulse mb-2"></div>
                 <div className="h-4 w-64 bg-muted/40 rounded animate-pulse"></div>
               </div>
@@ -142,7 +163,10 @@ const AIHub = () => {
 
       <div className="grid w-full grid-cols-3 gap-1 bg-muted/30 rounded-lg p-1">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="h-9 bg-muted/50 rounded-md animate-pulse"></div>
+          <div
+            key={i}
+            className="h-9 bg-muted/50 rounded-md animate-pulse"
+          ></div>
         ))}
       </div>
 
@@ -170,7 +194,9 @@ const AIHub = () => {
       <div className="flex justify-center items-center py-8">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
-          <div className="text-sm font-medium text-foreground">Loading AI features</div>
+          <div className="text-sm font-medium text-foreground">
+            Loading AI features
+          </div>
         </div>
       </div>
     </div>
@@ -179,14 +205,20 @@ const AIHub = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
+      <div
+        className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+      >
         <Sidebar />
-        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
+        <main
+          className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+            isOpen ? "" : "max-w-full"
+          }`}
+        >
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <PageLayout 
-              title="AI Hub" 
+            <PageLayout
+              title="AI Hub"
               subtitle="Harness the power of AI to enhance your alumni experience"
               className="max-w-6xl mx-auto"
             >
@@ -195,7 +227,9 @@ const AIHub = () => {
                   <div className="flex items-center gap-2">
                     <Bot className="h-6 w-6 text-primary" />
                     <span className="text-lg font-semibold">AI Assistant</span>
-                    <Badge variant="secondary" className="ml-2">Beta</Badge>
+                    <Badge variant="secondary" className="ml-2">
+                      Beta
+                    </Badge>
                   </div>
                   <Button className="alma-gradient text-primary-foreground w-full sm:w-auto">
                     <Sparkles className="h-4 w-4 mr-2" />
@@ -204,173 +238,246 @@ const AIHub = () => {
                 </div>
               </AnimatedCard>
 
-              <StaggeredList className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6" delay={400}>
-              {/* AI Usage Stats */}
-              <Card className="professional-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Zap className="h-5 w-5" />
-                    AI Usage This Month
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Career Insights</span>
-                      <span><CountingNumber start={0} end={85} duration={2200} />%</span>
-                    </div>
-                    <Progress value={85} className="h-2" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Mentorship Matching</span>
-                      <span><CountingNumber start={0} end={67} duration={2400} />%</span>
-                    </div>
-                    <Progress value={67} className="h-2" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Resume Analysis</span>
-                      <span><CountingNumber start={0} end={43} duration={2600} />%</span>
-                    </div>
-                    <Progress value={43} className="h-2" />
-                  </div>
-                  <div className="pt-2 text-xs text-muted-foreground">
-                    Next reset in 12 days
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* AI Insights */}
-              <Card className="professional-card lg:col-span-2">
-                <CardHeader className="p-4 sm:p-6">
-                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-                    <Brain className="h-5 w-5" />
-                    Smart Insights
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
-                  {aiInsights.map((insight, index) => (
-                    <div key={index} className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 p-3 rounded-lg bg-surface border border-border">
-                      <div className="space-y-1 min-w-0">
-                        <h4 className="font-medium text-foreground">{insight.title}</h4>
-                        <p className="text-sm text-muted-foreground">{insight.description}</p>
-                      </div>
-                      <Badge variant="secondary" className="bg-success/10 text-success self-start">
-                        {insight.trend}
-                      </Badge>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-              </StaggeredList>
-
-              <AnimatedCard delay={600}>
-                <Tabs defaultValue="features" className="space-y-6">
-                  <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3">
-                    <TabsTrigger value="features" className="text-sm">AI Features</TabsTrigger>
-                    <TabsTrigger value="activity" className="text-sm">Recent Activity</TabsTrigger>
-                    <TabsTrigger value="analytics" className="text-sm">Analytics</TabsTrigger>
-                  </TabsList>
-
-              <TabsContent value="features" className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                  {aiFeatures.map((feature) => (
-                    <Card key={feature.id} className="professional-card">
-                      <CardHeader className="p-4 sm:p-6">
-                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                          <div className="flex items-center gap-3 min-w-0">
-                            <div className="p-2 rounded-lg bg-primary/10 flex-shrink-0">
-                              <feature.icon className="h-6 w-6 text-primary" />
-                            </div>
-                            <div className="min-w-0">
-                              <CardTitle className="text-base sm:text-lg truncate">{feature.title}</CardTitle>
-                              <div className="flex items-center gap-2 mt-1">
-                                <Badge variant={feature.status === 'active' ? 'secondary' : 'outline'}>
-                                  {feature.status}
-                                </Badge>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
-                        <p className="text-sm text-muted-foreground">{feature.description}</p>
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                          <span className="text-xs text-muted-foreground">{feature.usage}</span>
-                          <Button size="sm" className="alma-gradient text-primary-foreground w-full sm:w-auto">
-                            Try Now
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="activity" className="space-y-4">
+              <StaggeredList
+                className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6"
+                delay={400}
+              >
+                {/* AI Usage Stats */}
                 <Card className="professional-card">
                   <CardHeader>
-                    <CardTitle>Recent AI Activities</CardTitle>
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <Zap className="h-5 w-5" />
+                      AI Usage This Month
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {recentActivities.map((activity) => (
-                      <div key={activity.id} className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-border">
-                        <div className="p-1 rounded-full bg-primary/10">
-                          <MessageSquare className="h-4 w-4 text-primary" />
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>Career Insights</span>
+                        <span>
+                          <CountingNumber start={0} end={85} duration={2200} />%
+                        </span>
+                      </div>
+                      <Progress value={85} className="h-2" />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>Mentorship Matching</span>
+                        <span>
+                          <CountingNumber start={0} end={67} duration={2400} />%
+                        </span>
+                      </div>
+                      <Progress value={67} className="h-2" />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>Resume Analysis</span>
+                        <span>
+                          <CountingNumber start={0} end={43} duration={2600} />%
+                        </span>
+                      </div>
+                      <Progress value={43} className="h-2" />
+                    </div>
+                    <div className="pt-2 text-xs text-muted-foreground">
+                      Next reset in 12 days
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* AI Insights */}
+                <Card className="professional-card lg:col-span-2">
+                  <CardHeader className="p-4 sm:p-6">
+                    <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                      <Brain className="h-5 w-5" />
+                      Smart Insights
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
+                    {aiInsights.map((insight, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 p-3 rounded-lg bg-surface border border-border"
+                      >
+                        <div className="space-y-1 min-w-0">
+                          <h4 className="font-medium text-foreground">
+                            {insight.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {insight.description}
+                          </p>
                         </div>
-                        <div className="flex-1">
-                          <p className="text-sm text-foreground">{activity.action}</p>
-                          <p className="text-xs text-muted-foreground">{activity.time}</p>
-                        </div>
-                        <Badge variant="outline" className="text-xs">
-                          {activity.type}
+                        <Badge
+                          variant="secondary"
+                          className="bg-success/10 text-success self-start"
+                        >
+                          {insight.trend}
                         </Badge>
                       </div>
                     ))}
                   </CardContent>
                 </Card>
-              </TabsContent>
+              </StaggeredList>
 
-              <TabsContent value="analytics" className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                  <Card className="professional-card">
-                    <CardHeader className="p-4 sm:p-6">
-                      <CardTitle className="text-base sm:text-lg">Success Rate</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-4 sm:p-6 pt-0">
-                      <div className="text-2xl sm:text-3xl font-bold text-foreground">
-                        <CountingNumber start={0} end={94} duration={2800} />%
-                      </div>
-                      <p className="text-sm text-muted-foreground">AI recommendations accuracy</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="professional-card">
-                    <CardHeader className="p-4 sm:p-6">
-                      <CardTitle className="text-base sm:text-lg">Time Saved</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-4 sm:p-6 pt-0">
-                      <div className="text-2xl sm:text-3xl font-bold text-foreground">
-                        <CountingNumber start={0} end={12.5} duration={2600} />h
-                      </div>
-                      <p className="text-sm text-muted-foreground">Average hours saved per user</p>
-                    </CardContent>
-                  </Card>
+              <AnimatedCard delay={600}>
+                <Tabs defaultValue="features" className="space-y-6">
+                  <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3">
+                    <TabsTrigger value="features" className="text-sm">
+                      AI Features
+                    </TabsTrigger>
+                    <TabsTrigger value="activity" className="text-sm">
+                      Recent Activity
+                    </TabsTrigger>
+                    <TabsTrigger value="analytics" className="text-sm">
+                      Analytics
+                    </TabsTrigger>
+                  </TabsList>
 
-                  <Card className="professional-card">
-                    <CardHeader className="p-4 sm:p-6">
-                      <CardTitle className="text-base sm:text-lg">Connections Made</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-4 sm:p-6 pt-0">
-                      <div className="text-2xl sm:text-3xl font-bold text-foreground">
-                        <CountingNumber start={0} end={347} duration={3000} />
-                      </div>
-                      <p className="text-sm text-muted-foreground">Through AI matching</p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
+                  <TabsContent value="features" className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                      {aiFeatures.map((feature) => (
+                        <Card key={feature.id} className="professional-card">
+                          <CardHeader className="p-4 sm:p-6">
+                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                              <div className="flex items-center gap-3 min-w-0">
+                                <div className="p-2 rounded-lg bg-primary/10 flex-shrink-0">
+                                  <feature.icon className="h-6 w-6 text-primary" />
+                                </div>
+                                <div className="min-w-0">
+                                  <CardTitle className="text-base sm:text-lg truncate">
+                                    {feature.title}
+                                  </CardTitle>
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <Badge
+                                      variant={
+                                        feature.status === "active"
+                                          ? "secondary"
+                                          : "outline"
+                                      }
+                                    >
+                                      {feature.status}
+                                    </Badge>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
+                            <p className="text-sm text-muted-foreground">
+                              {feature.description}
+                            </p>
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                              <span className="text-xs text-muted-foreground">
+                                {feature.usage}
+                              </span>
+                              <Button
+                                size="sm"
+                                className="alma-gradient text-primary-foreground w-full sm:w-auto"
+                              >
+                                Try Now
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="activity" className="space-y-4">
+                    <Card className="professional-card">
+                      <CardHeader>
+                        <CardTitle>Recent AI Activities</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        {recentActivities.map((activity) => (
+                          <div
+                            key={activity.id}
+                            className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-border"
+                          >
+                            <div className="p-1 rounded-full bg-primary/10">
+                              <MessageSquare className="h-4 w-4 text-primary" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm text-foreground">
+                                {activity.action}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                {activity.time}
+                              </p>
+                            </div>
+                            <Badge variant="outline" className="text-xs">
+                              {activity.type}
+                            </Badge>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  <TabsContent value="analytics" className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                      <Card className="professional-card">
+                        <CardHeader className="p-4 sm:p-6">
+                          <CardTitle className="text-base sm:text-lg">
+                            Success Rate
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-4 sm:p-6 pt-0">
+                          <div className="text-2xl sm:text-3xl font-bold text-foreground">
+                            <CountingNumber
+                              start={0}
+                              end={94}
+                              duration={2800}
+                            />
+                            %
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            AI recommendations accuracy
+                          </p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="professional-card">
+                        <CardHeader className="p-4 sm:p-6">
+                          <CardTitle className="text-base sm:text-lg">
+                            Time Saved
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-4 sm:p-6 pt-0">
+                          <div className="text-2xl sm:text-3xl font-bold text-foreground">
+                            <CountingNumber
+                              start={0}
+                              end={12.5}
+                              duration={2600}
+                            />
+                            h
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Average hours saved per user
+                          </p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="professional-card">
+                        <CardHeader className="p-4 sm:p-6">
+                          <CardTitle className="text-base sm:text-lg">
+                            Connections Made
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-4 sm:p-6 pt-0">
+                          <div className="text-2xl sm:text-3xl font-bold text-foreground">
+                            <CountingNumber
+                              start={0}
+                              end={347}
+                              duration={3000}
+                            />
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Through AI matching
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </TabsContent>
                 </Tabs>
               </AnimatedCard>
             </PageLayout>

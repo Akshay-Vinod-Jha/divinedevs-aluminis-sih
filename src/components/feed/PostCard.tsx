@@ -1,9 +1,21 @@
-import { Heart, MessageCircle, Share2, Bookmark, MoreHorizontal, Send } from "lucide-react";
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  Bookmark,
+  MoreHorizontal,
+  Send,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
@@ -23,18 +35,27 @@ interface PostCardProps {
   media?: string;
 }
 
-const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, media }: PostCardProps) => {
+const PostCard = ({
+  author,
+  content,
+  timestamp,
+  likes,
+  comments,
+  shares,
+  tags,
+  media,
+}: PostCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
   const [commentCount, setCommentCount] = useState(comments);
   const [shareCount, setShareCount] = useState(shares);
-  
+
   // Modal states
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [commentText, setCommentText] = useState("");
-  
+
   // Sample comments data
   const [postComments, setPostComments] = useState([
     {
@@ -42,21 +63,21 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
       author: "John Smith",
       avatar: "/api/placeholder/32/32",
       content: "Congratulations! This is really inspiring!",
-      timestamp: "2 hours ago"
+      timestamp: "2 hours ago",
     },
     {
       id: 2,
       author: "Emily Johnson",
-      avatar: "/api/placeholder/32/32", 
+      avatar: "/api/placeholder/32/32",
       content: "Amazing achievement! Keep up the great work 👏",
-      timestamp: "1 hour ago"
-    }
+      timestamp: "1 hour ago",
+    },
   ]);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
-    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
-    
+    setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+
     // Show feedback
     const message = isLiked ? "Removed like" : "Liked! ❤️";
     // You could add a toast notification here
@@ -65,10 +86,10 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
 
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
-    
+
     // Show feedback
     const message = isBookmarked ? "Removed from bookmarks" : "Bookmarked! 🔖";
-    // You could add a toast notification here  
+    // You could add a toast notification here
     console.log(message);
   };
 
@@ -82,27 +103,27 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
 
   const submitComment = () => {
     if (!commentText.trim()) return;
-    
+
     const newComment = {
       id: postComments.length + 1,
       author: "You",
       avatar: "/api/placeholder/32/32",
       content: commentText,
-      timestamp: "Just now"
+      timestamp: "Just now",
     };
-    
-    setPostComments(prev => [...prev, newComment]);
-    setCommentCount(prev => prev + 1);
+
+    setPostComments((prev) => [...prev, newComment]);
+    setCommentCount((prev) => prev + 1);
     setCommentText("");
-    
+
     console.log("Comment added:", newComment);
     // You could add a toast notification here
   };
 
   const handleSharePost = (shareType: string) => {
-    setShareCount(prev => prev + 1);
+    setShareCount((prev) => prev + 1);
     setIsShareModalOpen(false);
-    
+
     // Simulate sharing
     console.log(`Shared via ${shareType}`);
     alert(`Post shared via ${shareType}! 🚀`);
@@ -118,30 +139,45 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
               <Avatar className="h-10 w-10 sm:h-12 sm:w-12 alma-shadow flex-shrink-0">
                 <AvatarImage src={author.avatar} alt={author.name} />
                 <AvatarFallback className="bg-primary text-primary-foreground">
-                  {author.name.split(' ').map(n => n[0]).join('')}
+                  {author.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-foreground text-sm sm:text-base truncate">{author.name}</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground truncate">{author.title}</p>
-                <p className="text-xs text-muted-foreground">Class of {author.batchYear} • {timestamp}</p>
+                <h3 className="font-semibold text-foreground text-sm sm:text-base truncate">
+                  {author.name}
+                </h3>
+                <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                  {author.title}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Class of {author.batchYear} • {timestamp}
+                </p>
               </div>
             </div>
-            <Button variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 flex-shrink-0"
+            >
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </div>
 
           {/* Post Content */}
           <div className="mb-3 sm:mb-4">
-            <p className="text-foreground leading-relaxed mb-3 text-sm sm:text-base">{content}</p>
-            
+            <p className="text-foreground leading-relaxed mb-3 text-sm sm:text-base">
+              {content}
+            </p>
+
             {/* Media */}
             {media && (
               <div className="rounded-lg overflow-hidden alma-shadow mb-3">
-                <img 
-                  src={media} 
-                  alt="Post media" 
+                <img
+                  src={media}
+                  alt="Post media"
                   className="w-full h-48 sm:h-64 object-cover"
                 />
               </div>
@@ -162,31 +198,35 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
           {/* Post Actions */}
           <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-border">
             <div className="flex items-center space-x-3 sm:space-x-6">
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className={`px-2 sm:px-3 transition-colors duration-200 ${
-                  isLiked 
-                    ? 'text-red-500 hover:text-red-600' 
-                    : 'text-muted-foreground hover:text-red-500'
+                  isLiked
+                    ? "text-red-500 hover:text-red-600"
+                    : "text-muted-foreground hover:text-red-500"
                 }`}
                 onClick={handleLike}
               >
-                <Heart className={`h-4 w-4 mr-1 sm:mr-2 ${isLiked ? 'fill-current' : ''}`} />
+                <Heart
+                  className={`h-4 w-4 mr-1 sm:mr-2 ${
+                    isLiked ? "fill-current" : ""
+                  }`}
+                />
                 <span className="text-xs sm:text-sm">{likeCount}</span>
               </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className="text-muted-foreground hover:text-primary px-2 sm:px-3"
                 onClick={handleComment}
               >
                 <MessageCircle className="h-4 w-4 mr-1 sm:mr-2" />
                 <span className="text-xs sm:text-sm">{commentCount}</span>
               </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className="text-muted-foreground hover:text-success px-2 sm:px-3"
                 onClick={handleShare}
               >
@@ -194,17 +234,19 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
                 <span className="text-xs sm:text-sm">{shareCount}</span>
               </Button>
             </div>
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className={`transition-colors duration-200 ${
-                isBookmarked 
-                  ? 'text-yellow-500 hover:text-yellow-600' 
-                  : 'text-muted-foreground hover:text-yellow-500'
+                isBookmarked
+                  ? "text-yellow-500 hover:text-yellow-600"
+                  : "text-muted-foreground hover:text-yellow-500"
               }`}
               onClick={handleBookmark}
             >
-              <Bookmark className={`h-4 w-4 ${isBookmarked ? 'fill-current' : ''}`} />
+              <Bookmark
+                className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`}
+              />
             </Button>
           </div>
         </CardContent>
@@ -216,7 +258,7 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
           <DialogHeader>
             <DialogTitle>Comments</DialogTitle>
           </DialogHeader>
-          
+
           {/* Comments List */}
           <div className="flex-1 overflow-y-auto space-y-4 py-4">
             {postComments.map((comment) => (
@@ -224,20 +266,29 @@ const PostCard = ({ author, content, timestamp, likes, comments, shares, tags, m
                 <Avatar className="h-8 w-8 flex-shrink-0">
                   <AvatarImage src={comment.avatar} alt={comment.author} />
                   <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                    {comment.author.split(' ').map(n => n[0]).join('')}
+                    {comment.author
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <div className="bg-surface rounded-lg p-3">
-                    <p className="font-medium text-sm text-foreground">{comment.author}</p>
-                    <p className="text-sm text-foreground mt-1">{comment.content}</p>
+                    <p className="font-medium text-sm text-foreground">
+                      {comment.author}
+                    </p>
+                    <p className="text-sm text-foreground mt-1">
+                      {comment.content}
+                    </p>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1 ml-3">{comment.timestamp}</p>
+                  <p className="text-xs text-muted-foreground mt-1 ml-3">
+                    {comment.timestamp}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
-          
+
           {/* Add Comment */}
           <div className="border-t pt-4">
             <div className="flex space-x-2">

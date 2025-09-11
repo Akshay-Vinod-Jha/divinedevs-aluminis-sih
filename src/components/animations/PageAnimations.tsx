@@ -41,7 +41,12 @@ interface PageLayoutProps {
   className?: string;
 }
 
-export const PageLayout = ({ children, title, subtitle, className = "" }: PageLayoutProps) => {
+export const PageLayout = ({
+  children,
+  title,
+  subtitle,
+  className = "",
+}: PageLayoutProps) => {
   const [contentVisible, setContentVisible] = useState(false);
 
   useEffect(() => {
@@ -53,13 +58,19 @@ export const PageLayout = ({ children, title, subtitle, className = "" }: PageLa
 
   return (
     <div className={`min-h-screen bg-background ${className}`}>
-      <div className={`transition-all duration-1000 ${
-        contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}>
+      <div
+        className={`transition-all duration-1000 ${
+          contentVisible
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-4"
+        }`}
+      >
         {title && (
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">{title}</h1>
-            {subtitle && <p className="text-muted-foreground text-lg">{subtitle}</p>}
+            {subtitle && (
+              <p className="text-muted-foreground text-lg">{subtitle}</p>
+            )}
           </div>
         )}
         {children}
@@ -75,19 +86,23 @@ interface AnimatedCardProps {
   className?: string;
 }
 
-export const AnimatedCard = ({ children, delay = 0, className = "" }: AnimatedCardProps) => {
+export const AnimatedCard = ({
+  children,
+  delay = 0,
+  className = "",
+}: AnimatedCardProps) => {
   const [cardRef, isCardVisible] = useIntersectionAnimation(0.1);
 
   return (
-    <div 
+    <div
       ref={cardRef}
       className={`transition-all duration-700 ${
-        isCardVisible 
-          ? 'opacity-100 translate-y-0 scale-100' 
-          : 'opacity-0 translate-y-6 scale-98'
+        isCardVisible
+          ? "opacity-100 translate-y-0 scale-100"
+          : "opacity-0 translate-y-6 scale-98"
       } ${className}`}
-      style={{ 
-        transitionDelay: isCardVisible ? `${delay}ms` : '0ms' 
+      style={{
+        transitionDelay: isCardVisible ? `${delay}ms` : "0ms",
       }}
     >
       {children}
@@ -102,7 +117,11 @@ interface StaggeredListProps {
   className?: string;
 }
 
-export const StaggeredList = ({ children, delay = 150, className = "" }: StaggeredListProps) => {
+export const StaggeredList = ({
+  children,
+  delay = 150,
+  className = "",
+}: StaggeredListProps) => {
   const [listRef, isListVisible] = useIntersectionAnimation(0.1);
 
   return (
@@ -111,12 +130,12 @@ export const StaggeredList = ({ children, delay = 150, className = "" }: Stagger
         <div
           key={index}
           className={`transition-all duration-700 ${
-            isListVisible 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-4'
+            isListVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4"
           }`}
-          style={{ 
-            transitionDelay: isListVisible ? `${index * delay}ms` : '0ms' 
+          style={{
+            transitionDelay: isListVisible ? `${index * delay}ms` : "0ms",
           }}
         >
           {child}

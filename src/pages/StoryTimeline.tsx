@@ -8,7 +8,11 @@ import Sidebar from "@/components/layout/Sidebar";
 import ChatBot from "@/components/widgets/ChatBot";
 import { useState, useEffect } from "react";
 import { useSidebar } from "@/contexts/SidebarContext";
-import { PageLayout, AnimatedCard, StaggeredList } from "@/components/animations/PageAnimations";
+import {
+  PageLayout,
+  AnimatedCard,
+  StaggeredList,
+} from "@/components/animations/PageAnimations";
 
 const StoryTimeline = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,33 +29,48 @@ const StoryTimeline = () => {
     {
       id: 1,
       title: "The Tech Innovation Wave",
-      description: "A collection of breakthrough moments from our alumni in the tech industry",
+      description:
+        "A collection of breakthrough moments from our alumni in the tech industry",
       batchYear: 2020,
       posts: 15,
       generatedAt: "2024-12-10",
       author: "AI Assistant",
-      highlights: ["Sarah's promotion to VP at Google", "Mike's startup acquisition", "Lisa's patent filing"]
+      highlights: [
+        "Sarah's promotion to VP at Google",
+        "Mike's startup acquisition",
+        "Lisa's patent filing",
+      ],
     },
     {
       id: 2,
       title: "Healthcare Heroes Journey",
-      description: "Stories of medical professionals making a difference during challenging times",
+      description:
+        "Stories of medical professionals making a difference during challenging times",
       batchYear: 2018,
       posts: 22,
       generatedAt: "2024-12-08",
       author: "AI Assistant",
-      highlights: ["Dr. Chen's research breakthrough", "Nurse Amy's community service", "Dr. Patel's new clinic"]
+      highlights: [
+        "Dr. Chen's research breakthrough",
+        "Nurse Amy's community service",
+        "Dr. Patel's new clinic",
+      ],
     },
     {
       id: 3,
       title: "Entrepreneurship Chronicles",
-      description: "From idea to execution - startup stories from our ambitious alumni",
+      description:
+        "From idea to execution - startup stories from our ambitious alumni",
       batchYear: 2019,
       posts: 18,
       generatedAt: "2024-12-05",
       author: "AI Assistant",
-      highlights: ["Emma's food tech startup", "David's fintech success", "Rachel's sustainable fashion brand"]
-    }
+      highlights: [
+        "Emma's food tech startup",
+        "David's fintech success",
+        "Rachel's sustainable fashion brand",
+      ],
+    },
   ];
 
   // Professional Loader for StoryTimeline
@@ -78,26 +97,26 @@ const StoryTimeline = () => {
                 <div className="flex-1">
                   <div className="h-7 w-64 bg-muted/50 rounded animate-pulse mb-2"></div>
                   <div className="h-5 w-96 bg-muted/40 rounded animate-pulse mb-4"></div>
-                  
+
                   <div className="flex items-center space-x-4 mb-4">
                     <div className="h-6 w-20 bg-primary/20 rounded animate-pulse"></div>
                     <div className="h-4 w-32 bg-muted/40 rounded animate-pulse"></div>
                     <div className="h-4 w-24 bg-muted/40 rounded animate-pulse"></div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <div className="h-8 w-8 bg-muted/50 rounded animate-pulse"></div>
                   <div className="h-8 w-8 bg-muted/50 rounded animate-pulse"></div>
                 </div>
               </div>
             </CardHeader>
-            
+
             <CardContent>
               <div className="bg-surface rounded-lg p-6 mb-4">
                 <div className="relative">
                   <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-primary/30"></div>
-                  
+
                   <div className="space-y-8">
                     {[...Array(3)].map((_, j) => (
                       <div key={j} className="flex items-start space-x-4">
@@ -133,7 +152,9 @@ const StoryTimeline = () => {
       <div className="flex justify-center items-center py-8">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
-          <div className="text-sm font-medium text-foreground">Loading story timelines</div>
+          <div className="text-sm font-medium text-foreground">
+            Loading story timelines
+          </div>
         </div>
       </div>
     </div>
@@ -142,15 +163,21 @@ const StoryTimeline = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className={`flex transition-all duration-300 ${isOpen ? '' : 'ml-0'}`}>
+      <div
+        className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+      >
         <Sidebar />
-        
-        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? '' : 'max-w-full'}`}>
+
+        <main
+          className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+            isOpen ? "" : "max-w-full"
+          }`}
+        >
           {isLoading ? (
             <ProfessionalLoader />
           ) : (
-            <PageLayout 
-              title="StoryTimeline" 
+            <PageLayout
+              title="StoryTimeline"
               subtitle="AI-generated visual timelines of alumni stories and achievements"
               className="max-w-4xl mx-auto"
             >
@@ -158,14 +185,24 @@ const StoryTimeline = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                   <div className="flex items-center gap-2">
                     <Clock className="h-6 w-6 text-primary" />
-                    <span className="text-lg font-semibold">AI Story Generator</span>
+                    <span className="text-lg font-semibold">
+                      AI Story Generator
+                    </span>
                   </div>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-                    <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full sm:w-auto"
+                    >
                       <Filter className="h-4 w-4 mr-2" />
                       Filter by Batch
                     </Button>
-                    <Button variant="hero" size="sm" className="w-full sm:w-auto">
+                    <Button
+                      variant="hero"
+                      size="sm"
+                      className="w-full sm:w-auto"
+                    >
                       <Calendar className="h-4 w-4 mr-2" />
                       Generate New Timeline
                     </Button>
@@ -175,87 +212,107 @@ const StoryTimeline = () => {
 
               <StaggeredList className="space-y-6" delay={400}>
                 {timelineStories.map((story) => (
-                  <Card key={story.id} className="professional-card hover:alma-shadow-strong">
-                  <CardHeader className="p-4 sm:p-6">
-                    <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <CardTitle className="text-lg sm:text-xl font-semibold text-foreground mb-2">
-                          {story.title}
-                        </CardTitle>
-                        <p className="text-muted-foreground mb-4">{story.description}</p>
-                        
-                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-4">
-                          <Badge variant="secondary" className="bg-primary/10 text-primary">
-                            Class of {story.batchYear}
-                          </Badge>
-                          <div className="flex items-center text-xs sm:text-sm text-muted-foreground">
-                            <Clock className="h-4 w-4 mr-1" />
-                            <span className="hidden sm:inline">Generated on </span>{story.generatedAt}
-                          </div>
-                          <div className="flex items-center text-xs sm:text-sm text-muted-foreground">
-                            <Avatar className="h-5 w-5 mr-2">
-                              <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                                AI
-                              </AvatarFallback>
-                            </Avatar>
-                            {story.author}
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2 self-start">
-                        <Button variant="outline" size="sm">
-                          <Download className="h-4 w-4" />
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          <Share2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="p-4 sm:p-6 pt-0">
-                    {/* Timeline Preview */}
-                    <div className="bg-surface rounded-lg p-4 sm:p-6 mb-4">
-                      <div className="relative">
-                        {/* Timeline Line */}
-                        <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-primary/30"></div>
-                        
-                        {/* Timeline Items */}
-                        <div className="space-y-6 sm:space-y-8">
-                          {story.highlights.map((highlight, index) => (
-                            <div key={index} className="flex items-start space-x-4">
-                              <div className="relative flex-shrink-0">
-                                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center alma-shadow">
-                                  <div className="w-3 h-3 bg-primary-foreground rounded-full"></div>
-                                </div>
-                                {index === 0 && (
-                                  <div className="absolute -top-2 -left-2 w-12 h-12 bg-primary/20 rounded-full animate-pulse"></div>
-                                )}
-                              </div>
-                              <div className="flex-1 bg-card rounded-lg p-3 sm:p-4 alma-shadow min-w-0">
-                                <h4 className="font-medium text-foreground text-sm sm:text-base">{highlight}</h4>
-                                <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-                                  Part of the {story.title} collection
-                                </p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
+                  <Card
+                    key={story.id}
+                    className="professional-card hover:alma-shadow-strong"
+                  >
+                    <CardHeader className="p-4 sm:p-6">
+                      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="text-lg sm:text-xl font-semibold text-foreground mb-2">
+                            {story.title}
+                          </CardTitle>
+                          <p className="text-muted-foreground mb-4">
+                            {story.description}
+                          </p>
 
-                    {/* Story Stats */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <div className="text-sm text-muted-foreground">
-                        Based on {story.posts} posts from alumni
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-4">
+                            <Badge
+                              variant="secondary"
+                              className="bg-primary/10 text-primary"
+                            >
+                              Class of {story.batchYear}
+                            </Badge>
+                            <div className="flex items-center text-xs sm:text-sm text-muted-foreground">
+                              <Clock className="h-4 w-4 mr-1" />
+                              <span className="hidden sm:inline">
+                                Generated on{" "}
+                              </span>
+                              {story.generatedAt}
+                            </div>
+                            <div className="flex items-center text-xs sm:text-sm text-muted-foreground">
+                              <Avatar className="h-5 w-5 mr-2">
+                                <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                                  AI
+                                </AvatarFallback>
+                              </Avatar>
+                              {story.author}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center space-x-2 self-start">
+                          <Button variant="outline" size="sm">
+                            <Download className="h-4 w-4" />
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Share2 className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
-                      <Button variant="hero" size="sm" className="w-full sm:w-auto">
-                        View Full Timeline
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardHeader>
+
+                    <CardContent className="p-4 sm:p-6 pt-0">
+                      {/* Timeline Preview */}
+                      <div className="bg-surface rounded-lg p-4 sm:p-6 mb-4">
+                        <div className="relative">
+                          {/* Timeline Line */}
+                          <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-primary/30"></div>
+
+                          {/* Timeline Items */}
+                          <div className="space-y-6 sm:space-y-8">
+                            {story.highlights.map((highlight, index) => (
+                              <div
+                                key={index}
+                                className="flex items-start space-x-4"
+                              >
+                                <div className="relative flex-shrink-0">
+                                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center alma-shadow">
+                                    <div className="w-3 h-3 bg-primary-foreground rounded-full"></div>
+                                  </div>
+                                  {index === 0 && (
+                                    <div className="absolute -top-2 -left-2 w-12 h-12 bg-primary/20 rounded-full animate-pulse"></div>
+                                  )}
+                                </div>
+                                <div className="flex-1 bg-card rounded-lg p-3 sm:p-4 alma-shadow min-w-0">
+                                  <h4 className="font-medium text-foreground text-sm sm:text-base">
+                                    {highlight}
+                                  </h4>
+                                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                                    Part of the {story.title} collection
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Story Stats */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="text-sm text-muted-foreground">
+                          Based on {story.posts} posts from alumni
+                        </div>
+                        <Button
+                          variant="hero"
+                          size="sm"
+                          className="w-full sm:w-auto"
+                        >
+                          View Full Timeline
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </StaggeredList>
 
@@ -268,9 +325,14 @@ const StoryTimeline = () => {
                       Create Your Custom Timeline
                     </h3>
                     <p className="text-muted-foreground mb-6 text-sm sm:text-base">
-                      Generate personalized story timelines based on specific batches, departments, or topics
+                      Generate personalized story timelines based on specific
+                      batches, departments, or topics
                     </p>
-                    <Button variant="hero" size="lg" className="alma-glow w-full sm:w-auto">
+                    <Button
+                      variant="hero"
+                      size="lg"
+                      className="alma-glow w-full sm:w-auto"
+                    >
                       Generate New Timeline
                     </Button>
                   </CardContent>
@@ -280,8 +342,9 @@ const StoryTimeline = () => {
           )}
         </main>
       </div>
-      
+
       <ChatBot />
     </div>
   );
-};export default StoryTimeline;
+};
+export default StoryTimeline;
