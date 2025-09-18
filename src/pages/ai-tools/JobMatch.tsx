@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-} from "lucide-react";
+import {} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -59,7 +58,8 @@ const JobMatch = () => {
       posted: "2 days ago",
       applicants: 45,
       match: 95,
-      description: "Join our engineering team to build scalable web applications using React and Node.js.",
+      description:
+        "Join our engineering team to build scalable web applications using React and Node.js.",
       requirements: ["5+ years React", "Node.js experience", "AWS knowledge"],
       benefits: ["Health insurance", "401k", "Remote work", "Stock options"],
       companySize: "500-1000",
@@ -79,7 +79,8 @@ const JobMatch = () => {
       posted: "1 day ago",
       applicants: 32,
       match: 88,
-      description: "Lead product strategy and development for our mobile applications.",
+      description:
+        "Lead product strategy and development for our mobile applications.",
       requirements: ["3+ years PM experience", "Mobile products", "Analytics"],
       benefits: ["Health insurance", "Flexible PTO", "Learning budget"],
       companySize: "100-500",
@@ -99,8 +100,14 @@ const JobMatch = () => {
       posted: "3 days ago",
       applicants: 28,
       match: 92,
-      description: "Apply machine learning techniques to solve complex business problems.",
-      requirements: ["PhD or Masters", "Python/R", "ML frameworks", "5+ years experience"],
+      description:
+        "Apply machine learning techniques to solve complex business problems.",
+      requirements: [
+        "PhD or Masters",
+        "Python/R",
+        "ML frameworks",
+        "5+ years experience",
+      ],
       benefits: ["Health insurance", "Research time", "Conference budget"],
       companySize: "200-500",
       industry: "Technology",
@@ -119,7 +126,8 @@ const JobMatch = () => {
       posted: "5 days ago",
       applicants: 67,
       match: 85,
-      description: "Design intuitive user experiences for our flagship SaaS product.",
+      description:
+        "Design intuitive user experiences for our flagship SaaS product.",
       requirements: ["3+ years UX", "Figma proficiency", "User research"],
       benefits: ["Flexible hours", "Remote work", "Creative freedom"],
       companySize: "50-100",
@@ -131,25 +139,29 @@ const JobMatch = () => {
   ];
 
   const filteredJobs = jobs.filter((job) => {
-    const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         job.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesLocation = selectedLocation === "all" || job.location.includes(selectedLocation);
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.skills.some((skill) =>
+        skill.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    const matchesLocation =
+      selectedLocation === "all" || job.location.includes(selectedLocation);
     const matchesLevel = selectedLevel === "all" || job.level === selectedLevel;
     return matchesSearch && matchesLocation && matchesLevel;
   });
 
   const handleSaveJob = (jobId: number) => {
-    setSavedJobs(prev => 
-      prev.includes(jobId) 
-        ? prev.filter(id => id !== jobId)
+    setSavedJobs((prev) =>
+      prev.includes(jobId)
+        ? prev.filter((id) => id !== jobId)
         : [...prev, jobId]
     );
-    
+
     toast({
       title: savedJobs.includes(jobId) ? "Job Removed" : "Job Saved!",
-      description: savedJobs.includes(jobId) 
-        ? "Job removed from your saved list." 
+      description: savedJobs.includes(jobId)
+        ? "Job removed from your saved list."
         : "Job added to your saved list.",
     });
   };
@@ -163,14 +175,15 @@ const JobMatch = () => {
 
   const runAIAnalysis = async () => {
     setIsAnalyzing(true);
-    
+
     // Simulate AI analysis
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
     setIsAnalyzing(false);
     toast({
       title: "AI Analysis Complete!",
-      description: "Updated job recommendations based on your skills and preferences.",
+      description:
+        "Updated job recommendations based on your skills and preferences.",
     });
   };
 
@@ -178,16 +191,26 @@ const JobMatch = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+        <div
+          className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+        >
           <Sidebar />
-          <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+          <main
+            className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+              isOpen ? "" : "max-w-full"
+            }`}
+          >
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center justify-center h-96">
                 <div className="text-center space-y-4">
                   <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary" />
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">Analyzing Job Market</h3>
-                    <p className="text-muted-foreground">AI is finding the perfect opportunities for you...</p>
+                    <h3 className="text-lg font-semibold">
+                      Analyzing Job Market
+                    </h3>
+                    <p className="text-muted-foreground">
+                      AI is finding the perfect opportunities for you...
+                    </p>
                   </div>
                 </div>
               </div>
@@ -201,9 +224,15 @@ const JobMatch = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+      <div
+        className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+      >
         <Sidebar />
-        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+        <main
+          className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+            isOpen ? "" : "max-w-full"
+          }`}
+        >
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Header */}
             <div className="flex items-center gap-4">
@@ -221,15 +250,21 @@ const JobMatch = () => {
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold">Job Match</h1>
-                  <p className="text-muted-foreground">AI-powered job recommendations</p>
+                  <p className="text-muted-foreground">
+                    AI-powered job recommendations
+                  </p>
                 </div>
               </div>
             </div>
 
             <Tabs defaultValue="recommendations" className="space-y-6">
               <TabsList>
-                <TabsTrigger value="recommendations">AI Recommendations</TabsTrigger>
-                <TabsTrigger value="saved">Saved Jobs ({savedJobs.length})</TabsTrigger>
+                <TabsTrigger value="recommendations">
+                  AI Recommendations
+                </TabsTrigger>
+                <TabsTrigger value="saved">
+                  Saved Jobs ({savedJobs.length})
+                </TabsTrigger>
                 <TabsTrigger value="applied">Applied Jobs</TabsTrigger>
               </TabsList>
 
@@ -239,9 +274,12 @@ const JobMatch = () => {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div className="space-y-2">
-                        <h3 className="font-semibold text-lg">AI Job Matching</h3>
+                        <h3 className="font-semibold text-lg">
+                          AI Job Matching
+                        </h3>
                         <p className="text-muted-foreground">
-                          Personalized recommendations based on your skills and career goals
+                          Personalized recommendations based on your skills and
+                          career goals
                         </p>
                       </div>
                       <Button
@@ -281,19 +319,27 @@ const JobMatch = () => {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                        <Select
+                          value={selectedLocation}
+                          onValueChange={setSelectedLocation}
+                        >
                           <SelectTrigger className="w-40">
                             <SelectValue placeholder="Location" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="all">All Locations</SelectItem>
-                            <SelectItem value="San Francisco">San Francisco</SelectItem>
+                            <SelectItem value="San Francisco">
+                              San Francisco
+                            </SelectItem>
                             <SelectItem value="New York">New York</SelectItem>
                             <SelectItem value="Seattle">Seattle</SelectItem>
                             <SelectItem value="Austin">Austin</SelectItem>
                           </SelectContent>
                         </Select>
-                        <Select value={selectedLevel} onValueChange={setSelectedLevel}>
+                        <Select
+                          value={selectedLevel}
+                          onValueChange={setSelectedLevel}
+                        >
                           <SelectTrigger className="w-32">
                             <SelectValue placeholder="Level" />
                           </SelectTrigger>
@@ -312,7 +358,10 @@ const JobMatch = () => {
                 {/* Job Cards */}
                 <div className="space-y-4">
                   {filteredJobs.map((job) => (
-                    <Card key={job.id} className="professional-card hover:shadow-lg transition-all duration-300">
+                    <Card
+                      key={job.id}
+                      className="professional-card hover:shadow-lg transition-all duration-300"
+                    >
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex items-start gap-4 flex-1">
@@ -322,14 +371,18 @@ const JobMatch = () => {
                             <div className="space-y-3 flex-1">
                               <div className="flex items-center justify-between">
                                 <div>
-                                  <h3 className="text-lg font-semibold">{job.title}</h3>
-                                  <p className="text-muted-foreground">{job.company}</p>
+                                  <h3 className="text-lg font-semibold">
+                                    {job.title}
+                                  </h3>
+                                  <p className="text-muted-foreground">
+                                    {job.company}
+                                  </p>
                                 </div>
                                 <Badge className="bg-green-500/10 text-green-600">
                                   {job.match}% Match
                                 </Badge>
                               </div>
-                              
+
                               <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-1">
                                   <MapPin className="h-4 w-4" />
@@ -349,13 +402,21 @@ const JobMatch = () => {
                                 </div>
                               </div>
 
-                              <p className="text-sm text-muted-foreground">{job.description}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {job.description}
+                              </p>
 
                               <div className="space-y-2">
-                                <p className="text-sm font-medium">Required Skills:</p>
+                                <p className="text-sm font-medium">
+                                  Required Skills:
+                                </p>
                                 <div className="flex flex-wrap gap-1">
                                   {job.skills.map((skill, index) => (
-                                    <Badge key={index} variant="secondary" className="text-xs">
+                                    <Badge
+                                      key={index}
+                                      variant="secondary"
+                                      className="text-xs"
+                                    >
                                       {skill}
                                     </Badge>
                                   ))}
@@ -363,7 +424,9 @@ const JobMatch = () => {
                               </div>
 
                               <div className="space-y-2">
-                                <p className="text-sm font-medium">Match Analysis:</p>
+                                <p className="text-sm font-medium">
+                                  Match Analysis:
+                                </p>
                                 <Progress value={job.match} className="h-2" />
                               </div>
                             </div>
@@ -379,10 +442,16 @@ const JobMatch = () => {
                               variant="outline"
                               size="sm"
                               onClick={() => handleSaveJob(job.id)}
-                              className={savedJobs.includes(job.id) ? "text-red-600" : ""}
+                              className={
+                                savedJobs.includes(job.id) ? "text-red-600" : ""
+                              }
                             >
-                              <Heart 
-                                className={`h-4 w-4 mr-2 ${savedJobs.includes(job.id) ? "fill-current" : ""}`} 
+                              <Heart
+                                className={`h-4 w-4 mr-2 ${
+                                  savedJobs.includes(job.id)
+                                    ? "fill-current"
+                                    : ""
+                                }`}
                               />
                               {savedJobs.includes(job.id) ? "Saved" : "Save"}
                             </Button>
@@ -394,18 +463,27 @@ const JobMatch = () => {
                               </DialogTrigger>
                               <DialogContent className="max-w-2xl">
                                 <DialogHeader>
-                                  <DialogTitle>{job.title} at {job.company}</DialogTitle>
+                                  <DialogTitle>
+                                    {job.title} at {job.company}
+                                  </DialogTitle>
                                   <DialogDescription>
-                                    {job.location} • {job.type} • {job.match}% Match
+                                    {job.location} • {job.type} • {job.match}%
+                                    Match
                                   </DialogDescription>
                                 </DialogHeader>
                                 <div className="space-y-4">
                                   <div>
-                                    <h4 className="font-medium mb-2">Job Description</h4>
-                                    <p className="text-sm text-muted-foreground">{job.description}</p>
+                                    <h4 className="font-medium mb-2">
+                                      Job Description
+                                    </h4>
+                                    <p className="text-sm text-muted-foreground">
+                                      {job.description}
+                                    </p>
                                   </div>
                                   <div>
-                                    <h4 className="font-medium mb-2">Requirements</h4>
+                                    <h4 className="font-medium mb-2">
+                                      Requirements
+                                    </h4>
                                     <ul className="text-sm text-muted-foreground list-disc list-inside">
                                       {job.requirements.map((req, index) => (
                                         <li key={index}>{req}</li>
@@ -413,10 +491,16 @@ const JobMatch = () => {
                                     </ul>
                                   </div>
                                   <div>
-                                    <h4 className="font-medium mb-2">Benefits</h4>
+                                    <h4 className="font-medium mb-2">
+                                      Benefits
+                                    </h4>
                                     <div className="flex flex-wrap gap-1">
                                       {job.benefits.map((benefit, index) => (
-                                        <Badge key={index} variant="outline" className="text-xs">
+                                        <Badge
+                                          key={index}
+                                          variant="outline"
+                                          className="text-xs"
+                                        >
                                           {benefit}
                                         </Badge>
                                       ))}
@@ -424,16 +508,28 @@ const JobMatch = () => {
                                   </div>
                                   <div className="grid grid-cols-2 gap-4 text-sm">
                                     <div>
-                                      <span className="font-medium">Company Size:</span> {job.companySize}
+                                      <span className="font-medium">
+                                        Company Size:
+                                      </span>{" "}
+                                      {job.companySize}
                                     </div>
                                     <div>
-                                      <span className="font-medium">Industry:</span> {job.industry}
+                                      <span className="font-medium">
+                                        Industry:
+                                      </span>{" "}
+                                      {job.industry}
                                     </div>
                                     <div>
-                                      <span className="font-medium">Remote Work:</span> {job.remote ? "Yes" : "No"}
+                                      <span className="font-medium">
+                                        Remote Work:
+                                      </span>{" "}
+                                      {job.remote ? "Yes" : "No"}
                                     </div>
                                     <div>
-                                      <span className="font-medium">Experience Level:</span> {job.level}
+                                      <span className="font-medium">
+                                        Experience Level:
+                                      </span>{" "}
+                                      {job.level}
                                     </div>
                                   </div>
                                 </div>
@@ -461,8 +557,8 @@ const JobMatch = () => {
                     <Heart className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
                     <h3 className="text-lg font-semibold mb-2">Saved Jobs</h3>
                     <p className="text-muted-foreground">
-                      {savedJobs.length === 0 
-                        ? "No saved jobs yet. Start saving jobs from the recommendations tab!" 
+                      {savedJobs.length === 0
+                        ? "No saved jobs yet. Start saving jobs from the recommendations tab!"
                         : `You have ${savedJobs.length} saved job(s).`}
                     </p>
                   </CardContent>
@@ -486,7 +582,9 @@ const JobMatch = () => {
               <div className="text-center py-12">
                 <Briefcase className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
                 <h3 className="text-lg font-semibold mb-2">No jobs found</h3>
-                <p className="text-muted-foreground">Try adjusting your search criteria</p>
+                <p className="text-muted-foreground">
+                  Try adjusting your search criteria
+                </p>
               </div>
             )}
           </div>

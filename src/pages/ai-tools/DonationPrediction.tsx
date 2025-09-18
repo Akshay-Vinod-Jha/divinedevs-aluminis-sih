@@ -66,7 +66,11 @@ const DonationPrediction = () => {
       probability: 92,
       estimatedAmount: 85000,
       count: 12,
-      characteristics: ["Alumni 10+ years", "Previous major gifts", "Business leaders"],
+      characteristics: [
+        "Alumni 10+ years",
+        "Previous major gifts",
+        "Business leaders",
+      ],
       riskLevel: "Low",
       color: "bg-green-500",
     },
@@ -75,7 +79,11 @@ const DonationPrediction = () => {
       probability: 78,
       estimatedAmount: 95000,
       count: 67,
-      characteristics: ["Annual givers", "Event participants", "Active network"],
+      characteristics: [
+        "Annual givers",
+        "Event participants",
+        "Active network",
+      ],
       riskLevel: "Low",
       color: "bg-blue-500",
     },
@@ -84,7 +92,11 @@ const DonationPrediction = () => {
       probability: 65,
       estimatedAmount: 45000,
       count: 89,
-      characteristics: ["Recent graduates", "Career progression", "Alumni engagement"],
+      characteristics: [
+        "Recent graduates",
+        "Career progression",
+        "Alumni engagement",
+      ],
       riskLevel: "Medium",
       color: "bg-yellow-500",
     },
@@ -93,7 +105,11 @@ const DonationPrediction = () => {
       probability: 34,
       estimatedAmount: 20000,
       count: 156,
-      characteristics: ["No previous donations", "Low engagement", "Recent financial changes"],
+      characteristics: [
+        "No previous donations",
+        "Low engagement",
+        "Recent financial changes",
+      ],
       riskLevel: "High",
       color: "bg-red-500",
     },
@@ -174,14 +190,15 @@ const DonationPrediction = () => {
 
   const runPredictionAnalysis = async () => {
     setIsAnalyzing(true);
-    
+
     // Simulate AI analysis
-    await new Promise(resolve => setTimeout(resolve, 4000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+
     setIsAnalyzing(false);
     toast({
       title: "Prediction Analysis Complete!",
-      description: "Updated donation forecasts based on latest alumni data and market trends.",
+      description:
+        "Updated donation forecasts based on latest alumni data and market trends.",
     });
   };
 
@@ -196,16 +213,26 @@ const DonationPrediction = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+        <div
+          className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+        >
           <Sidebar />
-          <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+          <main
+            className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+              isOpen ? "" : "max-w-full"
+            }`}
+          >
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center justify-center h-96">
                 <div className="text-center space-y-4">
                   <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary" />
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">Analyzing Donation Patterns</h3>
-                    <p className="text-muted-foreground">AI is processing alumni data and donation history...</p>
+                    <h3 className="text-lg font-semibold">
+                      Analyzing Donation Patterns
+                    </h3>
+                    <p className="text-muted-foreground">
+                      AI is processing alumni data and donation history...
+                    </p>
                   </div>
                 </div>
               </div>
@@ -219,9 +246,15 @@ const DonationPrediction = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+      <div
+        className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+      >
         <Sidebar />
-        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+        <main
+          className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+            isOpen ? "" : "max-w-full"
+          }`}
+        >
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Header */}
             <div className="flex items-center gap-4">
@@ -238,8 +271,12 @@ const DonationPrediction = () => {
                   <DollarSign className="h-8 w-8 text-yellow-600" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold">Donation Likelihood Prediction</h1>
-                  <p className="text-muted-foreground">AI-powered fundraising analytics and predictions</p>
+                  <h1 className="text-2xl font-bold">
+                    Donation Likelihood Prediction
+                  </h1>
+                  <p className="text-muted-foreground">
+                    AI-powered fundraising analytics and predictions
+                  </p>
                 </div>
               </div>
             </div>
@@ -249,7 +286,10 @@ const DonationPrediction = () => {
               <CardContent className="p-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex gap-4">
-                    <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
+                    <Select
+                      value={selectedTimeframe}
+                      onValueChange={setSelectedTimeframe}
+                    >
                       <SelectTrigger className="w-40">
                         <SelectValue placeholder="Timeframe" />
                       </SelectTrigger>
@@ -259,24 +299,29 @@ const DonationPrediction = () => {
                         <SelectItem value="24months">24 Months</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Select value={selectedCampaign} onValueChange={setSelectedCampaign}>
+                    <Select
+                      value={selectedCampaign}
+                      onValueChange={setSelectedCampaign}
+                    >
                       <SelectTrigger className="w-48">
                         <SelectValue placeholder="Campaign" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">All Campaigns</SelectItem>
-                        <SelectItem value="scholarship">Scholarship Fund</SelectItem>
-                        <SelectItem value="infrastructure">Infrastructure</SelectItem>
-                        <SelectItem value="research">Research Initiative</SelectItem>
+                        <SelectItem value="scholarship">
+                          Scholarship Fund
+                        </SelectItem>
+                        <SelectItem value="infrastructure">
+                          Infrastructure
+                        </SelectItem>
+                        <SelectItem value="research">
+                          Research Initiative
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={exportReport}
-                    >
+                    <Button variant="outline" size="sm" onClick={exportReport}>
                       <Download className="h-4 w-4 mr-2" />
                       Export Report
                     </Button>
@@ -316,8 +361,8 @@ const DonationPrediction = () => {
                       ${donationMetrics.totalPredictedAmount.toLocaleString()}
                     </span>
                     <Badge className="bg-green-500/10 text-green-600">
-                      <TrendingUp className="h-3 w-3 mr-1" />
-                      +{donationMetrics.growthRate}%
+                      <TrendingUp className="h-3 w-3 mr-1" />+
+                      {donationMetrics.growthRate}%
                     </Badge>
                   </div>
                 </CardContent>
@@ -331,7 +376,9 @@ const DonationPrediction = () => {
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold">{donationMetrics.predictedDonors}</span>
+                    <span className="text-2xl font-bold">
+                      {donationMetrics.predictedDonors}
+                    </span>
                     <Badge variant="outline">
                       <Users className="h-3 w-3 mr-1" />
                       Active
@@ -349,10 +396,15 @@ const DonationPrediction = () => {
                 <CardContent className="p-4 pt-0">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold">{donationMetrics.confidenceScore}%</span>
+                      <span className="text-2xl font-bold">
+                        {donationMetrics.confidenceScore}%
+                      </span>
                       <CheckCircle className="h-5 w-5 text-green-500" />
                     </div>
-                    <Progress value={donationMetrics.confidenceScore} className="h-2" />
+                    <Progress
+                      value={donationMetrics.confidenceScore}
+                      className="h-2"
+                    />
                   </div>
                 </CardContent>
               </Card>
@@ -361,7 +413,9 @@ const DonationPrediction = () => {
             <Tabs defaultValue="segments" className="space-y-6">
               <TabsList>
                 <TabsTrigger value="segments">Donor Segments</TabsTrigger>
-                <TabsTrigger value="campaigns">Campaign Predictions</TabsTrigger>
+                <TabsTrigger value="campaigns">
+                  Campaign Predictions
+                </TabsTrigger>
                 <TabsTrigger value="prospects">Top Prospects</TabsTrigger>
               </TabsList>
 
@@ -371,10 +425,17 @@ const DonationPrediction = () => {
                     <Card key={index} className="professional-card">
                       <CardHeader className="p-6">
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg">{segment.segment}</CardTitle>
+                          <CardTitle className="text-lg">
+                            {segment.segment}
+                          </CardTitle>
                           <Badge
-                            variant={segment.riskLevel === "Low" ? "secondary" : 
-                                   segment.riskLevel === "Medium" ? "outline" : "destructive"}
+                            variant={
+                              segment.riskLevel === "Low"
+                                ? "secondary"
+                                : segment.riskLevel === "Medium"
+                                ? "outline"
+                                : "destructive"
+                            }
                           >
                             {segment.riskLevel} Risk
                           </Badge>
@@ -383,27 +444,49 @@ const DonationPrediction = () => {
                       <CardContent className="p-6 pt-0 space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <p className="text-sm text-muted-foreground">Donation Probability</p>
-                            <p className="text-2xl font-bold">{segment.probability}%</p>
+                            <p className="text-sm text-muted-foreground">
+                              Donation Probability
+                            </p>
+                            <p className="text-2xl font-bold">
+                              {segment.probability}%
+                            </p>
                           </div>
                           <div>
-                            <p className="text-sm text-muted-foreground">Estimated Amount</p>
-                            <p className="text-2xl font-bold">${segment.estimatedAmount.toLocaleString()}</p>
+                            <p className="text-sm text-muted-foreground">
+                              Estimated Amount
+                            </p>
+                            <p className="text-2xl font-bold">
+                              ${segment.estimatedAmount.toLocaleString()}
+                            </p>
                           </div>
-                        </div>
-                        
-                        <div>
-                          <p className="text-sm text-muted-foreground mb-2">Alumni Count: {segment.count}</p>
-                          <Progress value={segment.probability} className="h-2" />
                         </div>
 
                         <div>
-                          <p className="text-sm font-medium mb-2">Key Characteristics:</p>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Alumni Count: {segment.count}
+                          </p>
+                          <Progress
+                            value={segment.probability}
+                            className="h-2"
+                          />
+                        </div>
+
+                        <div>
+                          <p className="text-sm font-medium mb-2">
+                            Key Characteristics:
+                          </p>
                           <div className="space-y-1">
                             {segment.characteristics.map((char, charIndex) => (
-                              <div key={charIndex} className="flex items-center gap-2 text-sm">
-                                <div className={`w-2 h-2 rounded-full ${segment.color}`}></div>
-                                <span className="text-muted-foreground">{char}</span>
+                              <div
+                                key={charIndex}
+                                className="flex items-center gap-2 text-sm"
+                              >
+                                <div
+                                  className={`w-2 h-2 rounded-full ${segment.color}`}
+                                ></div>
+                                <span className="text-muted-foreground">
+                                  {char}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -422,27 +505,49 @@ const DonationPrediction = () => {
                         <div className="flex items-start justify-between gap-4">
                           <div className="space-y-3 flex-1">
                             <div className="flex items-center gap-2">
-                              <h3 className="text-lg font-semibold">{campaign.name}</h3>
-                              <Badge 
-                                variant={campaign.status === "Active" ? "secondary" : "outline"}
-                                className={campaign.status === "Active" ? "bg-green-500/10 text-green-600" : ""}
+                              <h3 className="text-lg font-semibold">
+                                {campaign.name}
+                              </h3>
+                              <Badge
+                                variant={
+                                  campaign.status === "Active"
+                                    ? "secondary"
+                                    : "outline"
+                                }
+                                className={
+                                  campaign.status === "Active"
+                                    ? "bg-green-500/10 text-green-600"
+                                    : ""
+                                }
                               >
                                 {campaign.status}
                               </Badge>
                             </div>
-                            
+
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                               <div>
-                                <p className="text-sm text-muted-foreground">Target Amount</p>
-                                <p className="font-semibold">${campaign.target.toLocaleString()}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Target Amount
+                                </p>
+                                <p className="font-semibold">
+                                  ${campaign.target.toLocaleString()}
+                                </p>
                               </div>
                               <div>
-                                <p className="text-sm text-muted-foreground">Predicted Amount</p>
-                                <p className="font-semibold">${campaign.predicted.toLocaleString()}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Predicted Amount
+                                </p>
+                                <p className="font-semibold">
+                                  ${campaign.predicted.toLocaleString()}
+                                </p>
                               </div>
                               <div>
-                                <p className="text-sm text-muted-foreground">Timeline</p>
-                                <p className="font-semibold">{campaign.timeline}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Timeline
+                                </p>
+                                <p className="font-semibold">
+                                  {campaign.timeline}
+                                </p>
                               </div>
                             </div>
 
@@ -451,17 +556,27 @@ const DonationPrediction = () => {
                                 <span>Success Probability</span>
                                 <span>{campaign.probability}%</span>
                               </div>
-                              <Progress value={campaign.probability} className="h-2" />
+                              <Progress
+                                value={campaign.probability}
+                                className="h-2"
+                              />
                             </div>
 
                             <div className="space-y-2">
                               <div className="flex items-center justify-between text-sm">
                                 <span>Progress to Target</span>
-                                <span>{Math.round((campaign.predicted / campaign.target) * 100)}%</span>
+                                <span>
+                                  {Math.round(
+                                    (campaign.predicted / campaign.target) * 100
+                                  )}
+                                  %
+                                </span>
                               </div>
-                              <Progress 
-                                value={(campaign.predicted / campaign.target) * 100} 
-                                className="h-2" 
+                              <Progress
+                                value={
+                                  (campaign.predicted / campaign.target) * 100
+                                }
+                                className="h-2"
                               />
                             </div>
                           </div>
@@ -481,36 +596,58 @@ const DonationPrediction = () => {
                           <div className="space-y-3 flex-1">
                             <div className="flex items-center justify-between">
                               <div>
-                                <h3 className="text-lg font-semibold">{prospect.name}</h3>
+                                <h3 className="text-lg font-semibold">
+                                  {prospect.name}
+                                </h3>
                                 <p className="text-muted-foreground">
-                                  {prospect.profession} • Class of {prospect.class}
+                                  {prospect.profession} • Class of{" "}
+                                  {prospect.class}
                                 </p>
                               </div>
                               <Badge className="bg-blue-500/10 text-blue-600">
                                 {prospect.donationProbability}% Likelihood
                               </Badge>
                             </div>
-                            
+
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                               <div>
-                                <span className="text-muted-foreground">Predicted Amount:</span>
-                                <p className="font-semibold">${prospect.predictedAmount.toLocaleString()}</p>
+                                <span className="text-muted-foreground">
+                                  Predicted Amount:
+                                </span>
+                                <p className="font-semibold">
+                                  ${prospect.predictedAmount.toLocaleString()}
+                                </p>
                               </div>
                               <div>
-                                <span className="text-muted-foreground">Last Donation:</span>
-                                <p className="font-semibold">{prospect.lastDonation}</p>
+                                <span className="text-muted-foreground">
+                                  Last Donation:
+                                </span>
+                                <p className="font-semibold">
+                                  {prospect.lastDonation}
+                                </p>
                               </div>
                               <div>
-                                <span className="text-muted-foreground">Probability:</span>
-                                <Progress value={prospect.donationProbability} className="h-2 mt-1" />
+                                <span className="text-muted-foreground">
+                                  Probability:
+                                </span>
+                                <Progress
+                                  value={prospect.donationProbability}
+                                  className="h-2 mt-1"
+                                />
                               </div>
                             </div>
 
                             <div>
-                              <p className="text-sm font-medium mb-2">Key Factors:</p>
+                              <p className="text-sm font-medium mb-2">
+                                Key Factors:
+                              </p>
                               <div className="flex flex-wrap gap-1">
                                 {prospect.factors.map((factor, index) => (
-                                  <Badge key={index} variant="secondary" className="text-xs">
+                                  <Badge
+                                    key={index}
+                                    variant="secondary"
+                                    className="text-xs"
+                                  >
                                     {factor}
                                   </Badge>
                                 ))}

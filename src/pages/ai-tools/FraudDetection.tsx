@@ -109,7 +109,8 @@ const FraudDetection = () => {
       id: 1,
       type: "Identity Fraud",
       severity: "High",
-      description: "Multiple accounts created with similar personal information",
+      description:
+        "Multiple accounts created with similar personal information",
       timestamp: "15 minutes ago",
       status: "Under Review",
       details: {
@@ -179,7 +180,8 @@ const FraudDetection = () => {
       pattern: "Fake Alumni Profiles",
       confidence: 87,
       instances: 8,
-      description: "Profiles with inconsistent graduation years and information",
+      description:
+        "Profiles with inconsistent graduation years and information",
       riskLevel: "High",
     },
     {
@@ -227,10 +229,10 @@ const FraudDetection = () => {
 
   const runSecurityScan = async () => {
     setIsScanning(true);
-    
+
     // Simulate security scan
-    await new Promise(resolve => setTimeout(resolve, 4000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+
     setIsScanning(false);
     toast({
       title: "Security Scan Complete!",
@@ -256,16 +258,26 @@ const FraudDetection = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+        <div
+          className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+        >
           <Sidebar />
-          <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+          <main
+            className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+              isOpen ? "" : "max-w-full"
+            }`}
+          >
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center justify-center h-96">
                 <div className="text-center space-y-4">
                   <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary" />
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">Initializing Security Systems</h3>
-                    <p className="text-muted-foreground">AI is analyzing security patterns and threats...</p>
+                    <h3 className="text-lg font-semibold">
+                      Initializing Security Systems
+                    </h3>
+                    <p className="text-muted-foreground">
+                      AI is analyzing security patterns and threats...
+                    </p>
                   </div>
                 </div>
               </div>
@@ -279,9 +291,15 @@ const FraudDetection = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+      <div
+        className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+      >
         <Sidebar />
-        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+        <main
+          className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+            isOpen ? "" : "max-w-full"
+          }`}
+        >
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Header */}
             <div className="flex items-center gap-4">
@@ -298,8 +316,12 @@ const FraudDetection = () => {
                   <Shield className="h-8 w-8 text-red-600" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold">Fraud & Anomaly Detection</h1>
-                  <p className="text-muted-foreground">AI-powered security monitoring and threat detection</p>
+                  <h1 className="text-2xl font-bold">
+                    Fraud & Anomaly Detection
+                  </h1>
+                  <p className="text-muted-foreground">
+                    AI-powered security monitoring and threat detection
+                  </p>
                 </div>
               </div>
             </div>
@@ -315,7 +337,8 @@ const FraudDetection = () => {
                     <div>
                       <h3 className="font-semibold text-lg">System Secure</h3>
                       <p className="text-muted-foreground">
-                        Last scan: {securityMetrics.lastScan} • Health: {securityMetrics.systemHealth}%
+                        Last scan: {securityMetrics.lastScan} • Health:{" "}
+                        {securityMetrics.systemHealth}%
                       </p>
                     </div>
                   </div>
@@ -349,7 +372,9 @@ const FraudDetection = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
-                  <div className="text-2xl font-bold">{securityMetrics.totalScans.toLocaleString()}</div>
+                  <div className="text-2xl font-bold">
+                    {securityMetrics.totalScans.toLocaleString()}
+                  </div>
                   <p className="text-sm text-muted-foreground">Last 30 days</p>
                 </CardContent>
               </Card>
@@ -362,10 +387,14 @@ const FraudDetection = () => {
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-red-600">{securityMetrics.threatsDetected}</span>
+                    <span className="text-2xl font-bold text-red-600">
+                      {securityMetrics.threatsDetected}
+                    </span>
                     <AlertTriangle className="h-5 w-5 text-red-500" />
                   </div>
-                  <p className="text-sm text-muted-foreground">Active incidents</p>
+                  <p className="text-sm text-muted-foreground">
+                    Active incidents
+                  </p>
                 </CardContent>
               </Card>
 
@@ -376,7 +405,9 @@ const FraudDetection = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
-                  <div className="text-2xl font-bold text-yellow-600">{securityMetrics.falsePositives}</div>
+                  <div className="text-2xl font-bold text-yellow-600">
+                    {securityMetrics.falsePositives}
+                  </div>
                   <p className="text-sm text-muted-foreground">This week</p>
                 </CardContent>
               </Card>
@@ -389,10 +420,15 @@ const FraudDetection = () => {
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-green-600">{securityMetrics.systemHealth}%</span>
+                    <span className="text-2xl font-bold text-green-600">
+                      {securityMetrics.systemHealth}%
+                    </span>
                     <CheckCircle className="h-5 w-5 text-green-500" />
                   </div>
-                  <Progress value={securityMetrics.systemHealth} className="h-2 mt-2" />
+                  <Progress
+                    value={securityMetrics.systemHealth}
+                    className="h-2 mt-2"
+                  />
                 </CardContent>
               </Card>
             </div>
@@ -402,7 +438,10 @@ const FraudDetection = () => {
               <CardContent className="p-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex gap-4">
-                    <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
+                    <Select
+                      value={selectedTimeframe}
+                      onValueChange={setSelectedTimeframe}
+                    >
                       <SelectTrigger className="w-40">
                         <SelectValue placeholder="Timeframe" />
                       </SelectTrigger>
@@ -413,7 +452,10 @@ const FraudDetection = () => {
                         <SelectItem value="30days">Last 30 Days</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Select value={selectedRiskLevel} onValueChange={setSelectedRiskLevel}>
+                    <Select
+                      value={selectedRiskLevel}
+                      onValueChange={setSelectedRiskLevel}
+                    >
                       <SelectTrigger className="w-40">
                         <SelectValue placeholder="Risk Level" />
                       </SelectTrigger>
@@ -425,11 +467,7 @@ const FraudDetection = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={exportReport}
-                  >
+                  <Button variant="outline" size="sm" onClick={exportReport}>
                     <Download className="h-4 w-4 mr-2" />
                     Export Report
                   </Button>
@@ -452,20 +490,30 @@ const FraudDetection = () => {
                         <div className="flex items-start justify-between gap-4">
                           <div className="space-y-3 flex-1">
                             <div className="flex items-center gap-2">
-                              <Badge className={getSeverityColor(alert.severity)}>
+                              <Badge
+                                className={getSeverityColor(alert.severity)}
+                              >
                                 {alert.severity} Risk
                               </Badge>
                               <Badge variant="outline">{alert.type}</Badge>
-                              <span className="text-sm text-muted-foreground">{alert.timestamp}</span>
+                              <span className="text-sm text-muted-foreground">
+                                {alert.timestamp}
+                              </span>
                             </div>
-                            <h3 className="font-semibold text-lg">{alert.description}</h3>
+                            <h3 className="font-semibold text-lg">
+                              {alert.description}
+                            </h3>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                              {Object.entries(alert.details).map(([key, value]) => (
-                                <div key={key}>
-                                  <span className="text-muted-foreground capitalize">{key.replace(/([A-Z])/g, ' $1')}:</span>
-                                  <p className="font-medium">{value}</p>
-                                </div>
-                              ))}
+                              {Object.entries(alert.details).map(
+                                ([key, value]) => (
+                                  <div key={key}>
+                                    <span className="text-muted-foreground capitalize">
+                                      {key.replace(/([A-Z])/g, " $1")}:
+                                    </span>
+                                    <p className="font-medium">{value}</p>
+                                  </div>
+                                )
+                              )}
                             </div>
                           </div>
                           <div className="text-right space-y-2">
@@ -481,25 +529,35 @@ const FraudDetection = () => {
                               </DialogTrigger>
                               <DialogContent>
                                 <DialogHeader>
-                                  <DialogTitle>Alert Details - {alert.type}</DialogTitle>
+                                  <DialogTitle>
+                                    Alert Details - {alert.type}
+                                  </DialogTitle>
                                   <DialogDescription>
                                     Detailed information and available actions
                                   </DialogDescription>
                                 </DialogHeader>
                                 <div className="space-y-4">
                                   <div>
-                                    <h4 className="font-medium mb-2">Description</h4>
-                                    <p className="text-sm text-muted-foreground">{alert.description}</p>
+                                    <h4 className="font-medium mb-2">
+                                      Description
+                                    </h4>
+                                    <p className="text-sm text-muted-foreground">
+                                      {alert.description}
+                                    </p>
                                   </div>
                                   <div>
-                                    <h4 className="font-medium mb-2">Available Actions</h4>
+                                    <h4 className="font-medium mb-2">
+                                      Available Actions
+                                    </h4>
                                     <div className="flex flex-wrap gap-2">
                                       {alert.actions.map((action, index) => (
                                         <Button
                                           key={index}
                                           variant="outline"
                                           size="sm"
-                                          onClick={() => handleTakeAction(alert.id, action)}
+                                          onClick={() =>
+                                            handleTakeAction(alert.id, action)
+                                          }
                                         >
                                           {action}
                                         </Button>
@@ -531,23 +589,45 @@ const FraudDetection = () => {
                         <div className="flex items-start justify-between gap-4">
                           <div className="space-y-2 flex-1">
                             <div className="flex items-center gap-2">
-                              <h4 className="font-semibold">{pattern.pattern}</h4>
+                              <h4 className="font-semibold">
+                                {pattern.pattern}
+                              </h4>
                               <Badge
-                                variant={pattern.riskLevel === "High" ? "destructive" : "outline"}
-                                className={pattern.riskLevel === "High" ? "" : "border-yellow-500 text-yellow-600"}
+                                variant={
+                                  pattern.riskLevel === "High"
+                                    ? "destructive"
+                                    : "outline"
+                                }
+                                className={
+                                  pattern.riskLevel === "High"
+                                    ? ""
+                                    : "border-yellow-500 text-yellow-600"
+                                }
                               >
                                 {pattern.riskLevel} Risk
                               </Badge>
                             </div>
-                            <p className="text-sm text-muted-foreground">{pattern.description}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {pattern.description}
+                            </p>
                             <div className="flex items-center gap-4 text-sm">
-                              <span>Instances: <strong>{pattern.instances}</strong></span>
-                              <span>Confidence: <strong>{pattern.confidence}%</strong></span>
+                              <span>
+                                Instances: <strong>{pattern.instances}</strong>
+                              </span>
+                              <span>
+                                Confidence:{" "}
+                                <strong>{pattern.confidence}%</strong>
+                              </span>
                             </div>
                           </div>
                           <div className="text-center">
-                            <div className="text-2xl font-bold">{pattern.confidence}%</div>
-                            <Progress value={pattern.confidence} className="h-2 w-24 mt-1" />
+                            <div className="text-2xl font-bold">
+                              {pattern.confidence}%
+                            </div>
+                            <Progress
+                              value={pattern.confidence}
+                              className="h-2 w-24 mt-1"
+                            />
                           </div>
                         </div>
                       </Card>
@@ -562,25 +642,45 @@ const FraudDetection = () => {
                     <Card key={index} className="professional-card">
                       <CardHeader className="p-6">
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg">{category.category}</CardTitle>
+                          <CardTitle className="text-lg">
+                            {category.category}
+                          </CardTitle>
                           <Badge
-                            variant={category.riskLevel === "High" ? "destructive" : 
-                                   category.riskLevel === "Medium" ? "outline" : "secondary"}
-                            className={category.riskLevel === "Low" ? "bg-green-500/10 text-green-600" :
-                                     category.riskLevel === "Medium" ? "border-yellow-500 text-yellow-600" : ""}
+                            variant={
+                              category.riskLevel === "High"
+                                ? "destructive"
+                                : category.riskLevel === "Medium"
+                                ? "outline"
+                                : "secondary"
+                            }
+                            className={
+                              category.riskLevel === "Low"
+                                ? "bg-green-500/10 text-green-600"
+                                : category.riskLevel === "Medium"
+                                ? "border-yellow-500 text-yellow-600"
+                                : ""
+                            }
                           >
                             {category.riskLevel} Risk
                           </Badge>
                         </div>
                       </CardHeader>
                       <CardContent className="p-6 pt-0 space-y-4">
-                        <p className="text-sm text-muted-foreground">{category.description}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {category.description}
+                        </p>
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="text-2xl font-bold">{category.incidents}</div>
-                            <div className="text-sm text-muted-foreground">Active incidents</div>
+                            <div className="text-2xl font-bold">
+                              {category.incidents}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              Active incidents
+                            </div>
                           </div>
-                          <div className={`w-4 h-4 rounded-full ${category.color}`}></div>
+                          <div
+                            className={`w-4 h-4 rounded-full ${category.color}`}
+                          ></div>
                         </div>
                       </CardContent>
                     </Card>

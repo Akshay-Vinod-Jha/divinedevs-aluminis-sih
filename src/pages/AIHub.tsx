@@ -1,5 +1,4 @@
-import {
-} from "lucide-react";
+import {} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -81,13 +80,7 @@ const AIHub = () => {
     },
   ];
 
-  const categories = [
-    "All",
-    "Networking",
-    "Career",
-    "Analytics",
-    "Security",
-  ];
+  const categories = ["All", "Networking", "Career", "Analytics", "Security"];
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const filteredTools =
@@ -167,8 +160,7 @@ const AIHub = () => {
                       AI-Powered Tools
                     </h1>
                     <p className="text-muted-foreground">
-                      Empowering alumni connections with artificial
-                      intelligence
+                      Empowering alumni connections with artificial intelligence
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -178,9 +170,7 @@ const AIHub = () => {
                     >
                       6 Tools Available
                     </Badge>
-                    <Badge variant="outline">
-                      Beta
-                    </Badge>
+                    <Badge variant="outline">Beta</Badge>
                   </div>
                 </div>
               </AnimatedCard>

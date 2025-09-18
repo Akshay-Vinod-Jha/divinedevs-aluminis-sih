@@ -182,10 +182,10 @@ const SentimentAnalysis = () => {
 
   const runSentimentAnalysis = async () => {
     setIsAnalyzing(true);
-    
+
     // Simulate AI analysis
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
     setIsAnalyzing(false);
     toast({
       title: "Sentiment Analysis Complete!",
@@ -204,16 +204,26 @@ const SentimentAnalysis = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+        <div
+          className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+        >
           <Sidebar />
-          <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+          <main
+            className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+              isOpen ? "" : "max-w-full"
+            }`}
+          >
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center justify-center h-96">
                 <div className="text-center space-y-4">
                   <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary" />
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">Analyzing Community Sentiment</h3>
-                    <p className="text-muted-foreground">AI is processing feedback and social data...</p>
+                    <h3 className="text-lg font-semibold">
+                      Analyzing Community Sentiment
+                    </h3>
+                    <p className="text-muted-foreground">
+                      AI is processing feedback and social data...
+                    </p>
                   </div>
                 </div>
               </div>
@@ -227,9 +237,15 @@ const SentimentAnalysis = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+      <div
+        className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+      >
         <Sidebar />
-        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+        <main
+          className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+            isOpen ? "" : "max-w-full"
+          }`}
+        >
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Header */}
             <div className="flex items-center gap-4">
@@ -246,8 +262,12 @@ const SentimentAnalysis = () => {
                   <TrendingUp className="h-8 w-8 text-rose-600" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold">Sentiment Analysis Dashboard</h1>
-                  <p className="text-muted-foreground">Real-time alumni community sentiment insights</p>
+                  <h1 className="text-2xl font-bold">
+                    Sentiment Analysis Dashboard
+                  </h1>
+                  <p className="text-muted-foreground">
+                    Real-time alumni community sentiment insights
+                  </p>
                 </div>
               </div>
             </div>
@@ -257,7 +277,10 @@ const SentimentAnalysis = () => {
               <CardContent className="p-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex gap-4">
-                    <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
+                    <Select
+                      value={selectedTimeframe}
+                      onValueChange={setSelectedTimeframe}
+                    >
                       <SelectTrigger className="w-40">
                         <SelectValue placeholder="Timeframe" />
                       </SelectTrigger>
@@ -268,7 +291,10 @@ const SentimentAnalysis = () => {
                         <SelectItem value="year">This Year</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Select value={selectedSource} onValueChange={setSelectedSource}>
+                    <Select
+                      value={selectedSource}
+                      onValueChange={setSelectedSource}
+                    >
                       <SelectTrigger className="w-48">
                         <SelectValue placeholder="Source" />
                       </SelectTrigger>
@@ -282,11 +308,7 @@ const SentimentAnalysis = () => {
                     </Select>
                   </div>
                   <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={exportReport}
-                    >
+                    <Button variant="outline" size="sm" onClick={exportReport}>
                       <Download className="h-4 w-4 mr-2" />
                       Export Report
                     </Button>
@@ -322,7 +344,9 @@ const SentimentAnalysis = () => {
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-3xl font-bold">{overallSentiment.score}</span>
+                    <span className="text-3xl font-bold">
+                      {overallSentiment.score}
+                    </span>
                     <Badge className="bg-green-500/10 text-green-600">
                       <TrendingUp className="h-3 w-3 mr-1" />
                       {overallSentiment.trend}
@@ -340,10 +364,15 @@ const SentimentAnalysis = () => {
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-3xl font-bold text-green-600">{overallSentiment.positive}%</span>
+                    <span className="text-3xl font-bold text-green-600">
+                      {overallSentiment.positive}%
+                    </span>
                     <ThumbsUp className="h-5 w-5 text-green-500" />
                   </div>
-                  <Progress value={overallSentiment.positive} className="h-2 mt-2" />
+                  <Progress
+                    value={overallSentiment.positive}
+                    className="h-2 mt-2"
+                  />
                 </CardContent>
               </Card>
 
@@ -355,10 +384,15 @@ const SentimentAnalysis = () => {
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-3xl font-bold text-yellow-600">{overallSentiment.neutral}%</span>
+                    <span className="text-3xl font-bold text-yellow-600">
+                      {overallSentiment.neutral}%
+                    </span>
                     <Meh className="h-5 w-5 text-yellow-500" />
                   </div>
-                  <Progress value={overallSentiment.neutral} className="h-2 mt-2" />
+                  <Progress
+                    value={overallSentiment.neutral}
+                    className="h-2 mt-2"
+                  />
                 </CardContent>
               </Card>
 
@@ -370,10 +404,15 @@ const SentimentAnalysis = () => {
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-3xl font-bold text-red-600">{overallSentiment.negative}%</span>
+                    <span className="text-3xl font-bold text-red-600">
+                      {overallSentiment.negative}%
+                    </span>
                     <ThumbsDown className="h-5 w-5 text-red-500" />
                   </div>
-                  <Progress value={overallSentiment.negative} className="h-2 mt-2" />
+                  <Progress
+                    value={overallSentiment.negative}
+                    className="h-2 mt-2"
+                  />
                 </CardContent>
               </Card>
             </div>
@@ -391,36 +430,66 @@ const SentimentAnalysis = () => {
                     <Card key={index} className="professional-card">
                       <CardHeader className="p-6">
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg">{source.source}</CardTitle>
+                          <CardTitle className="text-lg">
+                            {source.source}
+                          </CardTitle>
                           <Badge
-                            variant={source.trend.startsWith("+") ? "secondary" : "outline"}
-                            className={source.trend.startsWith("+") ? "bg-green-500/10 text-green-600" : "bg-red-500/10 text-red-600"}
+                            variant={
+                              source.trend.startsWith("+")
+                                ? "secondary"
+                                : "outline"
+                            }
+                            className={
+                              source.trend.startsWith("+")
+                                ? "bg-green-500/10 text-green-600"
+                                : "bg-red-500/10 text-red-600"
+                            }
                           >
                             {source.trend}%
                           </Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground">{source.volume} responses analyzed</p>
+                        <p className="text-sm text-muted-foreground">
+                          {source.volume} responses analyzed
+                        </p>
                       </CardHeader>
                       <CardContent className="p-6 pt-0 space-y-4">
                         <div className="grid grid-cols-3 gap-4 text-center">
                           <div>
-                            <div className="text-2xl font-bold text-green-600">{source.positive}%</div>
-                            <div className="text-xs text-muted-foreground">Positive</div>
+                            <div className="text-2xl font-bold text-green-600">
+                              {source.positive}%
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Positive
+                            </div>
                           </div>
                           <div>
-                            <div className="text-2xl font-bold text-yellow-600">{source.neutral}%</div>
-                            <div className="text-xs text-muted-foreground">Neutral</div>
+                            <div className="text-2xl font-bold text-yellow-600">
+                              {source.neutral}%
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Neutral
+                            </div>
                           </div>
                           <div>
-                            <div className="text-2xl font-bold text-red-600">{source.negative}%</div>
-                            <div className="text-xs text-muted-foreground">Negative</div>
+                            <div className="text-2xl font-bold text-red-600">
+                              {source.negative}%
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Negative
+                            </div>
                           </div>
                         </div>
                         <div className="space-y-2">
                           <Progress value={source.positive} className="h-2" />
                           <div className="flex justify-between text-xs text-muted-foreground">
                             <span>Overall Sentiment</span>
-                            <span>{source.positive > 60 ? "Very Positive" : source.positive > 40 ? "Positive" : "Mixed"}</span>
+                            <span>
+                              {source.positive > 60
+                                ? "Very Positive"
+                                : source.positive > 40
+                                ? "Positive"
+                                : "Mixed"}
+                            </span>
                           </div>
                         </div>
                       </CardContent>
@@ -439,20 +508,33 @@ const SentimentAnalysis = () => {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {topTopics.map((topic, index) => (
-                      <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-4 border rounded-lg"
+                      >
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
                             <h4 className="font-semibold">{topic.topic}</h4>
-                            <Badge variant="outline">{topic.mentions} mentions</Badge>
-                            {topic.trend === "up" && <TrendingUp className="h-4 w-4 text-green-500" />}
-                            {topic.trend === "down" && <TrendingDown className="h-4 w-4 text-red-500" />}
+                            <Badge variant="outline">
+                              {topic.mentions} mentions
+                            </Badge>
+                            {topic.trend === "up" && (
+                              <TrendingUp className="h-4 w-4 text-green-500" />
+                            )}
+                            {topic.trend === "down" && (
+                              <TrendingDown className="h-4 w-4 text-red-500" />
+                            )}
                           </div>
                           <div className="text-sm text-muted-foreground">
-                            Sentiment Score: {(topic.sentiment * 10).toFixed(1)}/10
+                            Sentiment Score: {(topic.sentiment * 10).toFixed(1)}
+                            /10
                           </div>
                         </div>
                         <div className="text-right">
-                          <Progress value={topic.sentiment * 100} className="h-2 w-24" />
+                          <Progress
+                            value={topic.sentiment * 100}
+                            className="h-2 w-24"
+                          />
                         </div>
                       </div>
                     ))}
@@ -463,19 +545,32 @@ const SentimentAnalysis = () => {
               <TabsContent value="recent" className="space-y-6">
                 <div className="space-y-4">
                   {recentFeedback.map((feedback) => (
-                    <Card key={feedback.id} className={`professional-card border-l-4 ${getSentimentColor(feedback.sentiment)}`}>
+                    <Card
+                      key={feedback.id}
+                      className={`professional-card border-l-4 ${getSentimentColor(
+                        feedback.sentiment
+                      )}`}
+                    >
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between gap-4">
                           <div className="space-y-3 flex-1">
                             <div className="flex items-center gap-2">
                               {getSentimentIcon(feedback.sentiment)}
                               <Badge variant="outline">{feedback.source}</Badge>
-                              <span className="text-sm text-muted-foreground">{feedback.timestamp}</span>
+                              <span className="text-sm text-muted-foreground">
+                                {feedback.timestamp}
+                              </span>
                             </div>
-                            <p className="text-foreground leading-relaxed">{feedback.text}</p>
+                            <p className="text-foreground leading-relaxed">
+                              {feedback.text}
+                            </p>
                             <div className="flex flex-wrap gap-1">
                               {feedback.topics.map((topic, index) => (
-                                <Badge key={index} variant="secondary" className="text-xs">
+                                <Badge
+                                  key={index}
+                                  variant="secondary"
+                                  className="text-xs"
+                                >
                                   {topic}
                                 </Badge>
                               ))}
@@ -483,11 +578,12 @@ const SentimentAnalysis = () => {
                           </div>
                           <div className="text-right">
                             <div className="text-sm font-semibold">
-                              Score: {feedback.score > 0 ? "+" : ""}{feedback.score.toFixed(2)}
+                              Score: {feedback.score > 0 ? "+" : ""}
+                              {feedback.score.toFixed(2)}
                             </div>
-                            <Progress 
-                              value={Math.abs(feedback.score) * 100} 
-                              className="h-1 w-16 mt-1" 
+                            <Progress
+                              value={Math.abs(feedback.score) * 100}
+                              className="h-1 w-16 mt-1"
                             />
                           </div>
                         </div>

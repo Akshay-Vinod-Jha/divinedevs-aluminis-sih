@@ -183,7 +183,8 @@ const EventPrediction = () => {
     {
       factor: "Event Type",
       weight: 25,
-      description: "Professional events have 35% higher attendance than social events",
+      description:
+        "Professional events have 35% higher attendance than social events",
     },
     {
       factor: "Timing",
@@ -198,7 +199,8 @@ const EventPrediction = () => {
     {
       factor: "Historical Engagement",
       weight: 15,
-      description: "Alumni with previous event attendance are 60% more likely to attend",
+      description:
+        "Alumni with previous event attendance are 60% more likely to attend",
     },
     {
       factor: "Weather Forecast",
@@ -214,14 +216,15 @@ const EventPrediction = () => {
 
   const runPredictionAnalysis = async () => {
     setIsAnalyzing(true);
-    
+
     // Simulate AI analysis
-    await new Promise(resolve => setTimeout(resolve, 4000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+
     setIsAnalyzing(false);
     toast({
       title: "Event Analysis Complete!",
-      description: "Updated attendance predictions based on latest data and trends.",
+      description:
+        "Updated attendance predictions based on latest data and trends.",
     });
   };
 
@@ -248,16 +251,26 @@ const EventPrediction = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+        <div
+          className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+        >
           <Sidebar />
-          <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+          <main
+            className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+              isOpen ? "" : "max-w-full"
+            }`}
+          >
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center justify-center h-96">
                 <div className="text-center space-y-4">
                   <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary" />
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">Analyzing Event Patterns</h3>
-                    <p className="text-muted-foreground">AI is processing attendance data and event factors...</p>
+                    <h3 className="text-lg font-semibold">
+                      Analyzing Event Patterns
+                    </h3>
+                    <p className="text-muted-foreground">
+                      AI is processing attendance data and event factors...
+                    </p>
                   </div>
                 </div>
               </div>
@@ -271,9 +284,15 @@ const EventPrediction = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}>
+      <div
+        className={`flex transition-all duration-300 ${isOpen ? "" : "ml-0"}`}
+      >
         <Sidebar />
-        <main className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${isOpen ? "" : "max-w-full"}`}>
+        <main
+          className={`flex-1 p-4 sm:p-6 transition-all duration-300 ${
+            isOpen ? "" : "max-w-full"
+          }`}
+        >
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Header */}
             <div className="flex items-center gap-4">
@@ -290,8 +309,12 @@ const EventPrediction = () => {
                   <Calendar className="h-8 w-8 text-purple-600" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold">Event Attendance Prediction</h1>
-                  <p className="text-muted-foreground">AI-powered event planning and attendance forecasting</p>
+                  <h1 className="text-2xl font-bold">
+                    Event Attendance Prediction
+                  </h1>
+                  <p className="text-muted-foreground">
+                    AI-powered event planning and attendance forecasting
+                  </p>
                 </div>
               </div>
             </div>
@@ -301,7 +324,10 @@ const EventPrediction = () => {
               <CardContent className="p-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex gap-4">
-                    <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
+                    <Select
+                      value={selectedTimeframe}
+                      onValueChange={setSelectedTimeframe}
+                    >
                       <SelectTrigger className="w-40">
                         <SelectValue placeholder="Timeframe" />
                       </SelectTrigger>
@@ -312,25 +338,26 @@ const EventPrediction = () => {
                         <SelectItem value="year">This Year</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <Select
+                      value={selectedCategory}
+                      onValueChange={setSelectedCategory}
+                    >
                       <SelectTrigger className="w-40">
                         <SelectValue placeholder="Category" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">All Events</SelectItem>
                         <SelectItem value="social">Social</SelectItem>
-                        <SelectItem value="professional">Professional</SelectItem>
+                        <SelectItem value="professional">
+                          Professional
+                        </SelectItem>
                         <SelectItem value="sports">Sports</SelectItem>
                         <SelectItem value="academic">Academic</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={exportReport}
-                    >
+                    <Button variant="outline" size="sm" onClick={exportReport}>
                       <Download className="h-4 w-4 mr-2" />
                       Export Report
                     </Button>
@@ -360,7 +387,9 @@ const EventPrediction = () => {
               <TabsList>
                 <TabsTrigger value="predictions">Event Predictions</TabsTrigger>
                 <TabsTrigger value="factors">Attendance Factors</TabsTrigger>
-                <TabsTrigger value="historical">Historical Analysis</TabsTrigger>
+                <TabsTrigger value="historical">
+                  Historical Analysis
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="predictions" className="space-y-6">
@@ -371,7 +400,9 @@ const EventPrediction = () => {
                         <div className="flex items-start justify-between">
                           <div className="space-y-2">
                             <div className="flex items-center gap-2">
-                              <h3 className="text-xl font-semibold">{event.title}</h3>
+                              <h3 className="text-xl font-semibold">
+                                {event.title}
+                              </h3>
                               <Badge variant="outline">{event.category}</Badge>
                             </div>
                             <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -389,7 +420,11 @@ const EventPrediction = () => {
                               </div>
                             </div>
                           </div>
-                          <Badge className={getConfidenceColor(event.confidenceScore)}>
+                          <Badge
+                            className={getConfidenceColor(
+                              event.confidenceScore
+                            )}
+                          >
                             {event.confidenceScore}% Confidence
                           </Badge>
                         </div>
@@ -401,52 +436,99 @@ const EventPrediction = () => {
                             <div className="text-2xl font-bold">
                               {event.predictedAttendance}
                             </div>
-                            <div className="text-sm text-muted-foreground">Predicted Attendance</div>
-                            <div className={`text-sm font-medium ${getAttendanceColor((event.predictedAttendance / event.capacity) * 100)}`}>
-                              {Math.round((event.predictedAttendance / event.capacity) * 100)}% of capacity
-                            </div>
-                          </div>
-                          <div className="text-center">
-                            <div className="text-2xl font-bold">{event.registrations}</div>
-                            <div className="text-sm text-muted-foreground">Current Registrations</div>
-                            <div className="text-sm text-green-600 font-medium">
-                              {Math.round((event.registrations / event.predictedAttendance) * 100)}% of predicted
-                            </div>
-                          </div>
-                          <div className="text-center">
-                            <div className="text-2xl font-bold">{event.capacity}</div>
-                            <div className="text-sm text-muted-foreground">Event Capacity</div>
                             <div className="text-sm text-muted-foreground">
-                              {event.capacity - event.predictedAttendance} spots available
+                              Predicted Attendance
+                            </div>
+                            <div
+                              className={`text-sm font-medium ${getAttendanceColor(
+                                (event.predictedAttendance / event.capacity) *
+                                  100
+                              )}`}
+                            >
+                              {Math.round(
+                                (event.predictedAttendance / event.capacity) *
+                                  100
+                              )}
+                              % of capacity
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-2xl font-bold">
+                              {event.registrations}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              Current Registrations
+                            </div>
+                            <div className="text-sm text-green-600 font-medium">
+                              {Math.round(
+                                (event.registrations /
+                                  event.predictedAttendance) *
+                                  100
+                              )}
+                              % of predicted
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-2xl font-bold">
+                              {event.capacity}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              Event Capacity
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              {event.capacity - event.predictedAttendance} spots
+                              available
                             </div>
                           </div>
                         </div>
 
                         {/* Attendance Factors */}
                         <div className="space-y-3">
-                          <h4 className="font-semibold">Attendance Factors Analysis</h4>
+                          <h4 className="font-semibold">
+                            Attendance Factors Analysis
+                          </h4>
                           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                            {Object.entries(event.factors).map(([factor, score]) => (
-                              <div key={factor} className="text-center">
-                                <div className="text-lg font-semibold">{score}%</div>
-                                <div className="text-xs text-muted-foreground capitalize">{factor}</div>
-                                <Progress value={score} className="h-1 mt-1" />
-                              </div>
-                            ))}
+                            {Object.entries(event.factors).map(
+                              ([factor, score]) => (
+                                <div key={factor} className="text-center">
+                                  <div className="text-lg font-semibold">
+                                    {score}%
+                                  </div>
+                                  <div className="text-xs text-muted-foreground capitalize">
+                                    {factor}
+                                  </div>
+                                  <Progress
+                                    value={score}
+                                    className="h-1 mt-1"
+                                  />
+                                </div>
+                              )
+                            )}
                           </div>
                         </div>
 
                         {/* Demographics Prediction */}
                         <div className="space-y-3">
-                          <h4 className="font-semibold">Expected Demographics</h4>
+                          <h4 className="font-semibold">
+                            Expected Demographics
+                          </h4>
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {Object.entries(event.demographics).map(([range, percentage]) => (
-                              <div key={range} className="text-center">
-                                <div className="text-lg font-semibold">{percentage}%</div>
-                                <div className="text-xs text-muted-foreground">{range}</div>
-                                <Progress value={percentage} className="h-1 mt-1" />
-                              </div>
-                            ))}
+                            {Object.entries(event.demographics).map(
+                              ([range, percentage]) => (
+                                <div key={range} className="text-center">
+                                  <div className="text-lg font-semibold">
+                                    {percentage}%
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">
+                                    {range}
+                                  </div>
+                                  <Progress
+                                    value={percentage}
+                                    className="h-1 mt-1"
+                                  />
+                                </div>
+                              )
+                            )}
                           </div>
                         </div>
 
@@ -459,9 +541,14 @@ const EventPrediction = () => {
                             </h4>
                             <div className="space-y-2">
                               {event.riskFactors.map((risk, index) => (
-                                <div key={index} className="flex items-center gap-2 text-sm">
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-2 text-sm"
+                                >
                                   <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                                  <span className="text-muted-foreground">{risk}</span>
+                                  <span className="text-muted-foreground">
+                                    {risk}
+                                  </span>
                                 </div>
                               ))}
                             </div>
@@ -473,9 +560,14 @@ const EventPrediction = () => {
                             </h4>
                             <div className="space-y-2">
                               {event.recommendations.map((rec, index) => (
-                                <div key={index} className="flex items-center gap-2 text-sm">
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-2 text-sm"
+                                >
                                   <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                                  <span className="text-muted-foreground">{rec}</span>
+                                  <span className="text-muted-foreground">
+                                    {rec}
+                                  </span>
                                 </div>
                               ))}
                             </div>
@@ -502,13 +594,22 @@ const EventPrediction = () => {
                           <div className="space-y-2 flex-1">
                             <div className="flex items-center gap-2">
                               <h4 className="font-semibold">{factor.factor}</h4>
-                              <Badge variant="outline">{factor.weight}% Weight</Badge>
+                              <Badge variant="outline">
+                                {factor.weight}% Weight
+                              </Badge>
                             </div>
-                            <p className="text-sm text-muted-foreground">{factor.description}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {factor.description}
+                            </p>
                           </div>
                           <div className="text-center">
-                            <div className="text-2xl font-bold">{factor.weight}%</div>
-                            <Progress value={factor.weight} className="h-2 w-16 mt-1" />
+                            <div className="text-2xl font-bold">
+                              {factor.weight}%
+                            </div>
+                            <Progress
+                              value={factor.weight}
+                              className="h-2 w-16 mt-1"
+                            />
                           </div>
                         </div>
                       </Card>
@@ -528,23 +629,39 @@ const EventPrediction = () => {
                   <CardContent>
                     <div className="space-y-4">
                       {pastEventAnalysis.map((analysis, index) => (
-                        <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                        <div
+                          key={index}
+                          className="flex items-center justify-between p-4 border rounded-lg"
+                        >
                           <div className="space-y-1">
                             <h4 className="font-semibold">{analysis.event}</h4>
                             <div className="text-sm text-muted-foreground">
-                              Predicted: {analysis.predicted} | Actual: {analysis.actual}
+                              Predicted: {analysis.predicted} | Actual:{" "}
+                              {analysis.actual}
                             </div>
                           </div>
                           <div className="text-right space-y-1">
                             <Badge
-                              variant={analysis.outcome === "Success" ? "secondary" : 
-                                     analysis.outcome === "Exceeded" ? "default" : "outline"}
-                              className={analysis.outcome === "Success" ? "bg-green-500/10 text-green-600" :
-                                        analysis.outcome === "Exceeded" ? "bg-blue-500/10 text-blue-600" : ""}
+                              variant={
+                                analysis.outcome === "Success"
+                                  ? "secondary"
+                                  : analysis.outcome === "Exceeded"
+                                  ? "default"
+                                  : "outline"
+                              }
+                              className={
+                                analysis.outcome === "Success"
+                                  ? "bg-green-500/10 text-green-600"
+                                  : analysis.outcome === "Exceeded"
+                                  ? "bg-blue-500/10 text-blue-600"
+                                  : ""
+                              }
                             >
                               {analysis.outcome}
                             </Badge>
-                            <div className="text-sm font-semibold">{analysis.accuracy}% Accurate</div>
+                            <div className="text-sm font-semibold">
+                              {analysis.accuracy}% Accurate
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -552,7 +669,9 @@ const EventPrediction = () => {
                     <div className="mt-6 p-4 bg-muted/50 rounded-lg">
                       <div className="text-center">
                         <div className="text-2xl font-bold">89.5%</div>
-                        <div className="text-sm text-muted-foreground">Average Prediction Accuracy</div>
+                        <div className="text-sm text-muted-foreground">
+                          Average Prediction Accuracy
+                        </div>
                       </div>
                     </div>
                   </CardContent>
