@@ -1,32 +1,23 @@
 import {
-  Bot,
-  Sparkles,
-  MessageSquare,
-  FileText,
-  Users,
-  TrendingUp,
-  Zap,
-  Brain,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSidebar } from "@/contexts/SidebarContext";
 import {
   PageLayout,
   AnimatedCard,
   StaggeredList,
 } from "@/components/animations/PageAnimations";
-import CountingNumber from "@/components/ui/counting-number";
 
 const AIHub = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { isOpen } = useSidebar();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,169 +26,115 @@ const AIHub = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const aiFeatures = [
+  const aiTools = [
     {
-      id: 1,
-      title: "Career Path Advisor",
+      id: "mentor-recommendation",
+      title: "Mentor Recommendation",
       description:
-        "Get AI-powered career guidance based on your background and alumni success stories",
-      icon: TrendingUp,
-      status: "active",
-      usage: "142 consultations this month",
+        "AI-powered matching with ideal mentors based on your career goals and background",
+      category: "Networking",
+      color: "bg-blue-500/10 text-blue-600",
+      status: "Active",
     },
     {
-      id: 2,
-      title: "Mentorship Matcher",
+      id: "job-match",
+      title: "Job Match",
       description:
-        "AI matches you with the perfect mentor based on your goals and interests",
-      icon: Users,
-      status: "active",
-      usage: "89 matches made",
+        "Find perfect job opportunities with smart matching algorithms",
+      category: "Career",
+      color: "bg-green-500/10 text-green-600",
+      status: "Active",
     },
     {
-      id: 3,
-      title: "Resume Optimizer",
-      description:
-        "Enhance your resume with AI suggestions based on industry trends",
-      icon: FileText,
-      status: "active",
-      usage: "56 resumes improved",
+      id: "donation-prediction",
+      title: "Donation Likelihood Prediction",
+      description: "Predict alumni donation patterns for fundraising campaigns",
+      category: "Analytics",
+      color: "bg-yellow-500/10 text-yellow-600",
+      status: "Beta",
     },
     {
-      id: 4,
-      title: "Network Insights",
+      id: "event-prediction",
+      title: "Event Attendance Prediction",
       description:
-        "Discover hidden connections and networking opportunities in your alumni network",
-      icon: Brain,
-      status: "beta",
-      usage: "23 insights generated",
+        "Forecast event attendance to optimize planning and resources",
+      category: "Analytics",
+      color: "bg-purple-500/10 text-purple-600",
+      status: "Active",
+    },
+    {
+      id: "sentiment-analysis",
+      title: "Sentiment Analysis Dashboard",
+      description:
+        "Analyze alumni feedback and community sentiment in real-time",
+      category: "Analytics",
+      color: "bg-rose-500/10 text-rose-600",
+      status: "Active",
+    },
+    {
+      id: "fraud-detection",
+      title: "Fraud/Anomaly Detection",
+      description: "Detect suspicious activities and protect your community",
+      category: "Security",
+      color: "bg-red-500/10 text-red-600",
+      status: "Active",
     },
   ];
 
-  const recentActivities = [
-    {
-      id: 1,
-      action: "Generated career roadmap for Software Engineering",
-      time: "2 hours ago",
-      type: "career",
-    },
-    {
-      id: 2,
-      action: "Matched with 3 potential mentors in Data Science",
-      time: "1 day ago",
-      type: "mentorship",
-    },
-    {
-      id: 3,
-      action: "Optimized resume - 15% improvement score",
-      time: "3 days ago",
-      type: "resume",
-    },
+  const categories = [
+    "All",
+    "Networking",
+    "Career",
+    "Analytics",
+    "Security",
   ];
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const aiInsights = [
-    {
-      title: "Alumni Success Patterns",
-      description: "Top career transitions: Engineering → Product Management",
-      trend: "+34%",
-    },
-    {
-      title: "Networking Opportunities",
-      description:
-        "5 alumni in your target companies available for connections",
-      trend: "New",
-    },
-    {
-      title: "Skill Recommendations",
-      description: "Cloud Computing skills show higher job match rate",
-      trend: "+89%",
-    },
-  ];
+  const filteredTools =
+    selectedCategory === "All"
+      ? aiTools
+      : aiTools.filter((tool) => tool.category === selectedCategory);
 
-  // Professional Loader for AI Hub
+  const handleToolClick = (toolId: string) => {
+    navigate(`/ai-hub/${toolId}`);
+  };
+
+  // Professional Loader
   const ProfessionalLoader = () => (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div className="h-8 w-48 bg-muted/50 rounded-lg animate-pulse"></div>
         <div className="h-9 w-32 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        <Card className="professional-card">
-          <CardContent className="p-6 space-y-4">
-            <div className="h-6 w-40 bg-muted/50 rounded animate-pulse"></div>
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="space-y-2">
-                <div className="flex justify-between">
-                  <div className="h-4 w-24 bg-muted/40 rounded animate-pulse"></div>
-                  <div className="h-4 w-8 bg-muted/40 rounded animate-pulse"></div>
-                </div>
-                <div className="h-2 bg-gradient-to-r from-primary/20 to-transparent rounded animate-pulse"></div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="professional-card lg:col-span-2">
-          <CardContent className="p-6 space-y-4">
-            <div className="h-6 w-32 bg-muted/50 rounded animate-pulse"></div>
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="p-3 rounded-lg bg-surface border border-border"
-              >
-                <div className="h-5 w-48 bg-gradient-to-r from-primary/20 to-transparent rounded animate-pulse mb-2"></div>
-                <div className="h-4 w-64 bg-muted/40 rounded animate-pulse"></div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid w-full grid-cols-3 gap-1 bg-muted/30 rounded-lg p-1">
-        {[...Array(3)].map((_, i) => (
+      <div className="flex gap-2 flex-wrap">
+        {[...Array(7)].map((_, i) => (
           <div
             key={i}
-            className="h-9 bg-muted/50 rounded-md animate-pulse"
+            className="h-8 w-20 bg-muted/50 rounded-full animate-pulse"
           ></div>
         ))}
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        {[...Array(4)].map((_, i) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {[...Array(12)].map((_, i) => (
           <Card key={i} className="professional-card">
             <CardContent className="p-6 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg animate-pulse"></div>
-                <div className="space-y-2">
-                  <div className="h-5 w-40 bg-muted/50 rounded animate-pulse"></div>
-                  <div className="h-4 w-16 bg-muted/40 rounded animate-pulse"></div>
+                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg animate-pulse"></div>
+                <div className="space-y-2 flex-1">
+                  <div className="h-5 w-32 bg-muted/50 rounded animate-pulse"></div>
+                  <div className="h-3 w-16 bg-muted/40 rounded animate-pulse"></div>
                 </div>
               </div>
-              <div className="h-4 w-full bg-muted/40 rounded animate-pulse"></div>
-              <div className="flex justify-between items-center">
-                <div className="h-3 w-24 bg-muted/30 rounded animate-pulse"></div>
-                <div className="h-8 w-16 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
+              <div className="space-y-2">
+                <div className="h-4 w-full bg-muted/40 rounded animate-pulse"></div>
+                <div className="h-4 w-3/4 bg-muted/40 rounded animate-pulse"></div>
               </div>
+              <div className="h-9 bg-gradient-to-r from-primary/20 to-accent/20 rounded-md animate-pulse"></div>
             </CardContent>
           </Card>
         ))}
-      </div>
-
-      <div className="flex justify-center items-center py-8">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
-          <div className="text-sm font-medium text-foreground">
-            Loading AI features
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -219,267 +156,124 @@ const AIHub = () => {
           ) : (
             <PageLayout
               title="AI Hub"
-              subtitle="Harness the power of AI to enhance your alumni experience"
-              className="max-w-6xl mx-auto"
+              subtitle="Discover powerful AI tools designed to enhance your alumni experience"
+              className="max-w-7xl mx-auto"
             >
+              {/* Header Section */}
               <AnimatedCard delay={200}>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                  <div>
+                    <h1 className="text-2xl font-bold text-foreground">
+                      AI-Powered Tools
+                    </h1>
+                    <p className="text-muted-foreground">
+                      Empowering alumni connections with artificial
+                      intelligence
+                    </p>
+                  </div>
                   <div className="flex items-center gap-2">
-                    <Bot className="h-6 w-6 text-primary" />
-                    <span className="text-lg font-semibold">AI Assistant</span>
-                    <Badge variant="secondary" className="ml-2">
+                    <Badge
+                      variant="secondary"
+                      className="bg-success/10 text-success"
+                    >
+                      6 Tools Available
+                    </Badge>
+                    <Badge variant="outline">
                       Beta
                     </Badge>
                   </div>
-                  <Button className="alma-gradient text-primary-foreground w-full sm:w-auto">
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Get AI Insights
-                  </Button>
                 </div>
               </AnimatedCard>
 
-              <StaggeredList
-                className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6"
-                delay={400}
-              >
-                {/* AI Usage Stats */}
-                <Card className="professional-card">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <Zap className="h-5 w-5" />
-                      AI Usage This Month
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Career Insights</span>
-                        <span>
-                          <CountingNumber start={0} end={85} duration={2200} />%
-                        </span>
-                      </div>
-                      <Progress value={85} className="h-2" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Mentorship Matching</span>
-                        <span>
-                          <CountingNumber start={0} end={67} duration={2400} />%
-                        </span>
-                      </div>
-                      <Progress value={67} className="h-2" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Resume Analysis</span>
-                        <span>
-                          <CountingNumber start={0} end={43} duration={2600} />%
-                        </span>
-                      </div>
-                      <Progress value={43} className="h-2" />
-                    </div>
-                    <div className="pt-2 text-xs text-muted-foreground">
-                      Next reset in 12 days
-                    </div>
-                  </CardContent>
-                </Card>
+              {/* Category Filter */}
+              <AnimatedCard delay={400}>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={
+                        selectedCategory === category ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                      className={`transition-all duration-200 ${
+                        selectedCategory === category
+                          ? "alma-gradient text-primary-foreground shadow-lg"
+                          : "hover:bg-accent/50"
+                      }`}
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+              </AnimatedCard>
 
-                {/* AI Insights */}
-                <Card className="professional-card lg:col-span-2">
-                  <CardHeader className="p-4 sm:p-6">
-                    <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-                      <Brain className="h-5 w-5" />
-                      Smart Insights
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
-                    {aiInsights.map((insight, index) => (
-                      <div
-                        key={index}
-                        className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 p-3 rounded-lg bg-surface border border-border"
-                      >
-                        <div className="space-y-1 min-w-0">
-                          <h4 className="font-medium text-foreground">
-                            {insight.title}
-                          </h4>
-                          <p className="text-sm text-muted-foreground">
-                            {insight.description}
-                          </p>
-                        </div>
+              {/* AI Tools Grid */}
+              <StaggeredList
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                delay={600}
+              >
+                {filteredTools.map((tool, index) => (
+                  <Card
+                    key={tool.id}
+                    className="professional-card hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                    onClick={() => handleToolClick(tool.id)}
+                  >
+                    <CardHeader className="p-6 pb-4">
+                      <div className="flex items-center justify-between mb-3">
                         <Badge
-                          variant="secondary"
-                          className="bg-success/10 text-success self-start"
+                          variant={
+                            tool.status === "Active" ? "secondary" : "outline"
+                          }
+                          className={
+                            tool.status === "Active"
+                              ? "bg-success/10 text-success"
+                              : ""
+                          }
                         >
-                          {insight.trend}
+                          {tool.status}
                         </Badge>
                       </div>
-                    ))}
-                  </CardContent>
-                </Card>
+                      <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors">
+                        {tool.title}
+                      </CardTitle>
+                      <Badge variant="outline" className="w-fit text-xs">
+                        {tool.category}
+                      </Badge>
+                    </CardHeader>
+                    <CardContent className="p-6 pt-0 space-y-4">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {tool.description}
+                      </p>
+                      <Button
+                        className="w-full alma-gradient text-primary-foreground group-hover:shadow-lg transition-all duration-200"
+                        size="sm"
+                      >
+                        Launch Tool
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
               </StaggeredList>
 
-              <AnimatedCard delay={600}>
-                <Tabs defaultValue="features" className="space-y-6">
-                  <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3">
-                    <TabsTrigger value="features" className="text-sm">
-                      AI Features
-                    </TabsTrigger>
-                    <TabsTrigger value="activity" className="text-sm">
-                      Recent Activity
-                    </TabsTrigger>
-                    <TabsTrigger value="analytics" className="text-sm">
-                      Analytics
-                    </TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent value="features" className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                      {aiFeatures.map((feature) => (
-                        <Card key={feature.id} className="professional-card">
-                          <CardHeader className="p-4 sm:p-6">
-                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                              <div className="flex items-center gap-3 min-w-0">
-                                <div className="p-2 rounded-lg bg-primary/10 flex-shrink-0">
-                                  <feature.icon className="h-6 w-6 text-primary" />
-                                </div>
-                                <div className="min-w-0">
-                                  <CardTitle className="text-base sm:text-lg truncate">
-                                    {feature.title}
-                                  </CardTitle>
-                                  <div className="flex items-center gap-2 mt-1">
-                                    <Badge
-                                      variant={
-                                        feature.status === "active"
-                                          ? "secondary"
-                                          : "outline"
-                                      }
-                                    >
-                                      {feature.status}
-                                    </Badge>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </CardHeader>
-                          <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
-                            <p className="text-sm text-muted-foreground">
-                              {feature.description}
-                            </p>
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                              <span className="text-xs text-muted-foreground">
-                                {feature.usage}
-                              </span>
-                              <Button
-                                size="sm"
-                                className="alma-gradient text-primary-foreground w-full sm:w-auto"
-                              >
-                                Try Now
-                              </Button>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="activity" className="space-y-4">
-                    <Card className="professional-card">
-                      <CardHeader>
-                        <CardTitle>Recent AI Activities</CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        {recentActivities.map((activity) => (
-                          <div
-                            key={activity.id}
-                            className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-border"
-                          >
-                            <div className="p-1 rounded-full bg-primary/10">
-                              <MessageSquare className="h-4 w-4 text-primary" />
-                            </div>
-                            <div className="flex-1">
-                              <p className="text-sm text-foreground">
-                                {activity.action}
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                {activity.time}
-                              </p>
-                            </div>
-                            <Badge variant="outline" className="text-xs">
-                              {activity.type}
-                            </Badge>
-                          </div>
-                        ))}
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
-
-                  <TabsContent value="analytics" className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                      <Card className="professional-card">
-                        <CardHeader className="p-4 sm:p-6">
-                          <CardTitle className="text-base sm:text-lg">
-                            Success Rate
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-4 sm:p-6 pt-0">
-                          <div className="text-2xl sm:text-3xl font-bold text-foreground">
-                            <CountingNumber
-                              start={0}
-                              end={94}
-                              duration={2800}
-                            />
-                            %
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            AI recommendations accuracy
-                          </p>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="professional-card">
-                        <CardHeader className="p-4 sm:p-6">
-                          <CardTitle className="text-base sm:text-lg">
-                            Time Saved
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-4 sm:p-6 pt-0">
-                          <div className="text-2xl sm:text-3xl font-bold text-foreground">
-                            <CountingNumber
-                              start={0}
-                              end={12.5}
-                              duration={2600}
-                            />
-                            h
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            Average hours saved per user
-                          </p>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="professional-card">
-                        <CardHeader className="p-4 sm:p-6">
-                          <CardTitle className="text-base sm:text-lg">
-                            Connections Made
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-4 sm:p-6 pt-0">
-                          <div className="text-2xl sm:text-3xl font-bold text-foreground">
-                            <CountingNumber
-                              start={0}
-                              end={347}
-                              duration={3000}
-                            />
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            Through AI matching
-                          </p>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </AnimatedCard>
+              {/* Empty State */}
+              {filteredTools.length === 0 && (
+                <div className="text-center py-12">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                    No tools found in {selectedCategory}
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Try selecting a different category or explore all tools
+                  </p>
+                  <Button
+                    variant="outline"
+                    className="mt-4"
+                    onClick={() => setSelectedCategory("All")}
+                  >
+                    View All Tools
+                  </Button>
+                </div>
+              )}
             </PageLayout>
           )}
         </main>

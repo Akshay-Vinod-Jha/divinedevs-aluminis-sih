@@ -29,12 +29,14 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useSidebar } from "@/contexts/SidebarContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const { toggleSidebar } = useSidebar();
+  const { isAuthenticated } = useAuth();
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -193,6 +195,14 @@ const Header = () => {
 
   const currentPath = location.pathname;
 
+  const handleLogoClick = () => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 alma-shadow">
       <div className="container mx-auto px-3 sm:px-4 lg:px-6">
@@ -213,7 +223,7 @@ const Header = () => {
                 <TooltipTrigger asChild>
                   <div
                     className="cursor-pointer flex items-center gap-2"
-                    onClick={() => navigate("/")}
+                    onClick={handleLogoClick}
                   >
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-lg flex items-center justify-center shadow-lg border border-primary/20">
                       <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
@@ -224,7 +234,9 @@ const Header = () => {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Go to Landing Page</p>
+                  <p>
+                    {isAuthenticated ? "Go to Dashboard" : "Go to Landing Page"}
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

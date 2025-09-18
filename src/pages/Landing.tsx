@@ -19,7 +19,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const Landing = () => {
   const { theme, toggleTheme } = useTheme();
-  const { markAsVisited, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   // Redirect authenticated users to dashboard
@@ -28,11 +28,6 @@ const Landing = () => {
       navigate("/dashboard", { replace: true });
     }
   }, [isAuthenticated, navigate]);
-
-  const handleAuthNavigation = (path: string) => {
-    markAsVisited();
-    // Navigation will be handled by Link component
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -65,18 +60,12 @@ const Landing = () => {
                   <Moon className="h-5 w-5" />
                 )}
               </Button>
-              <Link
-                to="/signin"
-                onClick={() => handleAuthNavigation("/signin")}
-              >
+              <Link to="/signin">
                 <Button variant="outline" className="hidden sm:inline-flex">
                   Sign In
                 </Button>
               </Link>
-              <Link
-                to="/signup"
-                onClick={() => handleAuthNavigation("/signup")}
-              >
+              <Link to="/signup">
                 <Button className="alma-gradient text-primary-foreground">
                   Join Now
                 </Button>
@@ -111,10 +100,7 @@ const Landing = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                to="/signup"
-                onClick={() => handleAuthNavigation("/signup")}
-              >
+              <Link to="/signup">
                 <Button
                   size="lg"
                   className="alma-gradient text-primary-foreground w-full sm:w-auto"
@@ -123,10 +109,7 @@ const Landing = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link
-                to="/signin"
-                onClick={() => handleAuthNavigation("/signin")}
-              >
+              <Link to="/signin">
                 <Button
                   size="lg"
                   variant="outline"
@@ -265,10 +248,7 @@ const Landing = () => {
                 connections and advancing their careers.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link
-                  to="/signup"
-                  onClick={() => handleAuthNavigation("/signup")}
-                >
+                <Link to="/signup">
                   <Button
                     size="lg"
                     className="alma-gradient text-primary-foreground w-full sm:w-auto"
@@ -277,10 +257,7 @@ const Landing = () => {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link
-                  to="/signin"
-                  onClick={() => handleAuthNavigation("/signin")}
-                >
+                <Link to="/signin">
                   <Button
                     size="lg"
                     variant="outline"

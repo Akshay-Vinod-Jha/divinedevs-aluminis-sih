@@ -49,7 +49,8 @@ const SignIn = () => {
     setTimeout(() => {
       if (formData.email && formData.password) {
         // Dummy login - always succeeds
-        login(); // This will automatically redirect to dashboard via ProtectedRoute
+        login();
+        navigate("/dashboard", { replace: true });
       } else {
         setError("Please fill in all required fields");
       }

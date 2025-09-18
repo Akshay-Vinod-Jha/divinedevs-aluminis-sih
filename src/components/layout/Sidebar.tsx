@@ -25,7 +25,7 @@ const Sidebar = () => {
   const { isOpen, closeSidebar } = useSidebar();
 
   const navigationItems = [
-    { icon: Home, label: "Feed", path: "/", count: null },
+    { icon: Home, label: "Feed", path: "/dashboard", count: null },
     { icon: Users, label: "My Network", path: "/network", count: 12 },
     { icon: MessageCircle, label: "Messages", path: "/messages", count: 2 },
     { icon: Bell, label: "Notifications", path: "/notifications", count: 5 },
@@ -37,7 +37,7 @@ const Sidebar = () => {
       path: "/storytimeline",
       count: null,
     },
-    { icon: Bot, label: "AI Hub", path: "/ai", count: null },
+    { icon: Bot, label: "AI Hub", path: "/ai-hub", count: null },
   ];
 
   const handleNavigation = (path: string) => {

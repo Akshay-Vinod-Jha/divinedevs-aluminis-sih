@@ -114,7 +114,8 @@ const SignUp = () => {
     // Simulate API call
     setTimeout(() => {
       // Dummy signup - always succeeds
-      login(); // This will automatically redirect to dashboard via ProtectedRoute
+      login();
+      navigate("/dashboard", { replace: true });
       setIsLoading(false);
     }, 2000);
   };

@@ -21,18 +21,20 @@ import Settings from "./pages/Settings";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
+import MentorRecommendation from "./pages/ai-tools/MentorRecommendation";
+import JobMatch from "./pages/ai-tools/JobMatch";
+import DonationPrediction from "./pages/ai-tools/DonationPrediction";
+import EventPrediction from "./pages/ai-tools/EventPrediction";
+import SentimentAnalysis from "./pages/ai-tools/SentimentAnalysis";
+import FraudDetection from "./pages/ai-tools/FraudDetection";
 
 const queryClient = new QueryClient();
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, hasVisited } = useAuth();
+  const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated && !hasVisited) {
-    return <Navigate to="/" replace />;
-  }
-
-  if (!isAuthenticated && hasVisited) {
+  if (!isAuthenticated) {
     return <Navigate to="/signin" replace />;
   }
 
@@ -132,6 +134,56 @@ const App = () => (
                   element={
                     <ProtectedRoute>
                       <StoryTimeline />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* AI Hub Tool Routes */}
+                <Route
+                  path="/ai-hub/mentor-recommendation"
+                  element={
+                    <ProtectedRoute>
+                      <MentorRecommendation />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ai-hub/job-match"
+                  element={
+                    <ProtectedRoute>
+                      <JobMatch />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ai-hub/donation-prediction"
+                  element={
+                    <ProtectedRoute>
+                      <DonationPrediction />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ai-hub/event-prediction"
+                  element={
+                    <ProtectedRoute>
+                      <EventPrediction />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ai-hub/sentiment-analysis"
+                  element={
+                    <ProtectedRoute>
+                      <SentimentAnalysis />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ai-hub/fraud-detection"
+                  element={
+                    <ProtectedRoute>
+                      <FraudDetection />
                     </ProtectedRoute>
                   }
                 />
