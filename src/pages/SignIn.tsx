@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Eye,
@@ -23,7 +23,7 @@ import { useAuth } from "@/contexts/AuthContext";
 const SignIn = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-  const { login, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -33,12 +33,8 @@ const SignIn = () => {
   });
   const [error, setError] = useState("");
 
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/dashboard", { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
+  // Note: Removed automatic redirect logic
+  // Users must complete the sign-in form to proceed
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

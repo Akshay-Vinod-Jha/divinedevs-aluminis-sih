@@ -14,12 +14,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check localStorage for authentication status
-    const authStatus = localStorage.getItem("isAuthenticated");
-
-    if (authStatus === "true") {
-      setIsAuthenticated(true);
-    }
+    // Clear any existing authentication state on app start
+    // This ensures users must log in fresh each session
+    localStorage.removeItem("isAuthenticated");
+    setIsAuthenticated(false);
   }, []);
 
   const login = () => {
@@ -29,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.setItem("isAuthenticated", "false");
+    localStorage.removeItem("isAuthenticated");
   };
 
   return (

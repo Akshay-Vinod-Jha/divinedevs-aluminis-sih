@@ -1,5 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   GraduationCap,
   Sparkles,
@@ -15,19 +14,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useAuth } from "@/contexts/AuthContext";
 
 const Landing = () => {
   const { theme, toggleTheme } = useTheme();
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
-  // Redirect authenticated users to dashboard
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/dashboard", { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
+  // Note: Removed automatic redirect logic
+  // Users must explicitly choose to sign in/up
 
   return (
     <div className="min-h-screen bg-background">

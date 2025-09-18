@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Eye,
@@ -33,18 +33,14 @@ import { useAuth } from "@/contexts/AuthContext";
 const SignUp = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-  const { login, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/dashboard", { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
+  // Note: Removed automatic redirect logic
+  // Users must complete the sign-up form to proceed
   const [formData, setFormData] = useState({
     // Personal Info
     firstName: "",
