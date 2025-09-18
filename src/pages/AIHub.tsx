@@ -206,10 +206,10 @@ const AIHub = () => {
                 {filteredTools.map((tool, index) => (
                   <Card
                     key={tool.id}
-                    className="professional-card hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                    className="professional-card hover:shadow-lg transition-all duration-300 cursor-pointer group h-full flex flex-col"
                     onClick={() => handleToolClick(tool.id)}
                   >
-                    <CardHeader className="p-6 pb-4">
+                    <CardHeader className="p-6 pb-4 flex-shrink-0">
                       <div className="flex items-center justify-between mb-3">
                         <Badge
                           variant={
@@ -231,12 +231,12 @@ const AIHub = () => {
                         {tool.category}
                       </Badge>
                     </CardHeader>
-                    <CardContent className="p-6 pt-0 space-y-4">
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                    <CardContent className="p-6 pt-0 flex flex-col flex-grow">
+                      <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
                         {tool.description}
                       </p>
                       <Button
-                        className="w-full alma-gradient text-primary-foreground group-hover:shadow-lg transition-all duration-200"
+                        className="w-full alma-gradient text-primary-foreground group-hover:shadow-lg transition-all duration-200 mt-4"
                         size="sm"
                       >
                         Launch Tool

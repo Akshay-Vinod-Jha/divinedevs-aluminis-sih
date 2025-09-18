@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -203,7 +202,6 @@ const JobMatch = () => {
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center justify-center h-96">
                 <div className="text-center space-y-4">
-                  <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary" />
                   <div className="space-y-2">
                     <h3 className="text-lg font-semibold">
                       Analyzing Job Market
@@ -242,18 +240,13 @@ const JobMatch = () => {
                 onClick={() => navigate("/ai-hub")}
                 className="shrink-0"
               >
-                <ArrowLeft className="h-4 w-4" />
+                ←
               </Button>
-              <div className="flex items-center gap-3">
-                <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
-                  <Briefcase className="h-8 w-8 text-green-600" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold">Job Match</h1>
-                  <p className="text-muted-foreground">
-                    AI-powered job recommendations
-                  </p>
-                </div>
+              <div>
+                <h1 className="text-2xl font-bold">Job Match</h1>
+                <p className="text-muted-foreground">
+                  AI-powered job recommendations
+                </p>
               </div>
             </div>
 
@@ -289,12 +282,10 @@ const JobMatch = () => {
                       >
                         {isAnalyzing ? (
                           <>
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                             Analyzing...
                           </>
                         ) : (
                           <>
-                            <TrendingUp className="h-4 w-4 mr-2" />
                             Update Matches
                           </>
                         )}
@@ -308,15 +299,11 @@ const JobMatch = () => {
                   <CardContent className="p-6">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div className="flex-1">
-                        <div className="relative">
-                          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input
-                            placeholder="Search jobs, companies, or skills..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pl-10"
-                          />
-                        </div>
+                        <Input
+                          placeholder="Search jobs, companies, or skills..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                        />
                       </div>
                       <div className="flex gap-2">
                         <Select
@@ -365,9 +352,6 @@ const JobMatch = () => {
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex items-start gap-4 flex-1">
-                            <div className="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
-                              <Building className="h-6 w-6 text-gray-600" />
-                            </div>
                             <div className="space-y-3 flex-1">
                               <div className="flex items-center justify-between">
                                 <div>
@@ -385,19 +369,15 @@ const JobMatch = () => {
 
                               <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-1">
-                                  <MapPin className="h-4 w-4" />
                                   {job.location}
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Clock className="h-4 w-4" />
                                   {job.type}
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <DollarSign className="h-4 w-4" />
                                   {job.salary}
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Users className="h-4 w-4" />
                                   {job.applicants} applicants
                                 </div>
                               </div>
@@ -446,13 +426,7 @@ const JobMatch = () => {
                                 savedJobs.includes(job.id) ? "text-red-600" : ""
                               }
                             >
-                              <Heart
-                                className={`h-4 w-4 mr-2 ${
-                                  savedJobs.includes(job.id)
-                                    ? "fill-current"
-                                    : ""
-                                }`}
-                              />
+                              {savedJobs.includes(job.id) ? "♥" : "♡"}
                               {savedJobs.includes(job.id) ? "Saved" : "Save"}
                             </Button>
                             <Dialog>
@@ -540,7 +514,6 @@ const JobMatch = () => {
                               onClick={() => handleApplyJob(job.id, job.title)}
                               className="alma-gradient text-primary-foreground"
                             >
-                              <ExternalLink className="h-4 w-4 mr-2" />
                               Apply Now
                             </Button>
                           </div>
@@ -554,7 +527,6 @@ const JobMatch = () => {
               <TabsContent value="saved">
                 <Card className="professional-card">
                   <CardContent className="p-6 text-center">
-                    <Heart className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
                     <h3 className="text-lg font-semibold mb-2">Saved Jobs</h3>
                     <p className="text-muted-foreground">
                       {savedJobs.length === 0
@@ -568,7 +540,6 @@ const JobMatch = () => {
               <TabsContent value="applied">
                 <Card className="professional-card">
                   <CardContent className="p-6 text-center">
-                    <CheckCircle className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
                     <h3 className="text-lg font-semibold mb-2">Applied Jobs</h3>
                     <p className="text-muted-foreground">
                       Track your job applications and their status here.
@@ -580,7 +551,6 @@ const JobMatch = () => {
 
             {filteredJobs.length === 0 && (
               <div className="text-center py-12">
-                <Briefcase className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
                 <h3 className="text-lg font-semibold mb-2">No jobs found</h3>
                 <p className="text-muted-foreground">
                   Try adjusting your search criteria
